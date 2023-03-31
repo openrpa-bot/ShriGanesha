@@ -5,7 +5,7 @@ set workingFolder=C:\xampp\htdocs\ShriGanesha
 
 cd %workingFolder%
 
-set webFolderName=SR
+set webFolderName=SRS
 set DBName=%webFolderName%
 set dbRootUsername="root"
 set dbRootPassword=""
@@ -56,20 +56,27 @@ call composer require drupal/commerce:2.34 --with-all-dependencies
 
 call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 
-call composer require drupal/search_api:1.29  --with-all-dependencies
-call composer require drupal/bat:2.1-alpha1 --with-all-dependencies
-call composer require drupal/fullcalendar_library:1.1 --with-all-dependencies
-
 call composer require drupal/services:dev-4.x --with-dependencies
 call composer require drupal/bat_api:1.1.0 --with-all-dependencies
 
-call composer require drupal/facets:^2.0 --with-all-dependencies
-call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
+call composer require drupal/bat:1.3.0 --with-all-dependencies
 
 call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 call composer require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
 
 call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
+
+call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
+
+
+Rem Short from Module Extend\Install.
+
+call composer require drupal/search_api:1.29  --with-all-dependencies
+call composer require drupal/facets:^2.0 --with-all-dependencies
+call composer require drupal/fullcalendar_library:1.1 --with-all-dependencies
+
+call composer require drupal/clientside_validation:4.0.2 --with-all-dependencies
+call composer require drupal/devel:5.1.1  --with-all-dependencies
 
 GOTO MyEOF
 
