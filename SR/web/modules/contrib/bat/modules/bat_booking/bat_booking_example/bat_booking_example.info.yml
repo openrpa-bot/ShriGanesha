@@ -1,0 +1,15 @@
+name: BAT Booking Example
+type: module
+description: BAT Booking Example
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: bat
+
+dependencies:
+  - bat:bat_booking
+  - bat:bat_facets
+
+# Information added by Drupal.org packaging script on 2023-03-26
+version: '8.x-2.1-alpha1'
+project: 'bat'
+datestamp: 1679828856

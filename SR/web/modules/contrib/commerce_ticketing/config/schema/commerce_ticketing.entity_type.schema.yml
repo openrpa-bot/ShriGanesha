@@ -1,0 +1,11 @@
+commerce_ticketing.commerce_ticket_type.*:
+  type: commerce_config_entity_bundle
+  label: 'Commerce Ticket type config'
+  mapping:
+    workflow:
+      type: string
+      label: 'Workflow'
+    numberPattern:
+      type: string
+      label: 'Number pattern'
+

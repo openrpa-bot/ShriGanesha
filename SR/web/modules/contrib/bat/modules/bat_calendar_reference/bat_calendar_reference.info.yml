@@ -1,0 +1,14 @@
+name: BAT Calendar Reference
+type: module
+description: Provides a field to reference and display event information on any fieldable entity.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: bat
+
+dependencies:
+  - bat:bat_fullcalendar
+
+# Information added by Drupal.org packaging script on 2023-03-26
+version: '8.x-2.1-alpha1'
+project: 'bat'
+datestamp: 1679828856

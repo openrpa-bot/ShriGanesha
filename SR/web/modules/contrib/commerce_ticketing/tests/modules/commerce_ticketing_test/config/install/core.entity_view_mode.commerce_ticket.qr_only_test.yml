@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_ticketing
+id: commerce_ticket.qr_only_test
+label: PDF
+targetEntityType: commerce_ticket
+cache: true

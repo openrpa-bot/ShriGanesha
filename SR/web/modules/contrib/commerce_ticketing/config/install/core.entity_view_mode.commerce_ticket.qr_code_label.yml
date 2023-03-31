@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_ticketing
+id: commerce_ticket.qr_code_label
+label: 'QR code label'
+targetEntityType: commerce_ticket
+cache: true
