@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Access\UnitTypeAddAccessCheck.
+ */
+
 namespace Drupal\bat_unit\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -37,8 +42,7 @@ class UnitTypeAddAccessCheck implements AccessInterface {
    *   The currently logged in account.
    * @param \Drupal\bat_unit\TypeBundleInterface $type_bundle
    *   (optional) The type bundle. If not specified, access is allowed if there
-   *   exists at least one type bundle for which the user may create a unit
-   *   type.
+   *   exists at least one type bundle for which the user may create a unit type.
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.

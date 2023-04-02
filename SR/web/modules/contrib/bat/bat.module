@@ -73,7 +73,7 @@ function bat_toolbar() {
  *   An associative array containing:
  *   - content: An array of type group bundles.
  */
-function template_preprocess_bat_type_group_add_list(array &$variables) {
+function template_preprocess_bat_type_group_add_list(&$variables) {
   $variables['types'] = [];
   if (!empty($variables['content'])) {
     foreach ($variables['content'] as $type) {
@@ -93,14 +93,7 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
 
   $entity_type = $entity->getEntityType()->id();
 
-  if (in_array($entity_type, [
-    'bat_type_group',
-    'bat_unit',
-    'bat_unit_type',
-    'bat_event',
-    'bat_event_series',
-    'bat_booking',
-  ])) {
+  if (in_array($entity_type, ['bat_type_group', 'bat_unit', 'bat_unit_type', 'bat_event', 'bat_event_series', 'bat_booking'])) {
     $entity_info = \Drupal::entityTypeManager()->getDefinition($entity_type);
 
     $cid = $entity->id();
@@ -131,14 +124,12 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
     if ($operation == 'view') {
       // When trying to figure out access to an entity, query the base table
       // using our access control tag.
-      // @todo remove incorrect hook test in summer 2020.
-      // mar23: what to remove?
+      // TODO remove incorrect hook test in summer 2020.
       if (Drupal::moduleHandler()->getImplementations('query_' . $entity_type . '_alter') ||
           Drupal::moduleHandler()->getImplementations('query_' . $entity_type . '_access_alter')) {
 
         // Trigger an error if the deprecated hook is implemented.
-        // @todo remove in summer 2020.
-        // mar23: what to remove?
+        // TODO remove in summer 2020.
         if (Drupal::moduleHandler()->getImplementations('query_' . $entity_type . '_alter')) {
           $message = "The 'query_{$entity_type}_alter' hook has been ";
           $message .= "deprecated, and will be removed in a future release. ";
@@ -151,8 +142,7 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
         $query = \Drupal::database()->select($entity_info->getBaseTable());
         $query->addExpression('1');
         $result = (bool) $query
-          // @todo remove in summer 2020.
-          // mar23: what to remove?
+          // TODO remove in summer 2020.
           ->addTag($entity_type)
           ->addTag($entity_type . '_access')
           ->addMetaData('account', $account)
@@ -176,12 +166,9 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
     }
     else {
       // Non-view operations.
-      // First grant access to the entity for the specified operation
-      // if no other module denies it and at least one other module
-      // says to grant access.
-      $access_results = \Drupal::moduleHandler()->invokeAll('bat_entity_access', [
-        $entity, $operation, $account,
-      ]);
+      // First grant access to the entity for the specified operation if no other
+      // module denies it and at least one other module says to grant access.
+      $access_results = \Drupal::moduleHandler()->invokeAll('bat_entity_access', [$entity, $operation, $account]);
 
       if (in_array(FALSE, $access_results, TRUE)) {
         $rights[$account->id()][$cid][$operation] = FALSE;
@@ -192,13 +179,11 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
         return AccessResult::allowed();
       }
 
-      // Grant access based on entity type and bundle specific
-      // permissions with special handling for the create operation
-      // since the entity passed in will be initialized without ownership.
+      // Grant access based on entity type and bundle specific permissions with
+      // special handling for the create operation since the entity passed in will
+      // be initialized without ownership.
       if ($operation == 'create') {
-        $access = $account->hasPermission(
-            'create ' . $entity_type . ' entities') ||
-            $account->hasPermission('create ' . $entity_type . ' entities of bundle ' . $entity->bundle());
+        $access = $account->hasPermission('create ' . $entity_type . ' entities') || $account->hasPermission('create ' . $entity_type . ' entities of bundle ' . $entity->bundle());
         $rights[$account->id()][$cid][$operation] = $access;
 
         if ($access) {
@@ -213,8 +198,8 @@ function bat_entity_access(EntityInterface $entity, $operation, AccountInterface
         // extracting the bundle name from the entity if available.
         $bundle_name = $entity->bundle();
 
-        // For the update and delete operations, first perform the
-        // entity type and bundle-level access check for any entity.
+        // For the update and delete operations, first perform the entity type and
+        // bundle-level access check for any entity.
         if ($account->hasPermission($operation . ' any ' . $entity_type . ' entity') ||
             $account->hasPermission($operation . ' any ' . $entity_type . ' entity of bundle ' . $bundle_name)) {
           $rights[$account->id()][$cid][$operation] = TRUE;
@@ -282,63 +267,40 @@ function bat_entity_access_permissions($entity_type) {
     ];
   }
   $permissions['delete any ' . $entity_type . ' entity'] = [
-    'title' => t('Delete any @entity_type of any type', [
-      '@entity_type' => $label,
-    ]),
+    'title' => t('Delete any @entity_type of any type', ['@entity_type' => $label]),
     'restrict access' => TRUE,
   ];
 
   // Per-bundle create and edit permissions.
   foreach (\Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type) as $bundle_name => $bundle_info) {
     $permissions['create ' . $entity_type . ' entities of bundle ' . $bundle_name] = [
-      'title' => t('Create %bundle @entity_type', [
-        '@entity_type' => $label,
-        '%bundle' => $bundle_info['label'],
-      ]),
+      'title' => t('Create %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
     ];
     if ($entity_info->getKey('uid') !== FALSE) {
       $permissions['view own ' . $entity_type . ' entities of bundle ' . $bundle_name] = [
-        'title' => t('View own %bundle @entity_type', [
-          '@entity_type' => $label,
-          '%bundle' => $bundle_info['label'],
-        ]),
+        'title' => t('View own %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       ];
     }
     $permissions['view any ' . $entity_type . ' entity of bundle ' . $bundle_name] = [
-      'title' => t('View any %bundle @entity_type', [
-        '@entity_type' => $label,
-        '%bundle' => $bundle_info['label'],
-      ]),
+      'title' => t('View any %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       'restrict access' => TRUE,
     ];
     if ($entity_info->getKey('uid') !== FALSE) {
       $permissions['update own ' . $entity_type . ' entities of bundle ' . $bundle_name] = [
-        'title' => t('Edit own %bundle @entity_type', [
-          '@entity_type' => $label,
-          '%bundle' => $bundle_info['label'],
-        ]),
+        'title' => t('Edit own %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       ];
     }
     $permissions['update any ' . $entity_type . ' entity of bundle ' . $bundle_name] = [
-      'title' => t('Edit any %bundle @entity_type', [
-        '@entity_type' => $label,
-        '%bundle' => $bundle_info['label'],
-      ]),
+      'title' => t('Edit any %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       'restrict access' => TRUE,
     ];
     if ($entity_info->getKey('uid') !== FALSE) {
       $permissions['delete own ' . $entity_type . ' entities of bundle ' . $bundle_name] = [
-        'title' => t('Delete own %bundle @entity_type', [
-          '@entity_type' => $label,
-          '%bundle' => $bundle_info['label'],
-        ]),
+        'title' => t('Delete own %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       ];
     }
     $permissions['delete any ' . $entity_type . ' entity of bundle ' . $bundle_name] = [
-      'title' => t('Delete any %bundle @entity_type', [
-        '@entity_type' => $label,
-        '%bundle' => $bundle_info['label'],
-      ]),
+      'title' => t('Delete any %bundle @entity_type', ['@entity_type' => $label, '%bundle' => $bundle_info['label']]),
       'restrict access' => TRUE,
     ];
   }
@@ -439,9 +401,7 @@ function bat_entity_access_query_alter($query, $entity_type, $base_table = NULL,
  * injection in one place.
  *
  * @param int $year
- *   Comment.
  * @param int $month
- *   Comment.
  *
  * @return array
  *   The array holding the field definitions
@@ -481,12 +441,7 @@ function bat_date_range_fields($year = NULL, $month = NULL, $granularity = 'bat_
     '#type' => 'date',
     '#title' => t('Event Start'),
     '#date_date_format' => $config->get('bat_daily_date_format'),
-    '#attributes' => $extra_attributes + [
-      'type' => 'date',
-      'class' => [
-        'bat_start_date',
-      ],
-    ],
+    '#attributes' => $extra_attributes + ['type' => 'date', 'class' => ['bat_start_date']],
     '#required' => TRUE,
   ];
 
@@ -496,12 +451,7 @@ function bat_date_range_fields($year = NULL, $month = NULL, $granularity = 'bat_
     '#type' => 'date',
     '#title' => t('Event End'),
     '#date_date_format' => $config->get('bat_daily_date_format'),
-    '#attributes' => $extra_attributes + [
-      'type' => 'date',
-      'class' => [
-        'bat_end_date',
-      ],
-    ],
+    '#attributes' => $extra_attributes + ['type' => 'date', 'class' => ['bat_end_date']],
     '#required' => TRUE,
     '#attached' => ['library' => ['bat/bat_date_range']],
   ];
@@ -565,7 +515,7 @@ function bat_type_group_load($group_id, $reset = FALSE) {
  *
  * @see bat_type_group_load()
  */
-function bat_type_group_load_multiple(array $group_ids, array $conditions, $reset = FALSE) {
+function bat_type_group_load_multiple($group_ids = [], $conditions = [], $reset = FALSE) {
   if ($reset) {
     \Drupal::entityTypeManager()->getStorage('bat_type_group')->resetCache();
   }
@@ -628,8 +578,7 @@ function bat_type_group_delete_multiple(array $group_ids) {
  *   A boolean indicating that the internal cache should be reset.
  *
  * @return \Drupal\bat\Entity\TypeGroupBundle[]
- *   Depending whether $bundle isset, an array of type group
- *   bundles or a single one.
+ *   Depending whether $bundle isset, an array of type group bundles or a single one.
  */
 function bat_type_group_get_bundles($bundle_name = NULL, $reset = FALSE) {
   if ($reset) {
@@ -646,7 +595,7 @@ function bat_type_group_get_bundles($bundle_name = NULL, $reset = FALSE) {
  * @param array $values
  *   The properties for the new type group bundle.
  */
-function bat_type_group_create(array $values) {
+function bat_type_group_create($values = []) {
   return TypeGroup::create($values);
 }
 

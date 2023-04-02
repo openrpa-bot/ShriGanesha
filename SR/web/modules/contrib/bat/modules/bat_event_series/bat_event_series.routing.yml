@@ -1,11 +1,3 @@
-bat.admin.eventseries:
-  path: '/admin/bat/eventseries'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Event Series'
-  requirements:
-    _permission: 'access administration pages'
-
 entity.bat_event_series.canonical:
   path: '/admin/bat/events/event_series/{bat_event_series}'
   defaults:

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\UnitPermissions.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Some Description.
+ *
  */
 class UnitPermissions implements ContainerInjectionInterface {
 
@@ -42,7 +47,6 @@ class UnitPermissions implements ContainerInjectionInterface {
    * Returns an array of filter permissions.
    *
    * @return array
-   *   Description.
    */
   public function permissions() {
     $permissions = [];
@@ -52,31 +56,19 @@ class UnitPermissions implements ContainerInjectionInterface {
 
     foreach (bat_unit_get_bundles() as $bundle_name => $bundle_info) {
       $permissions['view own bat_unit entities of bundle ' . $bundle_name] = [
-        'title' => t('View own published %bundle @entity_bundle', [
-          '@entity_bundle' => 'units',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View own published %bundle @entity_bundle', ['@entity_bundle' => 'units', '%bundle' => $bundle_info->label()]),
       ];
       $permissions['view any bat_unit entity of bundle ' . $bundle_name] = [
-        'title' => t('View any published %bundle @entity_bundle', [
-          '@entity_bundle' => 'unit',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View any published %bundle @entity_bundle', ['@entity_bundle' => 'unit', '%bundle' => $bundle_info->label()]),
       ];
     }
 
     foreach (bat_unit_get_type_bundles() as $bundle_name => $bundle_info) {
       $permissions['view own bat_unit_type entities of bundle ' . $bundle_name] = [
-        'title' => t('View own published %bundle @entity_bundle', [
-          '@entity_bundle' => 'types',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View own published %bundle @entity_bundle', ['@entity_bundle' => 'types', '%bundle' => $bundle_info->label()]),
       ];
       $permissions['view any bat_unit_type entity of bundle ' . $bundle_name] = [
-        'title' => t('View any published %bundle @entity_bundle', [
-          '@entity_bundle' => 'type',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View any published %bundle @entity_bundle', ['@entity_bundle' => 'type', '%bundle' => $bundle_info->label()]),
       ];
     }
 

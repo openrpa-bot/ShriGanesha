@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Access\TypeGroupAddAccessCheck.
+ */
+
 namespace Drupal\bat\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -36,9 +41,8 @@ class TypeGroupAddAccessCheck implements AccessInterface {
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The currently logged in account.
    * @param \Drupal\bat\TypeGroupBundleInterface $type_group_bundle
-   *   (optional) The type group bundle. If not specified, access
-   *   is allowed if there exists at least one type group bundle for
-   *   which the user may create a type group.
+   *   (optional) The type group bundle. If not specified, access is allowed if there
+   *   exists at least one type group bundle for which the user may create a type group.
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
@@ -59,10 +63,7 @@ class TypeGroupAddAccessCheck implements AccessInterface {
 
     $bundles = bat_type_group_get_bundles();
     foreach ($bundles as $bundle) {
-
-      $tmp = ['type' => $bundle->id(), 'uid' => 0];
-
-      if (bat_entity_access(bat_type_group_create($tmp), 'create', $account->getAccount())->isAllowed()) {
+      if (bat_entity_access(bat_type_group_create(['type' => $bundle->id(), 'uid' => 0]), 'create', $account->getAccount())->isAllowed()) {
         return AccessResult::allowed();
       }
     }

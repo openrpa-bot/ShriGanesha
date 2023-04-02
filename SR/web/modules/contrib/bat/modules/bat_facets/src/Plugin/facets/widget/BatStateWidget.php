@@ -1,13 +1,18 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_facets\Plugin\facets\widget\BatStateWidget.
+ */
+
 namespace Drupal\bat_facets\Plugin\facets\widget;
 
+use Drupal\Core\Form\FormBuilder;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\facets\Plugin\facets\widget\LinksWidget;
 use Drupal\facets\FacetInterface;
 
 /**
- * Some comment.
- *
  * @FacetsWidget(
  *   id = "bat_state",
  *   label = @Translation("BAT State"),
@@ -27,9 +32,7 @@ class BatStateWidget extends LinksWidget {
    * {@inheritdoc}
    */
   public function build(FacetInterface $facet) {
-
-    // Is this correct to code standard?
-    $build = \Drupal::formBuilder()->getForm('Drupal\bat_facets\Form\FacetsAvailabilityForm');
+    $build = $this->formBuilder->getForm('Drupal\bat_facets\Form\FacetsAvailabilityForm');
 
     return $build;
   }

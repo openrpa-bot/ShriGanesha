@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\StatePermissions.
+ */
+
 namespace Drupal\bat_event;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
+ *
  */
 class StatePermissions implements ContainerInjectionInterface {
 
@@ -40,6 +45,8 @@ class StatePermissions implements ContainerInjectionInterface {
 
   /**
    * Returns an array of filter permissions.
+   *
+   * @return array
    */
   public function permissions() {
     $permissions = [];

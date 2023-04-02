@@ -6,7 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description message.
+ *
  */
 class FullcalendarForm extends ConfigFormBase {
 

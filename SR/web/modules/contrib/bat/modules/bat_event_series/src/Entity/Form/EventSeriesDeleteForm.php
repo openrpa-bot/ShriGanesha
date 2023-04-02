@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Entity\Form\EventSeriesDeleteForm.
+ */
+
 namespace Drupal\bat_event_series\Entity\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,6 +21,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup bat
  */
 class EventSeriesDeleteForm extends ContentEntityConfirmFormBase {
+
+  /**
+   * Constructs a EventSeriesDeleteForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository service.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   The entity type bundle service.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
+   */
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
+  }
 
   /**
    * {@inheritdoc}

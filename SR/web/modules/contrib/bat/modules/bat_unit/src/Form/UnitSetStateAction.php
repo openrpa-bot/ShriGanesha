@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Form\UnitSetStateAction.
+ */
+
 namespace Drupal\bat_unit\Form;
 
 use Drupal\Core\Form\FormBase;
@@ -8,7 +13,7 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Some description.
+ *
  */
 class UnitSetStateAction extends FormBase {
 
@@ -128,7 +133,7 @@ class UnitSetStateAction extends FormBase {
       $values = $form_state->getValues();
 
       $type = $unit->unit_type_id->entity;
-      $type_bundle = bat_unit_type_bundle_load($type->bundle());
+      $type_bundle = bat_type_bundle_load($type->bundle());
 
       $event_state = bat_event_load_state_by_machine_name($values['event_state'])->id();
       $event_type = $values['event_type'];
@@ -144,8 +149,7 @@ class UnitSetStateAction extends FormBase {
         $event->uid = $type->uid->entity->uid->value;
 
         $event_type_entity = bat_event_type_load($event_type);
-        // Construct target entity reference field name using this event
-        // type's target entity type.
+        // Construct target entity reference field name using this event type's target entity type.
         $target_field_name = 'event_' . $event_type_entity->getTargetEntityType() . '_reference';
         $event->set($target_field_name, $unit_id);
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\Event.
+ */
+
 namespace Drupal\bat_event\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -8,11 +13,13 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Database\Database;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\bat_event\EventInterface;
 use Drupal\bat_unit\UnitInterface;
 use Drupal\user\UserInterface;
 use Drupal\user\EntityOwnerTrait;
+
 use Roomify\Bat\Calendar\Calendar;
 use Roomify\Bat\Store\DrupalDBStore;
 use Roomify\Bat\Unit\Unit;
@@ -183,8 +190,7 @@ class Event extends ContentEntityBase implements EventInterface {
     $langcode = $this->defaultLangcode;
     $event_type = bat_event_type_load($this->bundle());
 
-    // Construct target entity reference field name using this
-    // event type's target entity type.
+    // Construct target entity reference field name using this event type's target entity type.
     $target_field_name = 'event_' . $event_type->getTargetEntityType() . '_reference';
 
     // We are going to be updating the event - so the first step is to remove
@@ -275,8 +281,7 @@ class Event extends ContentEntityBase implements EventInterface {
     $langcode = $this->defaultLangcode;
     $event_type = bat_event_type_load($this->bundle());
 
-    // Construct target entity reference field name using
-    // this event type's target entity type.
+    // Construct target entity reference field name using this event type's target entity type.
     $target_field_name = 'event_' . $event_type->getTargetEntityType() . '_reference';
 
     // Check if the event had a unit associated with it and if so update the
@@ -363,26 +368,18 @@ class Event extends ContentEntityBase implements EventInterface {
   }
 
   /**
-   * Handles saving to the BatStore.
+   * Handles saving to the BatStore
    *
-   * @param \Roomify\Bat\Unit\Unit $unit
-   *   The unit to save.
+   * @param \Roomify\Bat\Unit\Unit $unit - The unit to save
    * @param \DateTime $start_date
-   *   Some comment.
    * @param \DateTime $end_date
-   *   Some comment.
-   * @param string $event_type
-   *   Some comment.
-   * @param string $granularity
-   *   Some comment.
-   * @param string $event_state
-   *   Some comment.
-   * @param string $event_id
-   *   Some comment.
-   * @param bool|false $remove
-   *   Set to TRUE if the event is to be removed (event_id set to zero).
+   * @param $event_type
+   * @param $granularity
+   * @param $event_state
+   * @param $event_id
+   * @param bool|FALSE $remove - set to TRUE if the event is to be removed (event_id set to zero)
    */
-  public function batStoreSave(Unit $unit, \DateTime $start_date, \DateTime $end_date, $event_type, $granularity, $event_state, string $event_id, $remove = FALSE) {
+  public function batStoreSave(Unit $unit, \DateTime $start_date, \DateTime $end_date, $event_type, $granularity, $event_state, $event_id, $remove = FALSE) {
     $database = Database::getConnectionInfo('default');
 
     $prefix = (isset($database['default']['prefix']['default'])) ? $database['default']['prefix']['default'] : '';
@@ -407,10 +404,9 @@ class Event extends ContentEntityBase implements EventInterface {
   }
 
   /**
-   * Returns the event value.
+   * Returns the event value
    *
-   * @return int|false
-   *   Add some description.
+   * @return int|FALSE
    */
   public function getEventValue() {
     $langcode = $this->defaultLangcode;
@@ -439,8 +435,7 @@ class Event extends ContentEntityBase implements EventInterface {
   /**
    * Returns the event label.
    *
-   * @return string|false
-   *   Return a string or FALSE
+   * @return string|FALSE
    */
   public function getEventLabel() {
     $type_bundle = bat_event_type_load($this->bundle());
@@ -463,10 +458,9 @@ class Event extends ContentEntityBase implements EventInterface {
   }
 
   /**
-   * Determines which field holds the event value.
+   * Determines which field holds the event value
    *
-   * @return string|false
-   *   Return a string or FALSE.
+   * @return string|FALSE
    */
   public function getEventValueField() {
     $type_bundle = bat_event_type_load($this->bundle());

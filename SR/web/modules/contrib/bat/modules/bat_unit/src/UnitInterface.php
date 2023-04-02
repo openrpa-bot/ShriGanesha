@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\UnitInterface.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -13,24 +18,12 @@ use Drupal\user\EntityOwnerInterface;
  */
 interface UnitInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface, EntityUnitTypeInterface {
 
-  /**
-   * Description.
-   */
   public function getUnitType();
 
-  /**
-   * Description.
-   */
   public function getUnitTypeId();
 
-  /**
-   * Description.
-   */
   public function setUnitTypeId($utid);
 
-  /**
-   * Description.
-   */
   public function setUnitType(UnitTypeInterface $unit_type);
 
 }

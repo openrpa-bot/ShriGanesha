@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\EventSeriesTypeListBuilder.
+ */
+
 namespace Drupal\bat_event_series;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
@@ -53,8 +58,8 @@ class EventSeriesTypeListBuilder extends ConfigEntityListBuilder {
   public function render() {
     $build = parent::render();
     $build['table']['#empty'] = $this->t('No event series types available. <a href=":link">Add event series type</a>.', [
-      ':link' => Url::fromRoute('entity.bat_event_series_type.type_add')->toString(),
-    ]);
+        ':link' => Url::fromRoute('entity.bat_event_series_type.type_add')->toString()
+      ]);
     return $build;
   }
 

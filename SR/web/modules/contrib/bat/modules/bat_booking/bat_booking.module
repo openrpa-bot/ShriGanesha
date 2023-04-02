@@ -2,7 +2,6 @@
 
 /**
  * @file
- * Some description.
  */
 
 use Drupal\Core\Url;
@@ -17,16 +16,16 @@ use Drupal\bat_booking\Entity\BookingBundle;
 /**
  * Determines whether the given user has access to a unit.
  *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *   Some entity.
- * @param string $operation
+ * @param string $op
  *   The operation being performed. One of 'view', 'update', 'create', 'delete'
  *   or just 'edit' (being the same as 'create' or 'update').
- * @param \Drupal\Core\Session\AccountInterface $account
+ * @param \Drupal\bat_booking\Entity\Booking $booking
+ *   Optionally a booking to check access for. If nothing is
+ *   given, access for all bookings is determined.
+ * @param object $account
  *   The user to check for. Leave it to NULL to check for the global user.
  *
  * @return \Drupal\Core\Access\AccessResult
- *   Some descriotion
  */
 function bat_booking_access(EntityInterface $entity, $operation, AccountInterface $account) {
   return bat_entity_access($entity, $operation, $account);
@@ -56,7 +55,7 @@ function bat_booking_type_create($values = []) {
 /**
  * Menu argument loader; Load a booking bundle by string.
  *
- * @param string $bundle
+ * @param $bundle
  *   The machine-readable name of a booking bundle to load.
  * @param bool $reset
  *   A boolean indicating whether the internal cache should be reset.
@@ -64,7 +63,7 @@ function bat_booking_type_create($values = []) {
  * @return array|false
  *   A booking bundle array or FALSE if $bundle does not exist.
  */
-function bat_booking_type_load(string $bundle, $reset = FALSE) {
+function bat_booking_type_load($bundle, $reset = FALSE) {
   if ($reset) {
     \Drupal::entityTypeManager()->getStorage('bat_booking_bundle')->resetCache();
   }
@@ -116,7 +115,6 @@ function bat_booking_type_delete(BookingBundle $bundle) {
  *   Integer specifying the booking id.
  * @param bool $reset
  *   A boolean indicating whether the internal cache should be reset.
- *
  * @return \Drupal\bat_booking\Entity\Booking|false
  *   A fully-loaded $booking object or FALSE if it cannot be loaded.
  *
@@ -142,7 +140,7 @@ function bat_booking_load($booking_id, $reset = FALSE) {
  *
  * @see bat_booking_load()
  */
-function bat_booking_load_multiple(array $booking_ids = [], array $conditions = [], $reset = FALSE) {
+function bat_booking_load_multiple($booking_ids = [], $conditions = [], $reset = FALSE) {
   if ($reset) {
     \Drupal::entityTypeManager()->getStorage('bat_booking')->resetCache();
   }
@@ -192,7 +190,7 @@ function bat_booking_theme() {
  *   An associative array containing:
  *   - content: An array of unit type bundles.
  */
-function template_preprocess_bat_booking_add_list(array &$variables) {
+function template_preprocess_bat_booking_add_list(&$variables) {
   $variables['types'] = [];
   if (!empty($variables['content'])) {
     foreach ($variables['content'] as $type) {

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\bat_event\Plugin\views\field;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
@@ -8,8 +12,6 @@ use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
- *
  * @ViewsField("bat_event_handler_duration_field")
  */
 class BatEventHandlerDurationField extends FieldPluginBase {
@@ -50,9 +52,9 @@ class BatEventHandlerDurationField extends FieldPluginBase {
     );
   }
 
-  /**
-   * This Method misses a description.
-   */
+  public function query() {
+  }
+
   public function render(ResultRow $values) {
     $event = $this->getEntity($values);
 

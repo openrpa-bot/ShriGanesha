@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Entity\EventSeries.
+ */
+
 namespace Drupal\bat_event_series\Entity;
 
 use Roomify\Bat\Calendar\Calendar;
@@ -104,7 +109,7 @@ class EventSeries extends ContentEntityBase implements EventSeriesInterface {
   /**
    * {@inheritdoc}
    */
-  public function getRrule() {
+  public function getRRule() {
     return $this->get('rrule')->value;
   }
 
@@ -128,7 +133,7 @@ class EventSeries extends ContentEntityBase implements EventSeriesInterface {
       $start = new \DateTime($this->get('event_dates')->value);
       $end = new \DateTime($this->get('event_dates')->end_value);
 
-      $rrule = new RRule($this->getRrule(), $start);
+      $rrule = new RRule($this->getRRule(), $start);
 
       foreach ($rrule as $occurrence) {
         $event = bat_event_create([
@@ -287,7 +292,11 @@ class EventSeries extends ContentEntityBase implements EventSeriesInterface {
   }
 
   /**
-   * Check availability.
+   * @param $start_date
+   * @param $end_date
+   * @param $event_type
+   * @param $unit
+   * @return bool
    */
   private function checkAvailability($start_date, $end_date, $event_type, $unit) {
     $target_field_name = 'event_' . $event_type->getTargetEntityType() . '_reference';

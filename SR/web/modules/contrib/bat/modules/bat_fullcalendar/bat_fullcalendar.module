@@ -2,10 +2,9 @@
 
 /**
  * @file
- * Manages the display of FullCalendar.
  *
- * Manages the display of FullCalendar and provides ways for other
- * modules to easily modify it.
+ * Manages the display of FullCalendar and provides ways for other modules
+ * to easily modify it.
  */
 
 use Drupal\Core\Ajax\CloseModalDialogCommand;
@@ -14,7 +13,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\bat_event\Controller\EventController;
 
 /**
- * Implements hook_bat_fullcalendar_modal_content().
+ * Implements hook_bat_fullcalendar_modal_content();
  */
 function bat_fullcalendar_bat_fullcalendar_modal_content($entity_id, $event_type, $event_id, $start_date, $end_date) {
   if ($event_id > 0) {
@@ -52,13 +51,10 @@ function bat_fullcalendar_bat_fullcalendar_modal_content($entity_id, $event_type
 /**
  * Fullcalendar settings.
  *
- * @param array $user_settings
- *   Description message.
- *
+ * @param $user_settings
  * @return array
- *   Description message.
  */
-function bat_fullcalendar_configure(array $user_settings) {
+function bat_fullcalendar_configure($user_settings) {
   $settings = [];
 
   $config = \Drupal::config('bat_fullcalendar.settings');
@@ -217,7 +213,7 @@ function bat_fullcalendar_configure(array $user_settings) {
 }
 
 /**
- * Theme function for FullCalendar.
+ * Theme function for FullCalendar
  */
 function template_preprocess_bat_fullcalendar(&$variables) {
   $calendar_id = $variables['calendar_settings']['calendar_id'];
@@ -273,8 +269,7 @@ function bat_fullcalendar_theme($existing, $type, $theme, $path) {
 /**
  * Define modal JS style and dependencies.
  *
- * @param string $style
- *   Some comment is required.
+ * @param $style
  */
 function bat_fullcalendar_modal_style($style = 'default') {
   global $base_path;

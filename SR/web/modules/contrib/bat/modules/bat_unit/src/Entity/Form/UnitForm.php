@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\Form\UnitForm.
+ */
+
 namespace Drupal\bat_unit\Entity\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
@@ -58,10 +63,7 @@ class UnitForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
-    /**
-     * @var \Drupal\bat\Entity\Unit $entity
-     */
+    /* @var $entity \Drupal\bat\Entity\Unit */
     $form = parent::buildForm($form, $form_state);
     $entity = $this->entity;
 
@@ -96,12 +98,7 @@ class UnitForm extends ContentEntityForm {
       ],
       'changed' => [
         '#type' => 'item',
-        '#wrapper_attributes' => [
-          'class' => [
-            'entity-meta__last-saved',
-            'container-inline',
-          ],
-        ],
+        '#wrapper_attributes' => ['class' => ['entity-meta__last-saved', 'container-inline']],
         '#markup' => '<h4 class="label inline">' . t('Last saved') . '</h4> ' . $is_new,
       ],
       'author' => [
@@ -167,8 +164,7 @@ class UnitForm extends ContentEntityForm {
 
     // Add a "Publish" button.
     $element['publish'] = $element['submit'];
-    // If the "Publish" button is clicked, we want to update the status
-    // to "published".
+    // If the "Publish" button is clicked, we want to update the status to "published".
     $element['publish']['#published_status'] = TRUE;
     $element['publish']['#dropbutton'] = 'save';
     if ($entity->isNew()) {
@@ -181,8 +177,7 @@ class UnitForm extends ContentEntityForm {
 
     // Add a "Unpublish" button.
     $element['unpublish'] = $element['submit'];
-    // If the "Unpublish" button is clicked, we want to update the
-    // status to "unpublished".
+    // If the "Unpublish" button is clicked, we want to update the status to "unpublished".
     $element['unpublish']['#published_status'] = FALSE;
     $element['unpublish']['#dropbutton'] = 'save';
     if ($entity->isNew()) {

@@ -1,11 +1,6 @@
 <?php
 
 /**
- * @file
- * Some description.
- */
-
-/**
  * Implements hook_install().
  */
 function bat_booking_example_install() {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_facets\Form\FacetsAvailabilityForm.
+ */
+
 namespace Drupal\bat_facets\Form;
 
 use Drupal\Core\Url;
@@ -10,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Description message.
+ *
  */
 class FacetsAvailabilityForm extends FormBase {
 
@@ -89,7 +94,7 @@ class FacetsAvailabilityForm extends FormBase {
       '#type' => 'date',
       '#description' => '',
       '#date_format' => $date_format,
-      '#default_value' => $arrival ?? '',
+      '#default_value' => isset($arrival) ? $arrival : '',
       '#required' => TRUE,
     ];
 
@@ -97,7 +102,7 @@ class FacetsAvailabilityForm extends FormBase {
       '#type' => 'date',
       '#description' => '',
       '#date_format' => $date_format,
-      '#default_value' => $departure ?? '',
+      '#default_value' => isset($departure) ? $departure : '',
       '#required' => TRUE,
     ];
 

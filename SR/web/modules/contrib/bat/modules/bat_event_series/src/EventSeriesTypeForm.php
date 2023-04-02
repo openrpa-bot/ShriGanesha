@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\EventSeriesTypeForm.
+ */
+
 namespace Drupal\bat_event_series;
 
+use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;

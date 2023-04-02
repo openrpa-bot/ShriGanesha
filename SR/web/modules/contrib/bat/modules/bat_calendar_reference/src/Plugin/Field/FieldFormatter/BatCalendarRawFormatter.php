@@ -1,13 +1,16 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_calendar_reference\Plugin\Field\FieldFormatter\BatCalendarRawFormatter.
+ */
+
 namespace Drupal\bat_calendar_reference\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Description message.
- *
  * @FieldFormatter(
  *   id = "bat_calendar_reference_raw_formatter",
  *   label = @Translation("Raw"),
@@ -30,20 +33,14 @@ class BatCalendarRawFormatter extends FormatterBase {
     if ($field_type == 'bat_calendar_unit_type_reference') {
       foreach ($items as $delta => $item) {
         $elements[$delta] = [
-          '#markup' => t('Unit type id: @unit_type_id - Event type id: @event_type_id', [
-            '@unit_type_id' => $item->unit_type_id,
-            '@event_type_id' => $item->event_type_id,
-          ]),
+          '#markup' => t('Unit type id: @unit_type_id - Event type id: @event_type_id', ['@unit_type_id' => $item->unit_type_id, '@event_type_id' => $item->event_type_id]),
         ];
       }
     }
     elseif ($field_type == 'bat_calendar_unit_reference') {
       foreach ($items as $delta => $item) {
         $elements[$delta] = [
-          '#markup' => t('Unit id: @unit_id - Event type id: @event_type_id', [
-            '@unit_id' => $item->unit_id,
-            '@event_type_id' => $item->event_type_id,
-          ]),
+          '#markup' => t('Unit id: @unit_id - Event type id: @event_type_id', ['@unit_id' => $item->unit_id, '@event_type_id' => $item->event_type_id]),
         ];
       }
     }

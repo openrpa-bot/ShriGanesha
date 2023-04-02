@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\EventSeriesPermissions.
+ */
+
 namespace Drupal\bat_event_series;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Event.
+ *
  */
 class EventSeriesPermissions implements ContainerInjectionInterface {
 
@@ -42,7 +47,6 @@ class EventSeriesPermissions implements ContainerInjectionInterface {
    * Returns an array of filter permissions.
    *
    * @return array
-   *   Description.
    */
   public function permissions() {
     return bat_entity_access_permissions('bat_event_series');

@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_ui\Form\BatEventUiBulkUpdateForm.
+ */
+
 namespace Drupal\bat_event_ui\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description.
+ *
  */
 class BatEventUiBulkUpdateForm extends FormBase {
 
@@ -39,7 +44,7 @@ class BatEventUiBulkUpdateForm extends FormBase {
       $types_options = [];
 
       foreach ($types as $type) {
-        $type_bundle = bat_unit_type_bundle_load($type->bundle());
+        $type_bundle = bat_type_bundle_load($type->bundle());
 
         if (is_array($type_bundle->default_event_value_field_ids)) {
           if (isset($type_bundle->default_event_value_field_ids[$event_type]) && !empty($type_bundle->default_event_value_field_ids[$event_type])) {
@@ -99,7 +104,7 @@ class BatEventUiBulkUpdateForm extends FormBase {
     $event_state = $values['state'];
     $type = bat_type_load($values['type']);
 
-    $units = bat_unit_load_multiple([], ['unit_type_id' => $type->id()]);
+    $units = bat_unit_load_multiple(NULL, ['unit_type_id' => $type->id()]);
 
     foreach ($units as $unit) {
       $event = bat_event_create([

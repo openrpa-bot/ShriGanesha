@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\EventViewsData.
+ */
+
 namespace Drupal\bat_event\Entity;
 
 use Drupal\views\EntityViewsData;

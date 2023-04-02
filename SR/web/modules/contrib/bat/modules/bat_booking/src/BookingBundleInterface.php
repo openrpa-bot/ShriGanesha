@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\BookingBundleInterface.
+ */
+
 namespace Drupal\bat_booking;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;

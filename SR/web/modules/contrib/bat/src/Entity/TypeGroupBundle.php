@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Entity\TypeGroupBundle.
+ */
+
 namespace Drupal\bat\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\bat\TypeGroupBundleInterface;
 
 /**
@@ -63,6 +69,20 @@ class TypeGroupBundle extends ConfigEntityBundleBase implements TypeGroupBundleI
    */
   public function id() {
     return $this->type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function postDelete(EntityStorageInterface $storage, array $entities) {
+    parent::postDelete($storage, $entities);
   }
 
 }

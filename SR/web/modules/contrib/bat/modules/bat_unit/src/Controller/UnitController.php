@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Controller\UnitController.
+ */
+
 namespace Drupal\bat_unit\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -21,14 +26,12 @@ class UnitController extends ControllerBase implements ContainerInjectionInterfa
   /**
    * Displays add content links for available unit bundles.
    *
-   * Redirects to admin/bat/config/unit/add/[type] if only one unit
-   * bundle is available.
+   * Redirects to admin/bat/config/unit/add/[type] if only one unit bundle is available.
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   A render array for a list of the unit bundles that can be added; however,
    *   if there is only one unit bundle defined for the site, the function
-   *   will return a RedirectResponse to the unit add page for that
-   *   one unit bundle.
+   *   will return a RedirectResponse to the unit add page for that one unit bundle.
    */
   public function addPage() {
     $build = [
@@ -92,14 +95,14 @@ class UnitController extends ControllerBase implements ContainerInjectionInterfa
   }
 
   /**
-   * Empty method?
+   *
    */
   public function listUnits(UnitTypeInterface $unit_type) {
 
   }
 
   /**
-   * Empty method?
+   *
    */
   public function addUnits(UnitTypeInterface $unit_type) {
 

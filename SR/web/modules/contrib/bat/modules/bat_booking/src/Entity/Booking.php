@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Entity\Booking.
+ */
+
 namespace Drupal\bat_booking\Entity;
 
 use Drupal\Core\Field\BaseFieldDefinition;

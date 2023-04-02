@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Entity\Form\TypeGroupForm.
+ */
+
 namespace Drupal\bat\Entity\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
@@ -8,6 +13,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\Language;
 use Drupal\bat\TypeGroupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -58,9 +64,7 @@ class TypeGroupForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /**
-     * @var \Drupal\bat\Entity\TypeGroup $entity
-     */
+    /* @var $entity \Drupal\bat\Entity\TypeGroup */
     $form = parent::buildForm($form, $form_state);
     $entity = $this->entity;
 
@@ -95,10 +99,7 @@ class TypeGroupForm extends ContentEntityForm {
       ],
       'changed' => [
         '#type' => 'item',
-        '#wrapper_attributes' => [
-          'class' =>
-            ['entity-meta__last-saved', 'container-inline'],
-        ],
+        '#wrapper_attributes' => ['class' => ['entity-meta__last-saved', 'container-inline']],
         '#markup' => '<h4 class="label inline">' . t('Last saved') . '</h4> ' . $is_new,
       ],
       'author' => [
@@ -166,8 +167,7 @@ class TypeGroupForm extends ContentEntityForm {
 
     // Add a "Publish" button.
     $element['publish'] = $element['submit'];
-    // If the "Publish" button is clicked,
-    // we want to update the status to "published".
+    // If the "Publish" button is clicked, we want to update the status to "published".
     $element['publish']['#published_status'] = TRUE;
     $element['publish']['#dropbutton'] = 'save';
     if ($entity->isNew()) {
@@ -180,8 +180,7 @@ class TypeGroupForm extends ContentEntityForm {
 
     // Add a "Unpublish" button.
     $element['unpublish'] = $element['submit'];
-    // If the "Unpublish" button is clicked,
-    // we want to update the status to "unpublished".
+    // If the "Unpublish" button is clicked, we want to update the status to "unpublished".
     $element['unpublish']['#published_status'] = FALSE;
     $element['unpublish']['#dropbutton'] = 'save';
     if ($entity->isNew()) {

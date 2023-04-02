@@ -15,31 +15,6 @@ bat.admin.config:
   requirements:
     _permission: 'access administration pages'
 
-bat.admin.config.booking:
-  path: '/admin/bat/config/booking'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Booking Configuration'
-  requirements:
-    _permission: 'access administration pages'
-
-bat.admin.config.event:
-  path: '/admin/bat/config/event'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Event Configuration'
-  requirements:
-    _permission: 'access administration pages'
-
-bat.admin.config.unit:
-  path: '/admin/bat/config/unit'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Unit Configuration'
-  requirements:
-    _permission: 'access administration pages'
-
-
 # Type Group routing definition
 entity.bat_type_group.canonical:
   path: '/admin/bat/config/type-group/{bat_type_group}'

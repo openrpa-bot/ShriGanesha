@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_ui\Form\BatEventUiEventTypeForm.
+ */
+
 namespace Drupal\bat_event_ui\Form;
 
 use Drupal\Core\Url;
@@ -7,7 +12,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description.
+ *
  */
 class BatEventUiEventTypeForm extends FormBase {
 
@@ -49,7 +54,7 @@ class BatEventUiEventTypeForm extends FormBase {
       ];
 
       foreach ($types as $type) {
-        $type_bundle = bat_unit_type_bundle_load($type->bundle());
+        $type_bundle = bat_type_bundle_load($type->bundle());
 
         if (is_array($type_bundle->default_event_value_field_ids)) {
           if (isset($type_bundle->default_event_value_field_ids[$event_type]) && !empty($type_bundle->default_event_value_field_ids[$event_type])) {
@@ -95,11 +100,8 @@ class BatEventUiEventTypeForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $type = $form_state->getValue('unit_type');
     $event_type = $form_state->getValue('event_types');
-    $form_state->setRedirectUrl(Url::fromRoute('bat_event_ui.calendar', [
-      'unit_type' => $type,
-      'event_type' => $event_type,
-    ]),
-    );
+
+    $form_state->setRedirectUrl(Url::fromRoute('bat_event_ui.calendar', ['unit_type' => $type, 'event_type' => $event_type]));
   }
 
 }

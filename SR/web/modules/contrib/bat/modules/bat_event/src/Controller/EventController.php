@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Controller\EventController.
+ */
+
 namespace Drupal\bat_event\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -43,8 +48,7 @@ class EventController extends ControllerBase implements ContainerInjectionInterf
   /**
    * Displays add event links for available event types.
    *
-   * Redirects to admin/bat/events/event/add/[type] if only one event
-   * type is available.
+   * Redirects to admin/bat/events/event/add/[type] if only one event type is available.
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   A render array for a list of the event types that can be added; however,
@@ -126,10 +130,9 @@ class EventController extends ControllerBase implements ContainerInjectionInterf
     $input = $this->request->request->all();
     $programmed = isset($input['form_id']);
     $input['form_id'] = 'bat_event_' . $event->bundle() . '_edit_form';
-    $form = $this->entityFormBuilder()->getForm($event, 'default', [
-      'programmed' => $programmed,
-      'input' => $input,
-    ]);
+
+    $form = $this->entityFormBuilder()->getForm($event, 'default', ['programmed' => $programmed, 'input' => $input]);
+
     return $form;
   }
 

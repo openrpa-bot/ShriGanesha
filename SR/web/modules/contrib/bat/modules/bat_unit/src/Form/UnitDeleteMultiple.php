@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Form\UnitDeleteMultiple.
+ */
+
 namespace Drupal\bat_unit\Form;
 
 use Drupal\Core\Form\ConfirmFormBase;

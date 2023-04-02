@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Access\EventSeriesAddAccessCheck.
+ */
+
 namespace Drupal\bat_event_series\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -36,9 +41,8 @@ class EventSeriesAddAccessCheck implements AccessInterface {
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The currently logged in account.
    * @param \Drupal\bat_event_series\EventSeriesTypeInterface $event_series_type
-   *   (optional) The event series type. If not specified, access is
-   *   allowed if there exists at least one event series type for which the
-   *   user may create a event.
+   *   (optional) The event series type. If not specified, access is allowed if there
+   *   exists at least one event series type for which the user may create a event.
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
@@ -59,8 +63,7 @@ class EventSeriesAddAccessCheck implements AccessInterface {
 
     $bundles = bat_event_series_get_types();
     foreach ($bundles as $bundle) {
-      $tmp = bat_event_create(['type' => $bundle->id(), 'uid' => 0]);
-      if (bat_event_series_access($tmp, 'create', $account->getAccount())->isAllowed()) {
+      if (bat_event_series_access(bat_event_create(['type' => $bundle->id(), 'uid' => 0]), 'create', $account->getAccount())->isAllowed()) {
         return AccessResult::allowed();
       }
     }

@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\TypeBundle.
+ */
+
 namespace Drupal\bat_unit\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\bat_unit\TypeBundleInterface;
 
 /**
@@ -71,6 +77,20 @@ class TypeBundle extends ConfigEntityBundleBase implements TypeBundleInterface {
    */
   public function getFixedEventStates() {
     return $this->get('fixed_event_states')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function postDelete(EntityStorageInterface $storage, array $entities) {
+    parent::postDelete($storage, $entities);
   }
 
 }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\TypeGroupInterface.
+ */
+
 namespace Drupal\bat;
 
 use Drupal\Core\Entity\ContentEntityInterface;

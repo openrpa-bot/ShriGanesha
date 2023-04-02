@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\TypeGroupAccessControlHandler.
+ */
+
 namespace Drupal\bat;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;

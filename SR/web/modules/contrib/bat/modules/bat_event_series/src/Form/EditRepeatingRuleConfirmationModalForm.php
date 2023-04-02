@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Form\EditRepeatingRuleConfirmationModalForm.
+ */
+
 namespace Drupal\bat_event_series\Form;
 
 use Roomify\Bat\Calendar\Calendar;
@@ -20,9 +25,16 @@ use RRule\RRule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Edit Repeating.
+ *
  */
 class EditRepeatingRuleConfirmationModalForm extends FormBase {
+
+  /**
+   * Event series object.
+   *
+   * @var \Drupal\bat_event_series\Entity\EventSeries
+   */
+  protected $event_series;
 
   /**
    * The tempstore object.
@@ -211,9 +223,6 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
     $this->event_series->save();
   }
 
-  /**
-   * Ajax Submit.
-   */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
 
@@ -224,7 +233,11 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
   }
 
   /**
-   * Get events.
+   * @param $start
+   * @param $end
+   * @param $repeat_frequency
+   * @param $repeat_until
+   * @return array
    */
   private function getEvents($start, $end, $repeat_frequency, $repeat_until) {
     $event_series_type = bat_event_series_type_load($this->event_series->bundle());
@@ -320,10 +333,12 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
   }
 
   /**
-   * Check Availability.
-   *
+   * @param $start_date
+   * @param $end_date
+   * @param $event_type
+   * @param $unit
+   * @param $current_events
    * @return bool
-   *   Description.
    */
   private function checkAvailability($start_date, $end_date, $event_type, $unit, $current_events) {
     $target_field_name = 'event_' . $event_type->getTargetEntityType() . '_reference';
@@ -361,9 +376,6 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
     return TRUE;
   }
 
-  /**
-   * Add events.
-   */
   private function addEvents($events) {
     $event_series_type = bat_event_series_type_load($this->event_series->bundle());
     $event_granularity = $event_series_type->getEventGranularity();
@@ -377,10 +389,7 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
         'type' => $event_type->id(),
       ]);
 
-      // list($start_date, $end_date) = explode(' - ', $dates);
-      // Drupal Code standard
-      // 392 | ERROR | [x] list(...) is forbidden, use [...] instead.
-      [$start_date, $end_date] = explode(' - ', $dates);
+      list($start_date, $end_date) = explode(' - ', $dates);
 
       $start_date = new \DateTime($start_date);
       $end_date = new \DateTime($end_date);
@@ -410,7 +419,7 @@ class EditRepeatingRuleConfirmationModalForm extends FormBase {
   }
 
   /**
-   * Delete events.
+   * @param $events
    */
   private function deleteEvents($events) {
     bat_event_delete_multiple($events);

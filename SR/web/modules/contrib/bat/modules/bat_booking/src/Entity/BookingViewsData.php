@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Entity\BookingViewsData.
+ */
+
 namespace Drupal\bat_booking\Entity;
 
 use Drupal\views\EntityViewsData;
 use Drupal\views\EntityViewsDataInterface;
 
 /**
- * Description message.
+ *
  */
 class BookingViewsData extends EntityViewsData implements EntityViewsDataInterface {
 

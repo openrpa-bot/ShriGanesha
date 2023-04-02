@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_calendar_reference\Plugin\Field\FieldFormatter\BatCalendarReferenceTimelineView.
+ */
+
 namespace Drupal\bat_calendar_reference\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
@@ -7,8 +12,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Component\Utility\Html;
 
 /**
- * Description message.
- *
  * @FieldFormatter(
  *   id = "bat_calendar_reference_timeline_view",
  *   label = @Translation("Timeline View"),

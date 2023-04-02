@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Entity\BookingBundle.
+ */
+
 namespace Drupal\bat_booking\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\bat_booking\BookingBundleInterface;
 
 /**
@@ -54,6 +60,20 @@ class BookingBundle extends ConfigEntityBundleBase implements BookingBundleInter
    */
   public function id() {
     return $this->type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function postDelete(EntityStorageInterface $storage, array $entities) {
+    parent::postDelete($storage, $entities);
   }
 
 }

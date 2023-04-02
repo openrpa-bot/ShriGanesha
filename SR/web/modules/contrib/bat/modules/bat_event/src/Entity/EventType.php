@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\EventType.
+ */
+
 namespace Drupal\bat_event\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\bat_event\EventTypeInterface;
 
 /**
@@ -87,23 +93,14 @@ class EventType extends ConfigEntityBundleBase implements EventTypeInterface {
     return $this->type;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function getEventGranularity() {
     return $this->event_granularity;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function getFixedEventStates() {
     return $this->fixed_event_states;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function getTargetEntityType() {
     return $this->target_entity_type;
   }
@@ -127,11 +124,24 @@ class EventType extends ConfigEntityBundleBase implements EventTypeInterface {
       bat_event_type_add_target_entity_field($this);
 
       if ($this->fixed_event_states) {
-        // Create a field of type 'Bat Event State Reference' to
-        // reference an Event State.
+        // Create a field of type 'Bat Event State Reference' to reference an Event State.
         bat_event_type_add_event_state_reference($this);
       }
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function postDelete(EntityStorageInterface $storage, array $entities) {
+    parent::postDelete($storage, $entities);
   }
 
   /**

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Entity\Form\EventSeriesUpdateConfirmForm.
+ */
+
 namespace Drupal\bat_event_series\Entity\Form;
 
 use Drupal\Core\Form\ConfirmFormBase;
@@ -9,16 +14,14 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description.
+ *
  */
 class EventSeriesUpdateConfirmForm extends ConfirmFormBase {
 
   /**
-   * Description.
-   *
    * @var \Drupal\bat_event_series\Entity\EventSeries
    */
-  protected $batEventSeries;
+  protected $bat_event_series;
 
   /**
    * The tempstore factory.
@@ -77,7 +80,7 @@ class EventSeriesUpdateConfirmForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $batEventSeries = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $bat_event_series = NULL) {
     $this->bat_event_series = $this->tempStoreFactory->get('event_series_update_confirm')->get($this->currentUser()->id());
 
     $form = parent::buildForm($form, $form_state);

@@ -1,13 +1,16 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_options\Plugin\Field\FieldFormatter\BatOptionsPrice.
+ */
+
 namespace Drupal\bat_options\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Description message.
- *
  * @FieldFormatter(
  *   id = "bat_options_price",
  *   label = @Translation("Bat Options Price"),

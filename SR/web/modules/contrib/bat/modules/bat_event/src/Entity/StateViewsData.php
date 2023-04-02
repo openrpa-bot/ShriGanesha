@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\StateViewsData.
+ */
+
 namespace Drupal\bat_event\Entity;
 
 use Drupal\views\EntityViewsData;
@@ -19,7 +24,7 @@ class StateViewsData extends EntityViewsData implements EntityViewsDataInterface
     $data['states']['table']['base'] = [
       'field' => 'id',
       'title' => $this->t('State'),
-      'help' => $this->t('The State ID'),
+      'help' => $this->t('The State ID.'),
     ];
 
     return $data;

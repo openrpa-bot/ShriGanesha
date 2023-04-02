@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\UnitListBuilder.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -15,6 +21,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup bat
  */
 class UnitListBuilder extends EntityListBuilder {
+
+  /**
+   * Constructs a new UnitListBuilder object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type definition.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage class.
+   */
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage) {
+    parent::__construct($entity_type, $storage);
+  }
 
   /**
    * {@inheritdoc}
@@ -63,9 +81,7 @@ class UnitListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /**
-     * @var \Drupal\bat\Entity\Unit $entity
-     */
+    /* @var $entity \Drupal\bat\Entity\Unit */
     $row['id'] = $entity->id();
     $row['name'] = Link::fromTextAndUrl(
       $entity->label(),

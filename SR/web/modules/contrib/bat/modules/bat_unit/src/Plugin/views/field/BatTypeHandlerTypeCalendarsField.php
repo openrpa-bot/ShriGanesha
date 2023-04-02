@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @file
+ * This field handler aggregates calendar edit links for a Bat Type
+ * under a single field.
+ */
+
 namespace Drupal\bat_unit\Plugin\views\field;
 
 use Drupal\Core\Path\PathValidatorInterface;
@@ -9,11 +15,6 @@ use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Aggregator.
- *
- * This field handler aggregates calendar edit links for a Bat Type
- * under a single field.
- *
  * @ViewsField("bat_type_handler_type_calendars_field")
  */
 class BatTypeHandlerTypeCalendarsField extends FieldPluginBase {
@@ -54,20 +55,14 @@ class BatTypeHandlerTypeCalendarsField extends FieldPluginBase {
     );
   }
 
-  /**
-   * Empty method?
-   */
   public function query() {
   }
 
-  /**
-   * Description.
-   */
   public function render(ResultRow $values) {
     $links = [];
 
     $type = $this->getEntity($values);
-    $type_bundle = bat_unit_type_bundle_load($type->bundle());
+    $type_bundle = bat_type_bundle_load($type->bundle());
 
     if (is_array($type_bundle->default_event_value_field_ids) && $this->getModuleHandler()->moduleExists('bat_event_ui')) {
       foreach ($type_bundle->default_event_value_field_ids as $event_type => $field) {
@@ -85,10 +80,7 @@ class BatTypeHandlerTypeCalendarsField extends FieldPluginBase {
               $event_type_label = bat_event_get_types($event_type)->label();
               $links[$event_type] = [
                 'title' => t('Manage @event_type_label', ['@event_type_label' => $event_type_label]),
-                'url' => Url::fromRoute($route_name, [
-                  'unit_type' => $type->id(),
-                  'event_type' => $event_type,
-                ]),
+                'url' => Url::fromRoute($route_name, ['unit_type' => $type->id(), 'event_type' => $event_type]),
               ];
             }
           }

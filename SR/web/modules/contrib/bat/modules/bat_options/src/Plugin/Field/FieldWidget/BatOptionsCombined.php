@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_options\Plugin\Field\FieldWidget\BatOptionsCombined.
+ */
+
 namespace Drupal\bat_options\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -15,8 +20,6 @@ use Drupal\Component\Utility\NestedArray;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
- *
  * @FieldWidget(
  *   id = "bat_options_combined",
  *   label = @Translation("Combined text field'"),
@@ -69,9 +72,6 @@ class BatOptionsCombined extends WidgetBase implements ContainerFactoryPluginInt
     );
   }
 
-  /**
-   * This Method misses a description.
-   */
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
@@ -111,10 +111,7 @@ class BatOptionsCombined extends WidgetBase implements ContainerFactoryPluginInt
       // table.
       if ($is_multiple) {
         $element = [
-          '#title' => $this->t('@title (value @number)', [
-            '@title' => $title,
-            '@number' => $delta + 1,
-          ]),
+          '#title' => $this->t('@title (value @number)', ['@title' => $title, '@number' => $delta + 1]),
           '#title_display' => 'invisible',
           '#description' => '',
         ];
@@ -155,9 +152,7 @@ class BatOptionsCombined extends WidgetBase implements ContainerFactoryPluginInt
               'wrapper' => $wrapper_id,
               'effect' => 'fade',
             ],
-            '#name' => implode('_', array_merge($parents, [
-              $field_name, $delta, 'remove_item',
-            ])),
+            '#name' => implode('_', array_merge($parents, [$field_name, $delta, 'remove_item'])),
             '#attributes' => ['class' => ['field-remove-item-submit']],
             '#limit_validation_errors' => [array_merge($parents, [$field_name])],
             '#weight' => 100,
@@ -229,9 +224,6 @@ class BatOptionsCombined extends WidgetBase implements ContainerFactoryPluginInt
     return $element;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public static function removeItemSubmit(array $form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
 
@@ -259,9 +251,6 @@ class BatOptionsCombined extends WidgetBase implements ContainerFactoryPluginInt
     $form_state->setRebuild();
   }
 
-  /**
-   * This Method misses a description.
-   */
   public static function removeItemAjax(array $form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Access\EventAddAccessCheck.
+ */
+
 namespace Drupal\bat_event\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -58,11 +63,7 @@ class EventAddAccessCheck implements AccessInterface {
 
     $bundles = bat_event_get_types();
     foreach ($bundles as $bundle) {
-      if (bat_event_access(bat_event_create([
-        'type' => $bundle->id(),
-        'uid' => 0,
-      ]),
-      'create', $account->getAccount())->isAllowed()) {
+      if (bat_event_access(bat_event_create(['type' => $bundle->id(), 'uid' => 0]), 'create', $account->getAccount())->isAllowed()) {
         return AccessResult::allowed();
       }
     }

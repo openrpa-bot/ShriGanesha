@@ -7,8 +7,6 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description message.
- *
  * @FieldWidget(
  *   id = "bat_calendar_reference_unit_type_autocomplete",
  *   label = @Translation("Calendar Unit type reference"),

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Controller\BookingController.
+ */
+
 namespace Drupal\bat_booking\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -20,14 +25,12 @@ class BookingController extends ControllerBase implements ContainerInjectionInte
   /**
    * Displays add content links for available unit type bundles.
    *
-   * Redirects to admin/bat/config/unit_type/add/[type] if only one
-   * unit type bundle is available.
+   * Redirects to admin/bat/config/unit_type/add/[type] if only one unit type bundle is available.
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   A render array for a list of the type bundles that can be added; however,
    *   if there is only one type bundle defined for the site, the function
-   *   will return a RedirectResponse to the type add page for
-   *   that one type bundle.
+   *   will return a RedirectResponse to the type add page for that one type bundle.
    */
   public function addPage() {
     $build = [

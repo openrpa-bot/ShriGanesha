@@ -1,3 +1,4 @@
+@ECHO OFF
 cls
 set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
@@ -5,7 +6,7 @@ set workingFolder=C:\xampp\htdocs\ShriGanesha
 
 cd %workingFolder%
 
-set webFolderName=SRN
+set webFolderName=SR
 set DBName=%webFolderName%
 set dbRootUsername="root"
 set dbRootPassword=""
@@ -56,6 +57,7 @@ call composer require drupal/google_tag:1.6  --with-all-dependencies
 ECHO  *******************************************************************************
 call composer require drupal/devel:5.1.1  --with-all-dependencies
 call composer require drupal/dbug:2.0.0 --with-all-dependencies
+call composer require drush/drush:11.5.1  --with-all-dependencies
 ECHO  *******************************************************************************
 call composer require drupal/s3fs:3.1 --with-all-dependencies
 call composer require drupal/exclude_node_title:1.4  --with-all-dependencies
@@ -79,13 +81,19 @@ ECHO  *                                                                         
 ECHO  *******************************************************************************
 call composer require drupal/flexslider:2.0   --with-dependencies
 call composer require drupal/views_slideshow:5.0.0  --with-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/addtoany:2.0.1 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/better_exposed_filters:6.0.3 --with-all-dependencies
 call composer require drupal/image_resize_filter:1.1 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/views_conditional:1.5 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/social_media_links:2.9 --with-all-dependencies
 call composer require drupal/better_social_sharing_buttons:4.0.3 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/simple_popup_blocks:3.1 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/poll:1.6  --with-all-dependencies
 
 
@@ -96,7 +104,9 @@ ECHO  *			 Drupal Field Modules installation in Progress .....    			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
 call composer require drupal/conditional_fields:4.0.0-alpha2  --with-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/twig_field_value:2.0.0  --with-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/youtube:2.0.0   --with-dependencies
 call composer require drupal/editor_file:1.7  --with-dependencies
 call composer require drupal/field_permissions:1.2 --with-dependencies
@@ -118,10 +128,12 @@ ECHO  *			 Drupal Map Modules installation in Progress .....       			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
 call composer require drupal/geofield:1.52   --with-dependencies
+call composer require drupal/geofield_map:3.0.8 --with-all-dependencies
+ECHO  *******************************************************************************
 call composer require drupal/geolocation:3.12 --with-all-dependencies
 call composer require drupal/geocoder:3.32 --with-all-dependencies
 call composer require drupal/webform_ip_geo:1.0.4 --with-all-dependencies
-call composer require drupal/geofield_map:3.0.8 --with-all-dependencies
+
 
 
 
@@ -213,6 +225,16 @@ call composer require drupal/clientside_validation:4.0.2 --with-all-dependencies
 
 
 
+ECHO  *******************************************************************************
+ECHO  *                                                                             *
+ECHO  *			 Drush command is in Progress .....      		                 	*
+ECHO  *                                                                             *                                                                                   
+ECHO  *******************************************************************************
+rem drush si --db-url=mysql://root:@localhost:3306/SRTest --site-name=Testing --site-mail=a@b.com --account-mail=b@c.com --account-name=a --account-pass=a --locale=en --existing-config -vvv
+rem drush si --db-url=mysql://root:@localhost:3306/%webFolderName% --site-name=Testing --site-mail=a@b.com --account-mail=b@c.com --account-name=a --account-pass=a --locale=en --existing-config -vvv
+
+
+
 GOTO MyEOF
 
 git config --global github.accesstoken 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
@@ -223,3 +245,4 @@ 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
 :MyEOF
 
 cd C:\xampp\htdocs\ShriGanesha\Setup
+@ECHO ON

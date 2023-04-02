@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Class FullCalendarOpenStateEventFormatter
+ */
+
 namespace Drupal\bat_fullcalendar;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -7,11 +12,12 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\bat_event\EventTypeInterface;
+use Roomify\Bat\Event\Event;
 use Roomify\Bat\Event\EventInterface;
 use Roomify\Bat\EventFormatter\AbstractEventFormatter;
 
 /**
- * Description message.
+ *
  */
 class FullCalendarOpenStateEventFormatter extends AbstractEventFormatter {
 
@@ -58,8 +64,6 @@ class FullCalendarOpenStateEventFormatter extends AbstractEventFormatter {
   protected $entityTypeManager;
 
   /**
-   * Description message.
-   *
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   Current user.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -78,8 +82,6 @@ class FullCalendarOpenStateEventFormatter extends AbstractEventFormatter {
   }
 
   /**
-   * Description message.
-   *
    * @param \Drupal\bat_event\EventTypeInterface $event_type
    *   The event type.
    */
@@ -88,8 +90,6 @@ class FullCalendarOpenStateEventFormatter extends AbstractEventFormatter {
   }
 
   /**
-   * Description message.
-   *
    * @param bool $background
    *   The event type.
    */
@@ -114,7 +114,7 @@ class FullCalendarOpenStateEventFormatter extends AbstractEventFormatter {
     if ($event->getValue()) {
       $bat_event = bat_event_load($event->getValue());
 
-      // Change the default  to value that the event stores in the entity.
+      // Change the default value to the one that the event actually stores in the entity.
       $default_value = $bat_event->getEventValue();
 
       if (bat_event_access($bat_event, 'update', $this->currentUser)->isAllowed()) {

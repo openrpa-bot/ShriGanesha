@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\EntityUnitInterface.
+ */
+
 namespace Drupal\bat_unit;
 
 /**

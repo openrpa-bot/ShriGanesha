@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Controller\TypeGroupController.
+ */
+
 namespace Drupal\bat\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -20,14 +25,13 @@ class TypeGroupController extends ControllerBase implements ContainerInjectionIn
   /**
    * Displays add content links for available type group bundles.
    *
-   * Redirects to admin/bat/config/type-group/add/[type]
-   * if only one type group bundle is available.
+   * Redirects to admin/bat/config/type-group/add/[type] if only one type group bundle is available.
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-   *   A render array for a list of the type group bundles that can be added;
-   *   however, if there is only one type group bundle defined for the
-   *   site, the function  will return a RedirectResponse to the type
-   *   group add page for that one type group bundle.
+   *   A render array for a list of the type group bundles that can be added; however,
+   *   if there is only one type group bundle defined for the site, the function
+   *   will return a RedirectResponse to the type group add page for that one
+   *   type group bundle.
    */
   public function addPage() {
     $build = [

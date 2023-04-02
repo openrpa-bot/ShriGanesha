@@ -1,13 +1,21 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_options\Element\BatOption.
+ */
+
 namespace Drupal\bat_options\Element;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element\FormElement;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Description message.
- *
  * @FormElement("bat_option")
  */
 class BatOption extends FormElement {
@@ -39,16 +47,13 @@ class BatOption extends FormElement {
     return '';
   }
 
-  /**
-   * This Method misses a description.
-   */
   public static function processBatOption(&$element, FormStateInterface $form_state, &$complete_form) {
     $parents_prefix = implode('_', $element['#parents']);
 
     $element['name'] = [
       '#type' => 'textfield',
       '#title' => t('Name'),
-      '#default_value' => $element['#default_value']['name'] ?? '',
+      '#default_value' => isset($element['#default_value']['name']) ? $element['#default_value']['name'] : NULL,
       '#attributes' => [
         'class' => ['bat_options-option--name'],
       ],
@@ -57,7 +62,7 @@ class BatOption extends FormElement {
       '#type' => 'select',
       '#title' => t('Quantity'),
       '#options' => array_combine(range(1, 10, 1), range(1, 10, 1)),
-      '#default_value' => $element['#default_value']['quantity'] ?? '',
+      '#default_value' => isset($element['#default_value']['quantity']) ? $element['#default_value']['quantity'] : NULL,
       '#description' => t('How many of this add-on should be available'),
       '#attributes' => [
         'class' => ['bat_options-option--quantity'],
@@ -68,7 +73,7 @@ class BatOption extends FormElement {
       '#type' => 'select',
       '#title' => t('Operation'),
       '#options' => $price_options,
-      '#default_value' => $element['#default_value']['operation'] ?? '',
+      '#default_value' => isset($element['#default_value']['operation']) ? $element['#default_value']['operation'] : NULL,
       '#attributes' => [
         'class' => ['bat_options-option--operation'],
       ],
@@ -87,9 +92,8 @@ class BatOption extends FormElement {
       ],
       '#states' => [
         'disabled' => [
-          ':input[name="' . $element['#parents'][0] . '[' . $element['#parents'][1] . '][operation]"]' => ['value' => 'no_charge',
-          ],
-        ],
+          ':input[name="' . $element['#parents'][0] . '[' . $element['#parents'][1] . '][operation]"]' => ['value' => 'no_charge'],
+        ]
       ],
     ];
     $type_options = [
@@ -97,12 +101,11 @@ class BatOption extends FormElement {
       BAT_OPTIONS_MANDATORY => t('Mandatory'),
       BAT_OPTIONS_ONREQUEST => t('On Request'),
     ];
-
     $element['type'] = [
       '#type' => 'select',
       '#title' => t('Type'),
       '#options' => $type_options,
-      '#default_value' => $element['#default_value']['type'] ?? '',
+      '#default_value' => isset($element['#default_value']['type']) ? $element['#default_value']['type'] : 'optional',
       '#attributes' => [
         'class' => ['bat_options-option--type'],
       ],

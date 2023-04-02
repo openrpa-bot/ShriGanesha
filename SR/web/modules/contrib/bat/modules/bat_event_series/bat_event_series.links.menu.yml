@@ -1,22 +1,13 @@
-bat.admin.eventseries:
-  title: 'Event Series'
-  route_name: bat.admin.eventseries
-  description: 'Configure settings for Event Series'
-  parent: bat.admin
-  weight: 21
-
 # Event Series menu items definition
 entity.bat_event_series.collection:
   title: 'Event series list'
   route_name: entity.bat_event_series.collection
-  description: 'List event series entities'
-  parent: bat.admin.eventseries
-  weight: 1
+  description: 'List Event series entities'
+  parent: bat.admin.events
 
 # Event Series Type menu items definition
 entity.bat_event_series_type.collection:
-  title: 'Event series type list'
+  title: 'Event Series Type list'
   route_name: entity.bat_event_series_type.collection
-  description: 'List event series types'
-  parent: bat.admin.eventseries
-  weight: 2
+  description: 'List Event Series Types'
+  parent: bat.admin.events

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Entity\TypeGroupViewsData.
+ */
+
 namespace Drupal\bat\Entity;
 
 use Drupal\views\EntityViewsData;

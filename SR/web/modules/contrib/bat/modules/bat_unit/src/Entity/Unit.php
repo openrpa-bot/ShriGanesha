@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\Unit.
+ */
+
 namespace Drupal\bat_unit\Entity;
 
 use Drupal\field\Entity\FieldConfig;
@@ -263,7 +268,9 @@ class Unit extends ContentEntityBase implements UnitInterface {
   }
 
   /**
-   * Description.
+   * @param $event_type
+   *
+   * @return
    */
   public function getEventDefaultValue($event_type) {
     $unit_type = $this->getUnitType();
@@ -272,7 +279,10 @@ class Unit extends ContentEntityBase implements UnitInterface {
   }
 
   /**
-   * Description.
+   * @param $event_type
+   * @param $value
+   *
+   * @return mixed
    */
   public function formatEventValue($event_type, $value) {
     $bat_type = $this->unit_type_id->entity;

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\UnitViewsData.
+ */
+
 namespace Drupal\bat_unit\Entity;
 
 use Drupal\views\EntityViewsData;

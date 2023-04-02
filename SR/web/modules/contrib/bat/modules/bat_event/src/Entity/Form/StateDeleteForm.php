@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Form\Entity\StateDeleteForm.
+ */
+
 namespace Drupal\bat_event\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;

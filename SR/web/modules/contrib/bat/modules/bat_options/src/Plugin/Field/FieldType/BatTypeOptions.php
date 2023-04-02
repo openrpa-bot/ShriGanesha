@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_options\Plugin\Field\FieldType\BatTypeOptions.
+ */
+
 namespace Drupal\bat_options\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemBase;
@@ -7,8 +12,6 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataReferenceTargetDefinition;
 
 /**
- * Description message.
- *
  * @FieldType(
  *   id = "bat_options",
  *   label = @Translation("BAT Type Options"),

@@ -1,19 +1,3 @@
-bat.admin.unit:
-  path: '/admin/bat/unit'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Unit'
-  requirements:
-    _permission: 'access administration pages'
-
-bat.admin.unittype:
-  path: '/admin/bat/unittype'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Unit Type'
-  requirements:
-    _permission: 'access administration pages'
-
 # UnitType routing definition
 entity.bat_unit_type.canonical:
   path: '/admin/bat/config/unit_type/{bat_unit_type}'
@@ -89,17 +73,6 @@ entity.bat_unit.canonical:
     _entity_access: 'bat_unit.view'
   options:
     _admin_route: TRUE
-
-bat.admin.config.unit.collection:
-  path: '/admin/bat/config/unit'
-  defaults:
-    _entity_list: 'bat_unit'
-    _title: 'Unit list'
-  requirements:
-    _permission: 'view any bat_unit entity'
-  options:
-    _admin_route: TRUE
-
 
 entity.bat_unit.collection:
   path: '/admin/bat/config/unit'

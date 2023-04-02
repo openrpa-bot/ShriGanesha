@@ -1,9 +1,22 @@
 <?php
 
-use Drupal\DrupalExtension\Context\RawDrupalContext;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Drupal\DrupalExtension\Context\RawDrupalContext,
+    Drupal\Component\Utility\Random;
+
+use Behat\Behat\Context\ClosuredContextInterface,
+    Behat\Behat\Context\TranslatedContextInterface,
+    Behat\Behat\Context\BehatContext,
+    Behat\Behat\Exception\PendingException;
+
+use Behat\Gherkin\Node\PyStringNode,
+    Behat\Gherkin\Node\TableNode;
+
+use Behat\Behat\Hook\Scope\BeforeScenarioScope,
+    Behat\Behat\Hook\Scope\AfterScenarioScope;
+
 use Behat\Behat\Context\CustomSnippetAcceptingContext;
+
+use Drupal\DrupalDriverManager;
 
 /**
  * Features context.
@@ -11,7 +24,7 @@ use Behat\Behat\Context\CustomSnippetAcceptingContext;
 class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingContext {
 
   /**
-   * The Mink context.
+   * The Mink context
    *
    * @var Drupal\DrupalExtension\Context\MinkContext
    */
@@ -22,64 +35,53 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
    *
    * @var array
    */
-  public $units = [];
+  public $units = array();
 
   /**
    * Keep track of Types so they can be cleaned up.
    *
    * @var array
    */
-  public $types = [];
+  public $Types = array();
 
   /**
    * Keep track of Types bundles so they can be cleaned up.
    *
    * @var array
    */
-  public $typeBundles = [];
+  public $typeBundles = array();
 
   /**
    * Keep track of events so they can be cleaned up.
    *
    * @var array
    */
-  public $events = [];
+  public $events = array();
 
   /**
    * Keep track of event types so they can be cleaned up.
    *
    * @var array
    */
-  public $eventTypes = [];
+  public $eventTypes = array();
 
   /**
-   * Track.
-   *
    * Keep track of created content types so they can be cleaned up.
    *
    * @var array
    */
-  public $contentTypes = [];
+  public $content_types = array();
 
   /**
-   * Track.
-   *
    * Keep track of created fields so they can be cleaned up.
    *
    * @var array
    */
-  public $fields = [];
+  public $fields = array();
+
+  public static function getAcceptedSnippetType() { return 'regex'; }
 
   /**
-   * Get.
-   */
-  public static function getAcceptedSnippetType() {
-    return 'regex';
-  }
-
-  /**
-   * Before.
-   *
    * @BeforeScenario
    */
   public function before(BeforeScenarioScope $scope) {
@@ -88,8 +90,6 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
   }
 
   /**
-   * After.
-   *
    * @AfterScenario
    */
   public function after(AfterScenarioScope $scope) {
@@ -141,8 +141,6 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
   }
 
   /**
-   * Descr.
-   *
    * @When /^I am on the "([^"]*)" type$/
    */
   public function iAmOnTheType($type_name) {
@@ -150,8 +148,6 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
   }
 
   /**
-   * Descr.
-   *
    * @When /^I am editing the "([^"]*)" type$/
    */
   public function iAmEditingTheType($type_name) {
@@ -162,7 +158,7 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
    * Asserts that a given node type is editable.
    */
   public function assertEditNodeOfType($type) {
-    $node = (object) ['type' => $type];
+    $node = (object) array('type' => $type);
     $saved = $this->getDriver()->createNode($node);
     $this->nodes[] = $saved;
 
@@ -172,13 +168,11 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
 
   /**
    * Fills a field using JS to avoid event firing.
-   *
    * @param string $field
-   *   Comment.
-   * @param string $value
-   *   Comment.
+   * @param string$value
+   *
    */
-  protected function fillFieldByJs($field, $value) {
+  protected function fillFieldByJS($field, $value) {
     $field = str_replace('\\"', '"', $field);
     $value = str_replace('\\"', '"', $value);
     $xpath = $this->getSession()->getPage()->findField($field)->getXpath();
@@ -187,25 +181,19 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
     $elementID = $element->getID();
     $subscript = "arguments[0]";
     $script = str_replace('{{ELEMENT}}', $subscript, '{{ELEMENT}}.value = "' . $value . '"');
-
-    $tmp = [
+    return $this->getSession()->getDriver()->getWebDriverSession()->execute(array(
       'script' => $script,
-      'args' => [
-        'ELEMENT' => $elementID,
-      ],
-    ];
-    return $this->getSession()->getDriver()->getWebDriverSession()->execute($tmp);
+      'args' => array(array('ELEMENT' => $elementID))
+    ));
   }
 
   /**
    * Redirects user to the action page for the given unit.
    *
-   * @param string $action
-   *   Comment.
-   * @param string $type_name
-   *   Comment.
+   * @param $action
+   * @param $unit_name
    */
-  protected function iAmDoingOnTheType(string $action, string $type_name) {
+  protected function iAmDoingOnTheType($action, $type_name) {
     $unit_id = $this->findTypeByName($type_name);
     $url = "admin/bat/config/types/manage/$type_id/$action";
     $this->getSession()->visit($this->locatePath($url));
@@ -214,15 +202,11 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
   /**
    * Returns a type_id from its name.
    *
-   * @param string $type_name
-   *   Comment.
-   *
+   * @param $type_name
    * @return int
-   *   Comment.
-   *
    * @throws RuntimeException
    */
-  protected function findTypeByName(string $type_name) {
+  protected function findTypeByName($type_name) {
     $query = \Drupal::entityQuery('bat_unit_type');
     $query->condition('name', $type_name);
     $results = $query->execute();
@@ -233,5 +217,4 @@ class FeatureContext extends RawDrupalContext implements CustomSnippetAcceptingC
       throw new RuntimeException('Unable to find that type');
     }
   }
-
 }

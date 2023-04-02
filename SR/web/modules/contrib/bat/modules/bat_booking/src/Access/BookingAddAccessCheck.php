@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Access\BookingAddAccessCheck.
+ */
+
 namespace Drupal\bat_booking\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -58,11 +63,7 @@ class BookingAddAccessCheck implements AccessInterface {
 
     $bundles = bat_booking_get_bundles();
     foreach ($bundles as $bundle) {
-      if (bat_booking_access(bat_booking_create([
-        'type' => $bundle->id(),
-        'uid' => 0,
-      ]),
-          'create', $account->getAccount())->isAllowed()) {
+      if (bat_booking_access(bat_booking_create(['type' => $bundle->id(), 'uid' => 0]), 'create', $account->getAccount())->isAllowed()) {
         return AccessResult::allowed();
       }
     }

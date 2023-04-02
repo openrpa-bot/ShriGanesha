@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\EventSeriesTypeAccessControlHandler.
+ */
+
 namespace Drupal\bat_event_series;
 
 use Drupal\Core\Access\AccessResult;

@@ -2,12 +2,9 @@
 
 /**
  * @file
- * Manages events.
- *
  * Manages events for Units and displaying dates on the jquery
  * FullCalendar plugin.
  */
 
-// No call for these constants. Do we need them?
-define('BAT_EVENT_UI_CALENDAR_ADMIN_STYLE', 1);
-define('BAT_EVENT_UI_CALENDAR_GENERIC_STYLE', 2);
+define('BAT_EVENT_CALENDAR_ADMIN_STYLE', 1);
+define('BAT_EVENT_CALENDAR_GENERIC_STYLE', 2);

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\Entity\Form\BookingDeleteForm.
+ */
+
 namespace Drupal\bat_booking\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;

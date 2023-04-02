@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\Form\UnitDeleteForm.
+ */
+
 namespace Drupal\bat_unit\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;

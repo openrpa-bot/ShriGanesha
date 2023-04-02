@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\Entity\TypeGroup.
+ */
+
 namespace Drupal\bat\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;

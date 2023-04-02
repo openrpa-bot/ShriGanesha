@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains bat_event_series.install.
- */
-
 use Drupal\field\Entity\FieldConfig;
 
 /**

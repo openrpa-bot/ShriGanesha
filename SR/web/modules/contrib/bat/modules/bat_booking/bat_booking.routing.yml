@@ -1,11 +1,3 @@
-bat.admin.booking:
-  path: '/admin/bat/booking'
-  defaults:
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Booking'
-  requirements:
-    _permission: 'access administration pages'
-
 entity.bat_booking.canonical:
   path: '/admin/bat/config/booking/{bat_booking}'
   defaults:

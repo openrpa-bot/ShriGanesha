@@ -2,11 +2,12 @@
 
 /**
  * @file
- * Module file for Facets search.
  */
 
 use Drupal\Core\Database\Database;
+
 use Roomify\Bat\Calendar\Calendar;
+use Roomify\Bat\Event\Event;
 use Roomify\Bat\Store\DrupalDBStore;
 use Roomify\Bat\Unit\Unit;
 use Drupal\search_api\Query\QueryInterface;
@@ -48,9 +49,9 @@ function bat_facets_search_api_query_alter(QueryInterface &$query) {
 
           $valid_type_ids = [];
 
-          // We need to narrow the query to all unit types configured for this
-          // datasource with Units that have the requested state over the
-          // requested dates. First, we retrieve all types.
+          // We need to narrow the query to all unit types configured for this datasource
+          // with Units that have the requested state over the requested dates.
+          // First, we retrieve all types.
           $type_ids = [];
           foreach (array_keys($datasource->getBundles()) as $bundle) {
             $type_ids += bat_type_ids($bundle);
@@ -59,7 +60,7 @@ function bat_facets_search_api_query_alter(QueryInterface &$query) {
           $available_unit_count = [];
           foreach ($type_ids as $type_id => $name) {
             // Get the units of this type.
-            $drupal_units = bat_unit_load_multiple([], ['unit_type_id' => $type_id]);
+            $drupal_units = bat_unit_load_multiple(FALSE, ['unit_type_id' => $type_id]);
             $bat_units = [];
             foreach ($drupal_units as $unit_id => $unit) {
               $bat_units[] = new Unit($unit_id, $unit->getEventDefaultValue($event_type));

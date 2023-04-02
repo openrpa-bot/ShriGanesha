@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\State.
+ */
+
 namespace Drupal\bat_event\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -61,10 +66,7 @@ class State extends ContentEntityBase implements StateInterface {
   }
 
   /**
-   * Load a State by machine name.
-   *
-   * @param string $machine_name
-   *   A string.
+   * @param $machine_name
    */
   public static function loadByMachineName($machine_name) {
     $units = [];

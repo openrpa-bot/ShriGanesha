@@ -2,7 +2,6 @@
 
 /**
  * @file
- * This file misses a description.
  */
 
 define('BAT_OPTIONS_ADD', 'add');

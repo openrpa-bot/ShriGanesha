@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\EntityUnitTypeInterface.
+ */
+
 namespace Drupal\bat_unit;
 
 /**
@@ -31,8 +36,7 @@ interface EntityUnitTypeInterface {
    * Returns the entity's UnitType ID.
    *
    * @return int|null
-   *   The UnitType bat ID, or NULL in case the UnitType ID field has not
-   *   been set on
+   *   The UnitType bat ID, or NULL in case the UnitType ID field has not been set on
    *   the entity.
    */
   public function getUnitTypeId();

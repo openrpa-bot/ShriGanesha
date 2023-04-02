@@ -1,15 +1,22 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking_example\Form\BookingConfirmationForm.
+ */
+
 namespace Drupal\bat_booking_example\Form;
 
 use Roomify\Bat\Calendar\Calendar;
+use Roomify\Bat\Event\Event;
 use Roomify\Bat\Store\DrupalDBStore;
 use Roomify\Bat\Unit\Unit;
+
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description message.
+ *
  */
 class BookingConfirmationForm extends FormBase {
 
@@ -67,7 +74,7 @@ class BookingConfirmationForm extends FormBase {
 
     $valid_states = array_merge([0], array_slice($state_ids, 0, 1));
 
-    $drupal_units = bat_unit_load_multiple([], ['unit_type_id' => $type_id]);
+    $drupal_units = bat_unit_load_multiple(FALSE, ['unit_type_id' => $type_id]);
     $bat_units = [];
     foreach ($drupal_units as $unit_id => $unit) {
       $bat_units[] = new Unit($unit_id, $unit->getEventDefaultValue($event_type));

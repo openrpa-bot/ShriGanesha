@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\Entity\UnitType.
+ */
+
 namespace Drupal\bat_unit\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -222,12 +227,9 @@ class UnitType extends ContentEntityBase implements UnitTypeInterface {
   }
 
   /**
-   * Description.
-   *
-   * @param string $event_type
-   *   Description is missing.
+   * @param $event_type
    */
-  public function getEventDefaultValue(string $event_type) {
+  public function getEventDefaultValue($event_type) {
     $langcode = $this->defaultLangcode;
 
     if ($field = $this->getEventValueDefaultField($event_type)) {
@@ -252,15 +254,11 @@ class UnitType extends ContentEntityBase implements UnitTypeInterface {
   }
 
   /**
-   * Description.
+   * @param $event_type
    *
-   * @param string $event_type
-   *   Description is missing.
-   *
-   * @return string|false
-   *   Description is missing.
+   * @return string|FALSE
    */
-  public function getEventValueFormatter(string $event_type) {
+  public function getEventValueFormatter($event_type) {
     if ($field = $this->getEventValueDefaultField($event_type)) {
       $field_info_instance = FieldConfig::loadByName('bat_unit_type', $this->bundle(), $field);
 
@@ -273,16 +271,12 @@ class UnitType extends ContentEntityBase implements UnitTypeInterface {
   }
 
   /**
-   * Description.
+   * @param $event_type
    *
-   * @param string $event_type
-   *   Description is missing.
-   *
-   * @return string|false
-   *   Description is missing.
+   * @return string|FALSE
    */
-  public function getEventValueDefaultField(string $event_type) {
-    $type_bundle = bat_unit_type_bundle_load($this->bundle());
+  public function getEventValueDefaultField($event_type) {
+    $type_bundle = bat_type_bundle_load($this->bundle());
 
     if (isset($type_bundle->default_event_value_field_ids[$event_type])) {
       return $type_bundle->default_event_value_field_ids[$event_type];

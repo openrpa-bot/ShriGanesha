@@ -8,10 +8,10 @@
 use Roomify\Bat\Calendar\Calendar;
 use Roomify\Bat\Store\DrupalDBStore;
 use Roomify\Bat\Unit\Unit;
+
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityFormInterface;
-use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Link;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -25,29 +25,11 @@ use Drupal\views\ViewExecutable;
 use Drupal\bat_event\Entity\Event;
 use Drupal\bat_event\Entity\EventType;
 use Drupal\bat_event\Entity\State;
-use Drupal\bat_event\Util\EventMaintenance;
 
 /**
- * Implements hook_cron().
- */
-function bat_event_cron() {
-  // Purge expired bat_events.
-  $eventMaintenance = new EventMaintenance();
-  $eventMaintenance->deleteOldBatEvents([]);
-}
-
-/**
- * Reference.
- *
- * Create a field of type 'Bat Event State Reference'
- * to reference an Event State.
+ * Create a field of type 'Bat Event State Reference' to reference an Event State.
  */
 function bat_event_type_add_event_state_reference($entity) {
-  // Prevent interruption of config sync.
-  if (Drupal::isConfigSyncing()) {
-    return;
-  }
-
   $field_name = 'event_state_reference';
 
   $field_storage = FieldStorageConfig::loadByName('bat_event', $field_name);
@@ -73,7 +55,7 @@ function bat_event_type_add_event_state_reference($entity) {
       'entity_type' => 'bat_event',
       'label' => 'State',
       'bundle' => $entity->id(),
-      'ruired' => TRUE,
+      'required' => TRUE,
       'settings' => [
         'handler' => 'default',
         'handler_settings' => [],
@@ -102,11 +84,6 @@ function bat_event_type_add_event_state_reference($entity) {
  * Create "Event Dates" field.
  */
 function bat_event_type_add_event_dates_field($entity) {
-  // Prevent interruption of config sync.
-  if (Drupal::isConfigSyncing()) {
-    return;
-  }
-
   $field_name = 'event_dates';
 
   $field_storage = FieldStorageConfig::loadByName('bat_event', $field_name);
@@ -162,11 +139,6 @@ function bat_event_type_add_event_dates_field($entity) {
  * We need to create a field/instance for each possible target entity type.
  */
 function bat_event_type_add_target_entity_field($entity) {
-  // Prevent interruption of config sync.
-  if (Drupal::isConfigSyncing()) {
-    return;
-  }
-
   $entity_info = \Drupal::entityTypeManager()->getDefinition($entity->getTargetEntityType());
   $field_name = 'event_' . $entity->getTargetEntityType() . '_reference';
 
@@ -257,11 +229,8 @@ function bat_event_field_widget_form_alter(&$element, FormStateInterface $form_s
   $form_object = $form_state->getFormObject();
   if ($form_object instanceof EntityFormInterface) {
     $entity = $form_object->getEntity();
-    if (
-      $entity->getEntityTypeId() == 'bat_event'
-      && $context['items'] instanceof EntityReferenceFieldItemList
-      && $context['items']->getFieldDefinition()->getSettings()['target_type'] == 'state'
-    ) {
+
+    if ($entity->getEntityTypeId() == 'bat_event') {
       $entity_type_bundle = $entity->bundle();
 
       // Limit options for select widgets.
@@ -274,7 +243,7 @@ function bat_event_field_widget_form_alter(&$element, FormStateInterface $form_s
         }
       }
       // Limit autocomplete options.
-      elseif (isset($element['target_id']) && $element['target_id']['#type'] == 'entity_autocomplete') {
+      elseif (isset($element['target_id']) && $element['target_id']['#type'] == 'entity_autocomplete' && $element['target_id']['#target_type'] == 'state') {
         // Use our custom selection handler.
         $element['target_id']['#selection_handler'] = 'bat_event:state';
         // Pass the bundle id to the handler.
@@ -285,30 +254,21 @@ function bat_event_field_widget_form_alter(&$element, FormStateInterface $form_s
 }
 
 /**
- * Description message.
- *
  * @param int $state_id
- *   Some comment.
  */
-function bat_event_load_state(int $state_id) {
+function bat_event_load_state($state_id) {
   return State::load($state_id);
 }
 
 /**
- * Description message.
- *
  * @param array $values
- *   Some comment.
  */
-function bat_event_create_state(array $values = []) {
+function bat_event_create_state($values = []) {
   return State::create($values);
 }
 
 /**
- * State.
- *
- * @param \Drupal\bat_event\Entity\State $state
- *   Some comment.
+ * @param State $state
  */
 function bat_event_save_state(State $state) {
   return $state->save();
@@ -318,7 +278,7 @@ function bat_event_save_state(State $state) {
  * Helper function to easily get event types in an array for use in forms, etc.
  *
  * @return array
- *   An array of event types keyed by type id and labels.
+ *  An array of event types keyed by type id and labels
  */
 function bat_event_types_ids() {
   $event_types = [];
@@ -410,7 +370,7 @@ function bat_event_load_multiple(array $event_ids = NULL, $reset = FALSE) {
  * Deletes a event.
  *
  * @param \Drupal\bat_event\Entity\Event $event
- *   The Event object that represents the event to delete.
+ *   The Event object that represents the event to delete
  */
 function bat_event_delete(Event $event) {
   $event->delete();
@@ -513,10 +473,9 @@ function bat_event_theme() {
 }
 
 /**
- * Schema.
+ * Given an event machine name drop all the tables that store event data for that event.
  *
- * Given an event machine name drop all the tables that
- * store event data for that event.
+ * @param string $machine_name
  */
 function bat_event_delete_event_type_schema($machine_name) {
   foreach (bat_event_get_event_type_tables($machine_name) as $name) {
@@ -525,13 +484,10 @@ function bat_event_delete_event_type_schema($machine_name) {
 }
 
 /**
- * Tables.
- *
  * Utility function to return the table names
  * required to start an event using BAT conventions.
  *
  * @param string $machine_name
- *   Some comment.
  */
 function bat_event_get_event_type_tables($machine_name) {
   return [
@@ -548,7 +504,6 @@ function bat_event_get_event_type_tables($machine_name) {
  * Create 6 tables for store events of type $machine_name.
  *
  * @param string $machine_name
- *   Some comment.
  */
 function bat_event_create_event_type_schema($machine_name) {
   $schema = [];
@@ -674,6 +629,8 @@ function bat_event_create_event_type_schema($machine_name) {
 
 /**
  * Creates the necessary day schema fields.
+ *
+ * @return array
  */
 function bat_event_generate_day_schema_fields() {
   $fields = [
@@ -711,6 +668,8 @@ function bat_event_generate_day_schema_fields() {
 
 /**
  * Creates the necessary hour schema fields.
+ *
+ * @return array
  */
 function bat_event_generate_hour_schema_fields() {
   $fields = [
@@ -754,6 +713,8 @@ function bat_event_generate_hour_schema_fields() {
 
 /**
  * Creates the necessary minute schema fields.
+ *
+ * @return array
  */
 function bat_event_generate_minute_schema_fields() {
   $fields = [
@@ -790,9 +751,8 @@ function bat_event_generate_minute_schema_fields() {
   ];
 
   for ($i = 0; $i <= 59; $i++) {
-    // PHP has no clean way to get the minutes without leading zeros
-    // so setting table fields names to contain the leading zeros to
-    // save strangeness in code elsewhere.
+    // PHP has no clean way to get the minutes without leading zeros so setting table
+    // fields names to contain the leading zeros to save strangeness in code elsewhere.
     if ($i <= 9) {
       $m = '0' . $i;
     }
@@ -814,7 +774,7 @@ function bat_event_generate_minute_schema_fields() {
 /**
  * Implements hook_form_FORM_ID_alter().
  *
- * FORM_ID = bat_type_bundle_edit_form.
+ * FORM_ID = bat_type_bundle_edit_form
  */
 function bat_event_form_bat_type_bundle_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $type_bundle = $form_state->getFormObject()->getEntity();
@@ -842,7 +802,7 @@ function bat_event_form_bat_type_bundle_edit_form_alter(&$form, FormStateInterfa
       '#type' => 'select',
       '#title' => t('Select your default @event field', ['@event' => $event_type->label()]),
       '#options' => $fields_options,
-      '#default_value' => $type_bundle->default_event_value_field_ids[$event_type->id()] ?? NULL,
+      '#default_value' => isset($type_bundle->default_event_value_field_ids[$event_type->id()]) ? $type_bundle->default_event_value_field_ids[$event_type->id()] : NULL,
       '#empty_option' => t('- Select a field -'),
     ];
   }
@@ -894,10 +854,18 @@ function bat_event_entity_bundle_delete($entity_type_id, $bundle) {
 }
 
 /**
- * Units.
+ * Given a date range and a set of valid states it will return all units within the
+ * set of valid states.
  *
- * Given a date range and a set of valid states it will
- * return all units within the set of valid states.
+ * @param DateTime $start_date
+ * @param DateTime $end_date
+ * @param $valid_name_states
+ * @param $type_id
+ * @param $event_type
+ * @param $intersect
+ * @param $drupal_units
+ *
+ * @return array
  */
 function bat_event_get_matching_units(DateTime $start_date, DateTime $end_date, $valid_name_states, $type_id, $event_type, $intersect = FALSE, $drupal_units = []) {
   // Instantiate a BAT Calendar.
@@ -907,21 +875,15 @@ function bat_event_get_matching_units(DateTime $start_date, DateTime $end_date, 
 }
 
 /**
- * Calendar.
+ * Retrieves relevant units and instantiates a BAT calendar object than can be reused. It is preferred to
+ * use this function to reduce the cost of setting up a calendar (i.e. loading units).
  *
- * Retrieves relevant units and instantiates a BAT calendar object
- * than can be reused. It is preferred to use this function to reduce
- * the cost of setting up a calendar (i.e. loading units).
- *
- * @param array $type_id
- *   Some comment.
- * @param string $event_type
- *   Some comment.
+ * @param $type_id
+ * @param $event_type
  *
  * @return \Roomify\Bat\Calendar\Calendar
- *   Calendar object.
  */
-function bat_event_get_calendar(array $type_id, string $event_type, $drupal_units = []) {
+function bat_event_get_calendar($type_id, $event_type, $drupal_units = []) {
   $database = Database::getConnectionInfo('default');
 
   $prefix = (isset($database['default']['prefix']['default'])) ? $database['default']['prefix']['default'] : '';
@@ -929,7 +891,7 @@ function bat_event_get_calendar(array $type_id, string $event_type, $drupal_unit
   $state_store = new DrupalDBStore($event_type, DrupalDBStore::BAT_STATE, $prefix);
 
   if (empty($drupal_units)) {
-    $drupal_units = bat_unit_load_multiple([], ['unit_type_id' => $type_id]);
+    $drupal_units = bat_unit_load_multiple(FALSE, ['unit_type_id' => $type_id]);
   }
   $bat_units = [];
 
@@ -943,13 +905,18 @@ function bat_event_get_calendar(array $type_id, string $event_type, $drupal_unit
 }
 
 /**
- * Matching Events.
- *
- * Returns matching units based on a provided Calendar.
- * A Calendar can be instantiated in a number of ways -
- * bat_event offers bat_event_get_calendar.
- * Using an already setup calendar multiple times
+ * Returns matching units based on a provided Calendar. A Calendar can be instantiated in a number
+ * of ways - bat_event offers bat_event_get_calendar. Using an already setup calendar multiple times
  * reduces overall load.
+ *
+ * @param $calendar
+ * @param DateTime $start_date
+ * @param DateTime $end_date
+ * @param $valid_name_states
+ * @param $intersect
+ * @param $reset
+ *
+ * @return array
  */
 function bat_event_get_matching_units_from_calendar($calendar, DateTime $start_date, DateTime $end_date, $valid_name_states, $intersect = FALSE, $reset = TRUE) {
   $valid_states = [];
@@ -975,10 +942,17 @@ function bat_event_get_matching_units_from_calendar($calendar, DateTime $start_d
 }
 
 /**
- * Response.
+ * Given a date range and a set of valid states it will return all units within the
+ * set of valid states.
  *
- * Given a date range and a set of valid states it will
- * return all units within the set of valid states.
+ * @param DateTime $start_date
+ * @param DateTime $end_date
+ * @param $valid_name_states
+ * @param $type_id
+ * @param $event_type
+ * @param $intersect
+ *
+ * @return array
  */
 function bat_event_get_calendar_response(DateTime $start_date, DateTime $end_date, $valid_name_states, $type_id, $event_type, $intersect = FALSE) {
   $results = [
@@ -1024,8 +998,6 @@ function bat_event_get_calendar_response(DateTime $start_date, DateTime $end_dat
 }
 
 /**
- * Description message.
- *
  * @see hook_event_constraints_info()
  * @see hook_event_constraints_info_alter()
  */
@@ -1062,7 +1034,7 @@ function bat_event_constraints_get_info() {
  *   An associative array containing:
  *   - content: An array of event types.
  */
-function template_preprocess_bat_event_add_list(array &$variables) {
+function template_preprocess_bat_event_add_list(&$variables) {
   $variables['types'] = [];
   if (!empty($variables['content'])) {
     foreach ($variables['content'] as $type) {
@@ -1075,17 +1047,12 @@ function template_preprocess_bat_event_add_list(array &$variables) {
 }
 
 /**
- * Description message.
- *
  * @param string|null $event_type
- *   Some comment.
  * @param array $conditions
- *   Some comment.
  *
  * @return array|false
- *   Description message.
  */
-function bat_event_get_states($event_type = NULL, array $conditions = []) {
+function bat_event_get_states($event_type = NULL, $conditions = []) {
   $query = \Drupal::entityQuery('state');
 
   if ($event_type !== NULL) {
@@ -1125,10 +1092,7 @@ function template_preprocess_bat_event(array &$variables) {
 }
 
 /**
- * Description message.
- *
  * @param string $machine_name
- *   Description message.
  */
 function bat_event_load_state_by_machine_name($machine_name) {
   return State::loadbyMachineName($machine_name);

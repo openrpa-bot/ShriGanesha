@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\EventTypeForm.
+ */
+
 namespace Drupal\bat_event;
 
 use Drupal\field\Entity\FieldConfig;
@@ -151,7 +156,7 @@ class EventTypeForm extends BundleEntityFormBase {
         '#type' => 'select',
         '#title' => t('Select your default @event field', ['@event' => $event_type->label()]),
         '#options' => $fields_options,
-        '#default_value' => $event_type->default_event_value_field_ids ?? '',
+        '#default_value' => isset($event_type->default_event_value_field_ids) ? $event_type->default_event_value_field_ids : NULL,
         '#empty_option' => t('- Select a field -'),
       ];
     }
@@ -176,7 +181,7 @@ class EventTypeForm extends BundleEntityFormBase {
       $form['event_label']['default_event_label_field_name'] = [
         '#type' => 'select',
         '#title' => t('Select your label field', ['@event' => $event_type->label()]),
-        '#default_value' => $event_type->default_event_label_field_name ?? '',
+        '#default_value' => isset($event_type->default_event_label_field_name) ? $event_type->default_event_label_field_name : NULL,
         '#empty_option' => t('- Select a field -'),
         '#description' => t('If you select a field here, its value will be used as the label for your event. BAT will fall back to using the event state as the label if the field has no value.'),
         '#options' => $fields_options,

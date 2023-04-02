@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_fullcalendar\Access\EventManagementAccessCheck.
+ */
+
 namespace Drupal\bat_fullcalendar\Access;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -30,6 +35,12 @@ class EventManagementAccessCheck implements AccessInterface {
 
   /**
    * Checks access to the event add page for the event type.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The currently logged in account.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The access result.
    */
   public function access(AccountInterface $account, $entity_id, $event_type, $event_id, $start_date, $end_date) {
     if ($event_id == 0) {

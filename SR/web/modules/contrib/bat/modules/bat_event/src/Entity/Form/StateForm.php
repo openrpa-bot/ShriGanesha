@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\Form\StateForm.
+ */
+
 namespace Drupal\bat_event\Entity\Form;
 
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Color;
 
 /**
- * Description.
+ * Class StateForm.
  *
  * @ingroup bat
  */
@@ -74,9 +79,6 @@ class StateForm extends ContentEntityForm {
     return $form;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 

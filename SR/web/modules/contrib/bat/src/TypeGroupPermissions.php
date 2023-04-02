@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat\TypeGroupPermissions.
+ */
+
 namespace Drupal\bat;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * {@inheritdoc}
+ *
  */
 class TypeGroupPermissions implements ContainerInjectionInterface {
 
@@ -42,7 +47,6 @@ class TypeGroupPermissions implements ContainerInjectionInterface {
    * Returns an array of filter permissions.
    *
    * @return array
-   *   this array misses a description
    */
   public function permissions() {
     $permissions = [];

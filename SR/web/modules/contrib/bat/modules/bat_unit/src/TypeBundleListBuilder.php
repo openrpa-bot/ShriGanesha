@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\TypeBundleListBuilder.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
@@ -51,8 +56,8 @@ class TypeBundleListBuilder extends ConfigEntityListBuilder {
   public function render() {
     $build = parent::render();
     $build['table']['#empty'] = $this->t('No type bundles available. <a href=":link">Add type bundle</a>.', [
-      ':link' => Url::fromRoute('entity.bat_type_bundle.type_add')->toString(),
-    ]);
+        ':link' => Url::fromRoute('entity.bat_type_bundle.type_add')->toString()
+      ]);
     return $build;
   }
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\BookingAccessControlHandler.
+ */
+
 namespace Drupal\bat_booking;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;

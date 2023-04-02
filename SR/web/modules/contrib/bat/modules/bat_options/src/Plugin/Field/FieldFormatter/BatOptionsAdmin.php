@@ -1,13 +1,16 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_options\Plugin\Field\FieldFormatter\BatOptionsAdmin.
+ */
+
 namespace Drupal\bat_options\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Description message.
- *
  * @FieldFormatter(
  *   id = "bat_options_admin",
  *   label = @Translation("Bat Options Administrator"),

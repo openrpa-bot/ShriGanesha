@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains bat_event_series.module.
- */
-
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityFormInterface;
@@ -21,10 +16,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use RRule\RRule;
 
 /**
- * Create a field.
- *
- * Create a field of type 'Bat Event State Reference' to reference
- * an Event State.
+ * Create a field of type 'Bat Event State Reference' to reference an Event State.
  */
 function bat_event_series_type_add_event_state_reference($bundle) {
   $field_name = 'event_state_reference';
@@ -190,18 +182,17 @@ function bat_event_series_type_add_target_entity_field($bundle, $target_entity_t
 /**
  * Checks event access for various operations.
  *
- * @param Drupal\Core\Entity\EntityInterface $entity
- *   Optionally an event to check access for.
- * @param string $operation
+ * @param string $op
  *   The operation being performed. One of 'view', 'update', 'create' or
  *   'delete'.
- * @param Drupal\Core\Session\AccountInterface $account
+ * @param object $event
+ *   Optionally an event to check access for.
+ * @param object $account
  *   The user to check for. Leave it to NULL to check for the current user.
  *
  * @return \Drupal\Core\Access\AccessResult
- *   Description.
  */
-function bat_event_series_access(EntityInterface $entity, string $operation, AccountInterface $account) {
+function bat_event_series_access(EntityInterface $entity, $operation, AccountInterface $account) {
   return bat_entity_access($entity, $operation, $account);
 }
 
@@ -236,8 +227,7 @@ function bat_event_series_query_bat_event_series_access_alter(AlterableInterface
  *   A boolean indicating that the internal cache should be reset.
  *
  * @return \Drupal\bat_event_series\Entity\EventSeriesType[]
- *   Depending whether $type isset, an array of event series
- *   types or a single one.
+ *   Depending whether $type isset, an array of event series types or a single one.
  */
 function bat_event_series_get_types($type_name = NULL, $reset = FALSE) {
   if ($reset) {
@@ -252,7 +242,7 @@ function bat_event_series_get_types($type_name = NULL, $reset = FALSE) {
  * Deletes a event.
  *
  * @param \Drupal\bat_event_series\Entity\EventSeries $event
- *   The Event object that represents the event to delete.
+ *   The Event object that represents the event to delete
  */
 function bat_event_series_delete(EventSeries $event) {
   $event->delete();
@@ -318,6 +308,8 @@ function bat_event_series_load($event_id = NULL, $reset = FALSE) {
  *
  * @param array $event_ids
  *   An array of event IDs.
+ * @param array $conditions
+ *   An array of conditions to match against the {bat_events} table.
  * @param bool $reset
  *   A boolean indicating that the internal cache should be reset.
  *
@@ -367,7 +359,7 @@ function bat_event_series_theme() {
  *   An associative array containing:
  *   - content: An array of event series types.
  */
-function template_preprocess_bat_event_series_add_list(array &$variables) {
+function template_preprocess_bat_event_series_add_list(&$variables) {
   $variables['types'] = [];
   if (!empty($variables['content'])) {
     foreach ($variables['content'] as $type) {
@@ -415,9 +407,6 @@ function template_preprocess_bat_event_series(array &$variables) {
   $variables['content']['events'] = views_embed_view('event_series', 'events', $event_series->id());
 }
 
-/**
- * Description.
- */
 function bat_event_series_rrule_date_formatter($date) {
   return $date->format('Y-m-d');
 }

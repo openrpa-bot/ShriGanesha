@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_ui\Controller\BatEventUIController.
+ */
+
 namespace Drupal\bat_event_ui\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -7,19 +12,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * Description.
+ *
  */
 class BatEventUIController extends ControllerBase {
 
-  /**
-   * Description.
-   */
   public function calendarPage($unit_type, $event_type) {
     $ev_type = bat_event_type_load($event_type);
 
     // Check if current type support this event type.
     if ($type = bat_type_load($unit_type)) {
-      $type_bundle = bat_unit_type_bundle_load($type->bundle());
+      $type_bundle = bat_type_bundle_load($type->bundle());
 
       if (is_array($type_bundle->default_event_value_field_ids)) {
         if (!(isset($type_bundle->default_event_value_field_ids[$event_type]) && !empty($type_bundle->default_event_value_field_ids[$event_type]))) {
@@ -76,12 +78,7 @@ class BatEventUIController extends ControllerBase {
       'calendar' => [
         '#theme' => 'bat_fullcalendar',
         '#calendar_settings' => $calendar_settings,
-        '#attached' => [
-          'library' => [
-            'bat_event_ui/bat_event_ui',
-            'bat_fullcalendar/bat-fullcalendar-scheduler',
-          ],
-        ],
+        '#attached' => ['library' => ['bat_event_ui/bat_event_ui', 'bat_fullcalendar/bat-fullcalendar-scheduler']],
       ],
     ];
 

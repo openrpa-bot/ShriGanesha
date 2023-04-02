@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Controller\EventSeriesController.
+ */
+
 namespace Drupal\bat_event_series\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\bat_event\EventInterface;
+use Drupal\bat_event_series\EventSeriesInterface;
 use Drupal\bat_event_series\EventSeriesTypeInterface;
 
 /**
@@ -20,14 +27,13 @@ class EventSeriesController extends ControllerBase implements ContainerInjection
   /**
    * Displays add event links for available event series types.
    *
-   * Redirects to admin/bat/events/event_series/add[type] if only one
-   * event series type is available.
+   * Redirects to admin/bat/events/event_series/add[type] if only one event series type is available.
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-   *   A render array for a list of the event series types that can
-   *   be added; however, if there is only one event series type defined
-   *   for the site, the function will return a RedirectResponse to the
-   *   event add page for that one event type.
+   *   A render array for a list of the event series types that can be added; however,
+   *   if there is only one event series type defined for the site, the function
+   *   will return a RedirectResponse to the event add page for that one event
+   *   type.
    */
   public function addPage() {
     $build = [

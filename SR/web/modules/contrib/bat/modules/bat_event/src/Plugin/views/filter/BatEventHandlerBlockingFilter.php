@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\bat_event\Plugin\views\filter;
 
 use Drupal\views\Views;
@@ -8,8 +12,6 @@ use Drupal\views\Plugin\views\filter\BooleanOperator;
 use Drupal\views\ViewExecutable;
 
 /**
- * Description.
- *
  * @ViewsFilter("bat_event_handler_blocking_filter")
  */
 class BatEventHandlerBlockingFilter extends BooleanOperator {
@@ -26,7 +28,7 @@ class BatEventHandlerBlockingFilter extends BooleanOperator {
    *
    * @var string
    */
-  protected $valueValue;
+  protected $value_value;
 
   /**
    * {@inheritdoc}
@@ -37,9 +39,6 @@ class BatEventHandlerBlockingFilter extends BooleanOperator {
     $this->value_value = $this->t('State');
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function getValueOptions() {
     $options = [
       'blocking' => t('Blocking'),
@@ -49,9 +48,6 @@ class BatEventHandlerBlockingFilter extends BooleanOperator {
     $this->valueOptions = $options;
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function query() {
     $this->ensureMyTable();
 
@@ -87,9 +83,6 @@ class BatEventHandlerBlockingFilter extends BooleanOperator {
     }
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function adminSummary() {
     if ($this->isAGroup()) {
       return t('grouped');

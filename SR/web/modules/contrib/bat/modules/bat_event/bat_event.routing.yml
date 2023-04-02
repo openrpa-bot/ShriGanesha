@@ -1,8 +1,8 @@
-bat.admin.event:
-  path: '/admin/bat/event'
+bat.admin.events:
+  path: '/admin/bat/events'
   defaults:
     _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Event'
+    _title: 'Events'
   requirements:
     _permission: 'access administration pages'
 
@@ -156,13 +156,5 @@ entity.bat_event_type.delete_form:
   defaults:
     _entity_form: 'bat_event_type.delete'
     _title: 'Delete'
-  requirements:
-    _permission: 'administer bat_event_type entities'
-
-bat_event.admin_settings:
-  path: '/admin/bat/events/settings'
-  defaults:
-    _form: '\Drupal\bat_event\Form\BatEventConfigurationForm'
-    _title: 'BAT Event Configuration'
   requirements:
     _permission: 'administer bat_event_type entities'

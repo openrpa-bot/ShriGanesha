@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\UnitTypeAccessControlHandler.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;

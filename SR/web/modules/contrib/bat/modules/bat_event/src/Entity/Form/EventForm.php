@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\Entity\Form\EventForm.
+ */
+
 namespace Drupal\bat_event\Entity\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
@@ -45,12 +50,12 @@ class EventForm extends ContentEntityForm {
    *   The entity repository service.
    * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
    *   The date service.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The current request.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle service.
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time service.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
    */
   public function __construct(EntityRepositoryInterface $entity_repository, DateFormatterInterface $date_formatter, Request $request, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
@@ -102,12 +107,7 @@ class EventForm extends ContentEntityForm {
       '#weight' => -100,
       'changed' => [
         '#type' => 'item',
-        '#wrapper_attributes' => [
-          'class' => [
-            'entity-meta__last-saved',
-            'container-inline',
-          ],
-        ],
+        '#wrapper_attributes' => ['class' => ['entity-meta__last-saved', 'container-inline']],
         '#markup' => '<h4 class="label inline">' . t('Last saved') . '</h4> ' . $is_new,
       ],
       'author' => [

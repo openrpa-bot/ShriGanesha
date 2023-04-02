@@ -23,7 +23,7 @@ bat_fullcalendar.event_management:
         with_config_overrides: TRUE
 
 bat_fullcalendar.fullcalendar:
-  path: '/admin/bat/fullcalendar'
+  path: '/admin/bat/config/fullcalendar'
   defaults:
     _form: '\Drupal\bat_fullcalendar\Form\FullcalendarForm'
     _title: 'Fullcalendar'

@@ -10,7 +10,7 @@ dependencies:
   - search_api:search_api
   - facets:facets
 
-# Information added by Drupal.org packaging script on 2023-03-26
-version: '8.x-2.1-alpha1'
+# Information added by Drupal.org packaging script on 2020-06-26
+version: '8.x-1.3'
 project: 'bat'
-datestamp: 1679828856
+datestamp: 1593189008

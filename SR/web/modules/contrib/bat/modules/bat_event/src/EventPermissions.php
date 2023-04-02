@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\EventPermissions.
+ */
+
 namespace Drupal\bat_event;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
+ *
  */
 class EventPermissions implements ContainerInjectionInterface {
 
@@ -42,17 +47,13 @@ class EventPermissions implements ContainerInjectionInterface {
    * Returns an array of filter permissions.
    *
    * @return array
-   *   Some description.
    */
   public function permissions() {
     $permissions = [];
 
     foreach (bat_event_get_types() as $bundle_name => $bundle_info) {
       $permissions['view calendar data for any ' . $bundle_name . ' event'] = [
-        'title' => $this->t('View calendar data for any %bundle @entity_type', [
-          '@entity_type' => 'events',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => $this->t('View calendar data for any %bundle @entity_type', ['@entity_type' => 'events', '%bundle' => $bundle_info->label()]),
       ];
     }
 

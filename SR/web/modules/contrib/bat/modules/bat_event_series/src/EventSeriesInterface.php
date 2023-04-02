@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\EventSeriesInterface.
+ */
+
 namespace Drupal\bat_event_series;
 
 use Drupal\Core\Entity\ContentEntityInterface;

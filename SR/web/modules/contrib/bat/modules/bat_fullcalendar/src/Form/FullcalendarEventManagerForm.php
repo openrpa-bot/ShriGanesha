@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_fullcalendar\Form\FullcalendarEventManagerForm.
+ */
+
 namespace Drupal\bat_fullcalendar\Form;
 
 use Drupal\Core\Entity\EntityFieldManagerInterface;
@@ -13,7 +18,7 @@ use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
+ *
  */
 class FullcalendarEventManagerForm extends FormBase {
 
@@ -88,7 +93,7 @@ class FullcalendarEventManagerForm extends FormBase {
 
     $form['#attributes']['class'][] = 'bat-management-form bat-event-form';
 
-    // This form element will be replaced whenever 'changethis' is updated.
+    // This entire form element will be replaced whenever 'changethis' is updated.
     $form['#prefix'] = '<div id="replace_textfield_div">';
     $form['#suffix'] = '</div>';
 
@@ -128,10 +133,7 @@ class FullcalendarEventManagerForm extends FormBase {
     $date_format = $this->configFactory()->get('bat.settings')->get('date_format') ?: 'Y-m-d H:i';
     $form['event_details'] = [
       '#prefix' => '<div class="event-details">',
-      '#markup' => t('Date range selected: @startdate to @enddate', [
-        '@startdate' => $start_date->format($date_format),
-        '@enddate' => $end_date->format($date_format),
-      ]),
+      '#markup' => t('Date range selected: @startdate to @enddate', ['@startdate' => $start_date->format($date_format), '@enddate' => $end_date->format($date_format)]),
       '#suffix' => '</div>',
     ];
 
@@ -139,7 +141,7 @@ class FullcalendarEventManagerForm extends FormBase {
       $state_options = bat_unit_state_options($event_type->id());
 
       $form['change_event_status'] = [
-        '#title' => t('Change the state for this event to'),
+        '#title' => t('Change the state for this event to') . ': ',
         '#type' => 'select',
         '#options' => $state_options,
         '#ajax' => [
@@ -207,8 +209,7 @@ class FullcalendarEventManagerForm extends FormBase {
     $event->set('event_dates', $event_dates);
 
     $event_type_entity = bat_event_type_load($event_type);
-    // Construct target entity reference field name using
-    // this event type's target entity type.
+    // Construct target entity reference field name using this event type's target entity type.
     $target_field_name = 'event_' . $event_type_entity->getTargetEntityType() . '_reference';
     $event->set($target_field_name, $entity_id);
 
@@ -250,8 +251,7 @@ class FullcalendarEventManagerForm extends FormBase {
     $event->set('event_dates', $event_dates);
 
     $event_type_entity = bat_event_type_load($event_type);
-    // Construct target entity reference field name using this
-    // event type's target entity type.
+    // Construct target entity reference field name using this event type's target entity type.
     $target_field_name = 'event_' . $event_type_entity->getTargetEntityType() . '_reference';
     $event->set($target_field_name, $entity_id);
 
@@ -266,10 +266,7 @@ class FullcalendarEventManagerForm extends FormBase {
 
     $form['form_wrapper_bottom'] = [
       '#prefix' => '<div>',
-      '#markup' => t('Value for <b>@name</b> changed to <b>@value</b>', [
-        '@name' => $unit->label(),
-        '@value' => trim(strip_tags($value->__toString())),
-      ]),
+      '#markup' => t('Value for <b>@name</b> changed to <b>@value</b>', ['@name' => $unit->label(), '@value' => trim(strip_tags($value->__toString()))]),
       '#suffix' => '</div>',
       '#weight' => 9,
     ];

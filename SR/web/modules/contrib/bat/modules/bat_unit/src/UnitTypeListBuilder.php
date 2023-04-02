@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_unit\UnitTypeListBuilder.
+ */
+
 namespace Drupal\bat_unit;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -15,6 +21,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup bat
  */
 class UnitTypeListBuilder extends EntityListBuilder {
+
+  /**
+   * Constructs a new UnitTypeListBuilder object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type definition.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage class.
+   */
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage) {
+    parent::__construct($entity_type, $storage);
+  }
 
   /**
    * {@inheritdoc}
@@ -63,9 +81,7 @@ class UnitTypeListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /**
-     * @var \Drupal\bat_unit\Entity\UnitType $entity
-     */
+    /* @var $entity \Drupal\bat_unit\Entity\UnitType */
     $row['id'] = $entity->id();
     $row['name'] = Link::fromTextAndUrl(
       $entity->label(),
@@ -75,7 +91,7 @@ class UnitTypeListBuilder extends EntityListBuilder {
         ]
       )
     );
-    $row['bundle'] = bat_unit_type_bundle_load($entity->bundle())->label();
+    $row['bundle'] = bat_type_bundle_load($entity->bundle())->label();
     $row['status'] = ($entity->getStatus()) ? t('Published') : t('Unpublished');
     return $row + parent::buildRow($entity);
   }

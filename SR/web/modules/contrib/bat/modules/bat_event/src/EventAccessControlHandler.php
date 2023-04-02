@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event\EventAccessControlHandler.
+ */
+
 namespace Drupal\bat_event;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;

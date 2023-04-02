@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_booking\BookingPermissions.
+ */
+
 namespace Drupal\bat_booking;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -8,7 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Description message.
+ *
  */
 class BookingPermissions implements ContainerInjectionInterface {
 
@@ -38,9 +43,6 @@ class BookingPermissions implements ContainerInjectionInterface {
     return new static($container->get('entity_type.manager'));
   }
 
-  /**
-   * This Method misses a description.
-   */
   public function permissions() {
     $permissions = [];
 
@@ -48,16 +50,10 @@ class BookingPermissions implements ContainerInjectionInterface {
 
     foreach (bat_booking_get_bundles() as $bundle_name => $bundle_info) {
       $permissions['view own booking entities of bundle ' . $bundle_name] = [
-        'title' => t('View own %bundle @entity_bundle', [
-          '@entity_bundle' => 'bookings',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View own %bundle @entity_bundle', ['@entity_bundle' => 'bookings', '%bundle' => $bundle_info->label()]),
       ];
       $permissions['view any booking entity of bundle ' . $bundle_name] = [
-        'title' => t('View any %bundle @entity_bundle', [
-          '@entity_bundle' => 'booking',
-          '%bundle' => $bundle_info->label(),
-        ]),
+        'title' => t('View any %bundle @entity_bundle', ['@entity_bundle' => 'booking', '%bundle' => $bundle_info->label()]),
       ];
     }
 

@@ -525,7 +525,7 @@ display:
         title: 'Unit Management'
         description: 'Manage Bat Types and their Units'
         expanded: false
-        parent: bat.admin.config.unit.main
+        parent: bat.admin
         weight: 0
         context: '0'
         menu_name: admin

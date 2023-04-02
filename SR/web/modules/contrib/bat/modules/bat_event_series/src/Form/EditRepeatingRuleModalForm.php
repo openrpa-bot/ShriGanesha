@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_event_series\Form\EditRepeatingRuleModalForm.
+ */
+
 namespace Drupal\bat_event_series\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
@@ -18,9 +23,16 @@ use RRule\RfcParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Edit.
+ *
  */
 class EditRepeatingRuleModalForm extends FormBase {
+
+  /**
+   * Event series object.
+   *
+   * @var \Drupal\bat_event_series\Entity\EventSeries
+   */
+  protected $event_series;
 
   /**
    * The tempstore object.
@@ -44,13 +56,9 @@ class EditRepeatingRuleModalForm extends FormBase {
   }
 
   /**
-   * Constructs.
-   *
    * Constructs a new EditRepeatingRuleModalForm object.
    *
    * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
-   *   The tempstore factory.
-   * @param \Drupal\Core\Form\FormBuilder $formBuilder
    *   The tempstore factory.
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, FormBuilder $formBuilder) {
@@ -212,9 +220,6 @@ class EditRepeatingRuleModalForm extends FormBase {
     $this->tempStore->set($this->currentUser()->id(), $values);
   }
 
-  /**
-   * Ajax Submit.
-   */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
 

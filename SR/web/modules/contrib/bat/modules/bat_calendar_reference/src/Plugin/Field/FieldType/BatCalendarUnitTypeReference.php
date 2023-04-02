@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bat_calendar_reference\Plugin\Field\FieldType\BatCalendarUnitTypeReference.
+ */
+
 namespace Drupal\bat_calendar_reference\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemBase;
@@ -8,8 +13,6 @@ use Drupal\Core\TypedData\DataReferenceTargetDefinition;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Description message.
- *
  * @FieldType(
  *   id = "bat_calendar_unit_type_reference",
  *   label = @Translation("BAT Calendar Unit Type Reference"),
