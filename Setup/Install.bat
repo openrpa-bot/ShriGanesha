@@ -133,7 +133,7 @@ ECHO  **************************************************************************
 call composer require drupal/geolocation:3.12 --with-all-dependencies
 call composer require drupal/geocoder:3.32 --with-all-dependencies
 call composer require drupal/webform_ip_geo:1.0.4 --with-all-dependencies
-
+call composer require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
 
 
 
@@ -222,8 +222,8 @@ call composer require drupal/search_api:1.29  --with-all-dependencies
 call composer require drupal/facets:^2.0 --with-all-dependencies
 call composer require drupal/fullcalendar_library:1.1 --with-all-dependencies
 call composer require drupal/clientside_validation:4.0.2 --with-all-dependencies
-
-
+call composer require drupal/page_manager:4.0-rc2 --with-all-dependencies
+call composer require drupal/jquery_ui_checkboxradio:2.0.0 --with-all-dependencies
 
 ECHO  *******************************************************************************
 ECHO  *                                                                             *
