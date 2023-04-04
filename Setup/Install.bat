@@ -4,14 +4,14 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-cd %workingFolder%
-
 set webFolderName=SR
+
 set DBName=%webFolderName%
 set dbRootUsername="root"
 set dbRootPassword=""
 set DrupalVersion=%2
 
+cd %workingFolder% 
 
 F %webFolderName%.==. GOTO EOF
 	%MySqlCommand% -u %dbRootUsername% -p  %dbRootPassword% -e "DROP DATABASE IF EXISTS %DBName%"
