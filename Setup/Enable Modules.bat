@@ -368,11 +368,13 @@ call drush -y en webform_jqueryui_datepicker
 call drush -y en webform_location_geocomplete
 call drush -y en webform_toggles
 call drush -y en basic_auth
-call drush -y en name: jsonapi
 call drush -y en rest
 call drush -y en serialization
+rem call drush -y en name: jsonapi
+call drush -y en jsonapi
 call drush -y en xmlsitemap_custom
 call drush -y en xmlsitemap_engines
+call drush -y en page_manager_ui
 GOTO MyEOF
 
 git config --global github.accesstoken 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
