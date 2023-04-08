@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=SR
+set webFolderName=SRT
 
 set DBName=%webFolderName%
 set dbRootUsername="root"
@@ -113,6 +113,7 @@ ECHO  *                                                                         
 ECHO  * 6.1    https://www.drupal.org/project/devel                                                                      *
 ECHO  * 6.2    https://www.drupal.org/project/dbug                                                                       *
 ECHO  * 6.3    https://www.drupal.org/project/drush                                                                      *
+ECHO  * 6.4    https://www.drupal.org/project/webprofiler                                                                     *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/devel:5.1.1  --with-all-dependencies
@@ -120,6 +121,8 @@ ECHO  **************************************************************************
 call composer require drupal/dbug:2.0.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drush/drush:11.5.1  --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webprofiler:10.0.0  --with-all-dependencies
 
 
 ECHO  ********************************************************************************************************************
@@ -295,23 +298,39 @@ call composer require drupal/search_api_location:1.0-alpha3 --with-all-dependenc
 
 
 
-
 ECHO  ********************************************************************************************************************
-ECHO  * 17     User Login                                                                                                *
+ECHO  * 17       Social Login                                                                                            *
 ECHO  ********************************************************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 17.1   https://www.drupal.org/project/social_auth                                                                *
-ECHO  * 17.2   https://www.drupal.org/project/tfa                                                                        *
-ECHO  * 17.3   https://www.drupal.org/project/prlp                                                                       *
-ECHO  * 17.4   https://www.drupal.org/project/sendgrid_integration                                                       *
-ECHO  * 17.5   https://www.drupal.org/project/externalauth                                                               *
-ECHO  * 17.6   https://www.drupal.org/project/social_auth_google                                                         *
-ECHO  * 17.7   https://www.drupal.org/project/r4032login                                                                 *
-ECHO  * 17.8   https://www.drupal.org/project/redirect_after_login                                                       *
-ECHO  * 17.9   https://www.drupal.org/project/openid_connect                                                             *
+ECHO  * 17.2   https://www.drupal.org/project/social_auth_google                                                         *
+ECHO  * 17.3   https://www.drupal.org/project/social_auth_facebook/                                                      *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/social_auth:3.1.0 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/social_auth_google:3.0.0 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/social_auth_facebook:3.0.1 --with-all-dependencies
+
+
+
+ECHO  ********************************************************************************************************************
+ECHO  * 17.1     User Login                                                                                              *
+ECHO  ********************************************************************************************************************
+ECHO  *                                                                                                                  *
+ECHO  * 17.4   https://www.drupal.org/project/tfa                                                                        *
+ECHO  * 17.5   https://www.drupal.org/project/prlp                                                                       *
+ECHO  * 17.6   https://www.drupal.org/project/sendgrid_integration                                                       *
+ECHO  * 17.7   https://www.drupal.org/project/r4032login                                                                 *
+ECHO  * 17.8   https://www.drupal.org/project/redirect_after_login                                                       *
+ECHO  * 17.9   https://www.drupal.org/project/login_destination                                                          *
+ECHO  * 17.13  https://www.drupal.org/project/user_email_verification - disabled                                         *
+ECHO  *                                                                                                                  *
+ECHO  ********************************************************************************************************************
+call composer require drupal/social_auth:3.1.0 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/social_auth_google:3.0.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/tfa:1.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
@@ -319,17 +338,11 @@ call composer require drupal/prlp:1.10 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/sendgrid_integration:2.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/externalauth:2.0.3  --with-all-dependencies
-ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_google:3.0.0 --with-all-dependencies
-ECHO  ********************************************************************************************************************
 call composer require drupal/r4032login:2.2.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/redirect_after_login:2.7 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/openid_connect:1.2 --with-all-dependencies
-ECHO ********************************************************************************************************************
-rem call composer require drupal/login_destination:8.x-2.0-beta6 --with-all-dependencies
+call composer require drupal/login_destination:8.x-2.0-beta6 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/user_email_verification:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************
