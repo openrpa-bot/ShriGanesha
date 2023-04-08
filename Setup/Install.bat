@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=SRT
+set webFolderName=BaseImage
 
 set DBName=%webFolderName%
 set dbRootUsername="root"
@@ -122,7 +122,7 @@ call composer require drupal/dbug:2.0.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drush/drush:11.5.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/webprofiler:10.0.0  --with-all-dependencies
+call composer require drupal/webprofiler:9.0.2  --with-all-dependencies
 
 
 ECHO  ********************************************************************************************************************
@@ -241,7 +241,7 @@ ECHO  *                                                                         
 ECHO  ********************************************************************************************************************
 call composer require drupal/conditional_fields:4.0.0-alpha2  --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/twig_field_value:2.0.0  --with-dependencies
+call composer require drupal/twig_field_value:2.0.2  --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/exclude_node_title:1.4 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -254,7 +254,7 @@ call composer require drupal/field_group:3.4 --with-dependencies
 
 
 ECHO  ********************************************************************************************************************
-ECHO  * 15     Field Formatters                                                                                          *
+ECHO  * 15     View Formatters                                                                                           *
 ECHO  ********************************************************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 15.1   https://www.drupal.org/project/pdf_api                                                                    *
@@ -342,7 +342,7 @@ call composer require drupal/r4032login:2.2.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/redirect_after_login:2.7 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/login_destination:8.x-2.0-beta6 --with-all-dependencies
+call composer require drupal/login_destination:2.0-beta6 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/user_email_verification:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************
@@ -413,7 +413,7 @@ ECHO *                                                                          
 ECHO ********************************************************************************************************************
 call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce:2.34 --with-all-dependencies
+call composer require drupal/commerce:2.35 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 ECHO ********************************************************************************************************************

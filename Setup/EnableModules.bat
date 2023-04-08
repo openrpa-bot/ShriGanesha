@@ -18,7 +18,6 @@ call drush -y en layout_builder_restrictions
 call drush -y en layout_builder_modal
 call drush -y en bootstrap_layout_builder
 ECHO  *******************************************************************************
-rem call drush -y enwe_megamenu:1.13 --with-dependencies
 call drush -y en tb_megamenu
 call drush -y en extlink
 call drush -y en admin_toolbar
@@ -31,7 +30,7 @@ ECHO  **************************************************************************
 call drush -y en devel
 call drush -y en dbug
 ECHO  *******************************************************************************
-call drush -y en s3fs
+rem call drush -y en s3fs
 call drush -y en exclude_node_title
 call drush -y en pdf_api
 
@@ -120,11 +119,11 @@ call drush -y en social_auth
 call drush -y en tfa
 call drush -y en prlp
 call drush -y en sendgrid_integration
-call drush -y en externalauth
+rem call drush -y en externalauth
 call drush -y en social_auth_google
 rem call drush -y en login_destination:8.x-2.0-beta6 --with-all-dependencies
 call drush -y en redirect_after_login
-call drush -y en openid_connect
+rem call drush -y en openid_connect
 
 
 
@@ -177,7 +176,7 @@ ECHO  *                                                                         
 ECHO  *			 Drupal BAT Modules installation in Progress .....      			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
-call drush -y en services
+rem call drush -y en services
 call drush -y en bat_api
 call drush -y en bat
 
@@ -206,23 +205,23 @@ rem drush si --db-url=mysql://root:@localhost:3306/SRTest --site-name=Testing --
 rem drush si --db-url=mysql://root:@localhost:3306/%webFolderName% --site-name=Testing --site-mail=a@b.com --account-mail=b@c.com --account-name=a --account-pass=a --locale=en --existing-config -vvv
 
 call drush -y en action
-call drush -y en tracker
-call drush -y en ban
-call drush -y en book
+rem call drush -y en tracker
+rem call drush -y en ban
+rem call drush -y en book
 call drush -y en content_moderation
 call drush -y en forum
 call drush -y en inline_form_errors
 call drush -y en pgsql
-call drush -y en quickedit
-call drush -y en rdf
+rem call drush -y en quickedit
+rem call drush -y en rdf
 call drush -y en responsive_image
 call drush -y en settings_tray
-call drush -y en sqlite
+rem call drush -y en sqlite
 call drush -y en statistics
 call drush -y en workflows
-call drush -y en admin_toolbar_tools
+rem call drush -y en admin_toolbar_tools
 call drush -y en admin_toolbar_links_access_filter
-call drush -y en bat_booking_example
+rem call drush -y en bat_booking_example
 call drush -y en admin_toolbar_search
 call drush -y en bat_calendar_reference
 call drush -y en bat_event_series
@@ -232,11 +231,11 @@ call drush -y en bat_fullcalendar
 call drush -y en bat_options
 call drush -y en ctools_block
 call drush -y en ctools_views
-call drush -y en clientside_validation_demo
+rem call drush -y en clientside_validation_demo
 call drush -y en clientside_validation_jquery
 call drush -y en commerce_log
 call drush -y en commerce_payment
-call drush -y en commerce_payment_example
+rem call drush -y en commerce_payment_example
 call drush -y en commerce_promotion
 call drush -y en commerce_tax
 call drush -y en commerce_currency_resolver_shipping
@@ -249,11 +248,11 @@ call drush -y en help_topics
 call drush -y en workspaces
 call drush -y en devel_generate
 call drush -y en entity_print_views
-call drush -y en checklistapiexample
+rem call drush -y en checklistapiexample
 call drush -y en tablefield_cellspan
 call drush -y en tablefield_required
 call drush -y en telephone
-call drush -y en flexslider_example
+rem call drush -y en flexslider_example
 call drush -y en flexslider_fields
 call drush -y en flexslider_views
 call drush -y en geocoder_address
@@ -262,40 +261,40 @@ call drush -y en geocoder_geofield
 call drush -y en geofield_map_extras
 call drush -y en geolocation_address
 call drush -y en geolocation_baidu
-call drush -y en geolocation_demo
+rem call drush -y en geolocation_demo
 call drush -y en geolocation_geocodio
 call drush -y en geolocation_geofield
 call drush -y en geolocation_geometry
-call drush -y en geolocation_geometry_demo
+rem call drush -y en geolocation_geometry_demo
 call drush -y en geolocation_geometry_data
 call drush -y en geolocation_geometry_germany_zip_codes
 call drush -y en geolocation_geometry_natural_earth_countries
 call drush -y en geolocation_geometry_natural_earth_us_states
 call drush -y en geolocation_geometry_open_canada_provinces
 call drush -y en geolocation_geometry_world_heritage
-call drush -y en geolocation_google_static_maps_demo
+rem call drush -y en geolocation_google_static_maps_demo
 call drush -y en geolocation_google_maps
-call drush -y en geolocation_google_maps_demo
+rem call drush -y en geolocation_google_maps_demo
 call drush -y en geolocation_google_places_api
 call drush -y en geolocation_google_static_maps
 call drush -y en geolocation_gpx
 call drush -y en geolocation_here
 call drush -y en geolocation_leaflet
-call drush -y en geolocation_leaflet_demo
+rem call drush -y en geolocation_leaflet_demo
 call drush -y en geolocation_search_api
 call drush -y en geolocation_yandex
 call drush -y en layout_builder_restrictions_by_region
 call drush -y en sendgrid_integration_reports
-call drush -y en field_group_migrate
-call drush -y en migrate
-call drush -y en migrate_drupal
-call drush -y en migrate_drupal_ui
-call drush -y en config_translation
-call drush -y en content_translation
-call drush -y en locale
-call drush -y en language
+rem call drush -y en field_group_migrate
+rem call drush -y en migrate
+rem call drush -y en migrate_drupal
+rem call drush -y en migrate_drupal_ui
+rem call drush -y en config_translation
+rem call drush -y en content_translation
+rem call drush -y en locale
+rem call drush -y en language
 call drush -y en ctools_entity_mask
-call drush -y en extra_field_example
+rem call drush -y en extra_field_example
 call drush -y en puphpeteer
 call drush -y en social_media_links_field
 call drush -y en search_api_db
@@ -325,7 +324,7 @@ call drush -y en metatag_pinterest
 call drush -y en metatag_twitter_cards
 call drush -y en metatag_verification
 call drush -y en metatag_views
-call drush -y en services_tfa
+rem call drush -y en services_tfa
 call drush -y en image_captcha
 call drush -y en views_slideshow_cycle
 call drush -y en webform_access
@@ -349,29 +348,28 @@ call drush -y en webform_submission_export_import
 call drush -y en webform_submission_log
 call drush -y en webform_templates
 call drush -y en webform_ui
-call drush -y en webform_demo_application_evaluation
-call drush -y en webform_demo_event_registration
-call drush -y en webform_demo_region_contact
-call drush -y en webform_example_custom_form
-call drush -y en webform_example_element
-call drush -y en webform_example_element_properties
-call drush -y en webform_example_composite
-call drush -y en webform_examples
-call drush -y en webform_examples_accessibility
-call drush -y en webform_example_handler
-call drush -y en webform_example_remote_post
-call drush -y en webform_example_variant
-call drush -y en webform_location_places
-call drush -y en webform_icheck
-call drush -y en webform_jqueryui_buttons
-call drush -y en webform_jqueryui_datepicker 
-call drush -y en webform_location_geocomplete
-call drush -y en webform_toggles
-call drush -y en basic_auth
-call drush -y en rest
-call drush -y en serialization
-rem call drush -y en name: jsonapi
-call drush -y en jsonapi
+rem call drush -y en webform_demo_application_evaluation
+rem call drush -y en webform_demo_event_registration
+rem call drush -y en webform_demo_region_contact
+rem call drush -y en webform_example_custom_form
+rem call drush -y en webform_example_element
+rem call drush -y en webform_example_element_properties
+rem call drush -y en webform_example_composite
+rem call drush -y en webform_examples
+rem call drush -y en webform_examples_accessibility
+rem call drush -y en webform_example_handler
+rem call drush -y en webform_example_remote_post
+rem call drush -y en webform_example_variant
+rem call drush -y en webform_location_places
+rem call drush -y en webform_icheck
+rem call drush -y en webform_jqueryui_buttons
+rem call drush -y en webform_jqueryui_datepicker 
+rem call drush -y en webform_location_geocomplete
+rem call drush -y en webform_toggles
+rem call drush -y en basic_auth
+rem call drush -y en rest
+rem call drush -y en serialization
+rem call drush -y en jsonapi
 call drush -y en xmlsitemap_custom
 call drush -y en xmlsitemap_engines
 call drush -y en page_manager_ui
