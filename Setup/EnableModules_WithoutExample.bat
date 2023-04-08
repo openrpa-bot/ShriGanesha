@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=SR
+set webFolderName=Test
 
 cd %workingFolder%
 cd %webFolderName%
@@ -113,7 +113,7 @@ ECHO  *                                                                         
 ECHO  *			 Drupal User Login Modules installation in Progress .....  			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
-call drush -y en user_email_verification
+rem call drush -y en user_email_verification
 call drush -y en r4032login
 call drush -y en social_auth
 call drush -y en tfa
@@ -266,12 +266,12 @@ call drush -y en geolocation_geocodio
 call drush -y en geolocation_geofield
 call drush -y en geolocation_geometry
 rem call drush -y en geolocation_geometry_demo
-call drush -y en geolocation_geometry_data
-call drush -y en geolocation_geometry_germany_zip_codes
-call drush -y en geolocation_geometry_natural_earth_countries
-call drush -y en geolocation_geometry_natural_earth_us_states
-call drush -y en geolocation_geometry_open_canada_provinces
-call drush -y en geolocation_geometry_world_heritage
+rem call drush -y en geolocation_geometry_data
+rem call drush -y en geolocation_geometry_germany_zip_codes
+rem call drush -y en geolocation_geometry_natural_earth_countries
+rem call drush -y en geolocation_geometry_natural_earth_us_states
+rem call drush -y en geolocation_geometry_open_canada_provinces
+rem call drush -y en geolocation_geometry_world_heritage
 rem call drush -y en geolocation_google_static_maps_demo
 call drush -y en geolocation_google_maps
 rem call drush -y en geolocation_google_maps_demo

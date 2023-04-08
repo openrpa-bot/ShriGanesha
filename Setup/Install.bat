@@ -295,7 +295,12 @@ ECHO  **************************************************************************
 call composer require drupal/webform_ip_geo:1.0.4 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
-
+ECHO  ********************************************************************************************************************
+call composer require geocodio/geocodio-library-php --with-all-dependencies
+call composer require sibyx/phpgpx:@RC --with-all-dependencies
+call composer require drupal/bee:1.2 --with-all-dependencies
+call composer require drupal/commerce_cart drupal/commerce_checkout drupal/commerce_number_pattern drupal/commerce_order drupal/commerce_payment drupal/commerce_price drupal/commerce_product drupal/commerce_store drupal/bat drupal/bat_calendar_reference drupal/bat_event drupal/bat_event_ui drupal/bat_fullcalendar drupal/bat_options drupal/bat_unit
+call composer require drupal/bee_hote:2.13.0-alpha1
 
 
 ECHO  ********************************************************************************************************************
@@ -447,6 +452,7 @@ ECHO ***************************************************************************
 call composer require drupal/bat_api:1.1.0 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/bat:1.3.0 --with-all-dependencies
+rem call composer require drupal/bat:2.1-alpha1 --with-all-dependencies
 
 
 
