@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=BaseImage
+set webFolderName=RamaDevotee
 
 cd %workingFolder%
 cd %webFolderName%
