@@ -224,7 +224,8 @@ ECHO  **************************************************************************
 call composer require drupal/geofield:1.52   --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/geofield_map:3.0.8 --with-all-dependencies
-
+ECHO  ********************************************************************************************************************
+call composer require drupal/text_field_formatter:2.0.1  --with-all-dependencies
 
 
 ECHO  ********************************************************************************************************************
@@ -263,6 +264,10 @@ ECHO  * 15.3   https://www.drupal.org/project/better_exposed_filters            
 ECHO  * 15.4   https://www.drupal.org/project/image_resize_filter                                                        *
 ECHO  * 15.5   https://www.drupal.org/project/views_conditional                                                          *
 ECHO  * 15.6   https://www.drupal.org/project/autocomplete_deluxe                                                        *
+ECHO  * 15.7   https://www.drupal.org/project/asset_injector                                                             *
+ECHO  * 15.8   https://www.drupal.org/project/jquery_ui_tooltip                                                          *
+ECHO  * 15.9   https://www.drupal.org/project/ctools                                                                     *
+ECHO  * 15.10  https://www.drupal.org/project/entity_embed                                                               *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -276,6 +281,15 @@ ECHO  **************************************************************************
 call composer require drupal/views_conditional:1.5 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/autocomplete_deluxe:2.0.3 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/asset_injector:2.16 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/jquery_ui_tooltip:2.0.0 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/ctools:4.0.3 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/entity_embed:1.3 --with-dependencies
+
 
 
 ECHO  ********************************************************************************************************************

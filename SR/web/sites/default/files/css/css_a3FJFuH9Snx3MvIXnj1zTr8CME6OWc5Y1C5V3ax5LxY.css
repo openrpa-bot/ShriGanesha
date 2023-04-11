@@ -1,0 +1,2 @@
+.form-item.form-type-datetime .container-inline,.form-item.form-type-datelist .container-inline{display:inline-block;}
+.form-type-datelist input[type="text"]{max-width:5em;}
