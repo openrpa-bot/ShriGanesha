@@ -113,7 +113,7 @@ ECHO  *                                                                         
 ECHO  * 6.1    https://www.drupal.org/project/devel                                                                      *
 ECHO  * 6.2    https://www.drupal.org/project/dbug                                                                       *
 ECHO  * 6.3    https://www.drupal.org/project/drush                                                                      *
-ECHO  * 6.4    https://www.drupal.org/project/webprofiler                                                                     *
+ECHO  * 6.4    https://www.drupal.org/project/webprofiler                                                                *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/devel:5.1.1  --with-all-dependencies
@@ -123,6 +123,7 @@ ECHO  **************************************************************************
 call composer require drush/drush:11.5.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/webprofiler:9.0.2  --with-all-dependencies
+
 
 
 ECHO  ********************************************************************************************************************
@@ -184,6 +185,7 @@ ECHO  **************************************************************************
 call composer require drupal/poll:1.6  --with-all-dependencies
 
 
+
 ECHO  ********************************************************************************************************************
 ECHO  * 12     Webform                                                                                                   *
 ECHO  ********************************************************************************************************************
@@ -238,6 +240,8 @@ ECHO  * 14.3   https://www.drupal.org/project/exclude_node_title                
 ECHO  * 14.4   https://www.drupal.org/project/field_permissions                                                          *
 ECHO  * 14.5   https://www.drupal.org/project/field_formatter_class                                                      *
 ECHO  * 14.6   https://www.drupal.org/project/field_group                                                                *
+ECHO  * 14.7   https://www.drupal.org/project/field_group_table                                                          *
+ECHO  * 14.8   https://www.drupal.org/project/boolean_single_state_formatter                                             *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/conditional_fields:4.0.0-alpha2  --with-dependencies
@@ -251,6 +255,10 @@ ECHO  **************************************************************************
 call composer require drupal/field_formatter_class:1.6 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/field_group:3.4 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/field_group_table:1.0 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/boolean_single_state_formatter:1.1 --with-dependencies
 
 
 
@@ -311,6 +319,7 @@ ECHO  **************************************************************************
 call composer require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require geocodio/geocodio-library-php --with-all-dependencies
+ECHO  ********************************************************************************************************************
 call composer require sibyx/phpgpx:@RC --with-all-dependencies
 
 
@@ -426,6 +435,7 @@ ECHO * 20.7   https://www.drupal.org/project/commerce_donate                    
 ECHO * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
 ECHO * 20.9   https://www.drupal.org/project/commerce_shipping                                                          *
 ECHO * 20.10  https://www.drupal.org/project/commerce_stock                                                             *
+ECHO * 20.11  https://www.drupal.org/project/direct_checkout_by_url                                                     *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
 call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
@@ -447,6 +457,8 @@ ECHO ***************************************************************************
 call composer require drupal/commerce_shipping:2.6  --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_stock:1.0  --with-all-dependencies
+ECHO ********************************************************************************************************************
+call composer require drupal/direct_checkout_by_url:1.1  --with-all-dependencies
 
 
 
