@@ -373,12 +373,29 @@ rem call drush -y en jsonapi
 call drush -y en xmlsitemap_custom
 call drush -y en xmlsitemap_engines
 call drush -y en page_manager_ui
+
+call drush -y en boolean_single_state_formatter
+call drush -y en direct_checkout_by_url
+call drush -y en jquery_ui_tooltip
+rem call drush -y en tooltip
+call drush -y en ctools
+call drush -y en entity_embed
+call drush -y en asset_injector
+call drush -y en bee_webform
+call drush -y en bat_booking
+call drush -y en text_field_formatter
+call drush -y en field_group_table
+rem call drush -y en webprofiler
+
 GOTO MyEOF
+
 
 git config --global github.accesstoken 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
 
 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
 
+drush ws
+call drush -y un entity_embed
 
 :MyEOF
 

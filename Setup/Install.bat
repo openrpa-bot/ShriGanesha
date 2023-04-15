@@ -520,6 +520,7 @@ git config --global github.accesstoken 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
 
 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
 
+drush ws
 
 :MyEOF
 
