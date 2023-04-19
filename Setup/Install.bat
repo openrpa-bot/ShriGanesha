@@ -114,6 +114,7 @@ ECHO  * 6.1    https://www.drupal.org/project/devel                             
 ECHO  * 6.2    https://www.drupal.org/project/dbug                                                                       *
 ECHO  * 6.3    https://www.drupal.org/project/drush                                                                      *
 ECHO  * 6.4    https://www.drupal.org/project/webprofiler                                                                *
+ECHO  * 6.5    https://www.drupal.org/project/twig_debugger                                                              *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/devel:5.1.1  --with-all-dependencies
@@ -123,6 +124,8 @@ ECHO  **************************************************************************
 call composer require drush/drush:11.5.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/webprofiler:9.0.2  --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/twig_debugger:1.1.3  --with-all-dependencies
 
 
 
@@ -191,9 +194,12 @@ ECHO  * 12     Webform                                                          
 ECHO  ********************************************************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 12.1   https://www.drupal.org/project/webform                                                                    *
+ECHO  * 12.2   https://www.drupal.org/project/webform_content_creator                                                    *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/webform:6.2.0-beta5 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webform_content_creator:4.0.0 --with-all-dependencies
 
 
 
@@ -276,6 +282,8 @@ ECHO  * 15.7   https://www.drupal.org/project/asset_injector                    
 ECHO  * 15.8   https://www.drupal.org/project/jquery_ui_tooltip                                                          *
 ECHO  * 15.9   https://www.drupal.org/project/ctools                                                                     *
 ECHO  * 15.10  https://www.drupal.org/project/entity_embed                                                               *
+ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
+ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                                                           *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -292,11 +300,16 @@ call composer require drupal/autocomplete_deluxe:2.0.3 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/asset_injector:2.16 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/jquery_ui_tooltip:2.0.0 --with-dependencies
+rem call composer require drupal/jquery_ui_tooltip:2.0.0 --with-dependencies
+call composer require drupal/jquery_ui_tooltip:1.1.0 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/ctools:4.0.3 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_embed:1.3 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/field_description_tooltip:1.0.2 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
 
 
 
@@ -430,12 +443,14 @@ ECHO * 20.2   https://www.drupal.org/project/commerce                           
 ECHO * 20.3   https://www.drupal.org/project/commerce_ticketing                                                         *
 ECHO * 20.4   https://www.drupal.org/project/advancedqueue                                                              *
 ECHO * 20.5   https://www.drupal.org/project/commerce_license                                                           *
-ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order                                                     *
+ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order - disabled                                                    *
 ECHO * 20.7   https://www.drupal.org/project/commerce_donate                                                            *
 ECHO * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
 ECHO * 20.9   https://www.drupal.org/project/commerce_shipping                                                          *
 ECHO * 20.10  https://www.drupal.org/project/commerce_stock                                                             *
 ECHO * 20.11  https://www.drupal.org/project/direct_checkout_by_url                                                     *
+ECHO * 20.12  https://www.drupal.org/project/commerce_choose_price                                                      *
+ECHO * 20.13  https://www.drupal.org/project/webform_product                                                     *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
 call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
@@ -448,7 +463,7 @@ call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
+rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
 ECHO ********************************************************************************************************************
@@ -459,6 +474,10 @@ ECHO ***************************************************************************
 call composer require drupal/commerce_stock:1.0  --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/direct_checkout_by_url:1.1  --with-all-dependencies
+ECHO ********************************************************************************************************************
+call composer require drupal/commerce_choose_price:1.3  --with-all-dependencies
+ECHO ********************************************************************************************************************
+call composer require drupal/webform_product:3.0.4  --with-all-dependencies
 
 
 
@@ -516,11 +535,20 @@ rem composer require drupal/search_exclude:3.0.0-beta1 --with-all-dependencies
 
 GOTO MyEOF
 
+/sites/default/settings.php
+
 git config --global github.accesstoken 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
 
 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
 
 drush ws
+
+Using the rebuild script
+Open settings.php (/sites/default/settings.php) in any plain text editor. Add this line to the end of the file and save it:
+
+$settings['rebuild_access'] = TRUE;
+Visit http://www.example.com/core/rebuild.php in your browser (where www.example.com is your site’s URL). After a short pause, you should be redirected to the home page of your site, and the cache should be rebuilt.
+Open settings.php (/sites/default/settings.php) in a text editor. Find the line you added with $settings[rebuild_access], remove this line, and save the file.
 
 :MyEOF
 

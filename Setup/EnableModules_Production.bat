@@ -397,6 +397,13 @@ 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
 drush ws
 call drush -y un entity_embed
 
+Using the rebuild script
+Open settings.php (/sites/default/settings.php) in any plain text editor. Add this line to the end of the file and save it:
+
+$settings['rebuild_access'] = TRUE;
+Visit http://www.example.com/core/rebuild.php in your browser (where www.example.com is your site’s URL). After a short pause, you should be redirected to the home page of your site, and the cache should be rebuilt.
+Open settings.php (/sites/default/settings.php) in a text editor. Find the line you added with $settings[rebuild_access], remove this line, and save the file.
+
 :MyEOF
 
 cd C:\xampp\htdocs\ShriGanesha\Setup
