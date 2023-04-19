@@ -1,0 +1,17 @@
+name: Direct checkout by URL
+description: Provides a URL where you can send a user directly into checkout by a URL pattern.
+core: 8.x
+core_version_requirement: ^8 || ^9
+type: module
+dependencies:
+  - commerce:commerce_product
+  - commerce:commerce_order
+  - commerce:commerce_cart
+  - commerce:commerce_checkout
+
+configure: direct_checkout_by_url.settings
+
+# Information added by Drupal.org packaging script on 2020-08-20
+version: '8.x-1.1'
+project: 'direct_checkout_by_url'
+datestamp: 1597936652

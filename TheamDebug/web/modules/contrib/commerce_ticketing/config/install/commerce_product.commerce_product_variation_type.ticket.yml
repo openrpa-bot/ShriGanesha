@@ -1,0 +1,14 @@
+langcode: en
+status: true
+third_party_settings:
+  commerce_ticketing:
+    auto_create_ticket: true
+    auto_activate_ticket: true
+    order_state: completed
+id: ticket
+label: Ticket
+orderItemType: default
+generateTitle: false
+traits:
+  - purchasable_entity_ticket
+locked: false

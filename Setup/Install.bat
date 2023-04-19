@@ -443,7 +443,7 @@ ECHO * 20.2   https://www.drupal.org/project/commerce                           
 ECHO * 20.3   https://www.drupal.org/project/commerce_ticketing                                                         *
 ECHO * 20.4   https://www.drupal.org/project/advancedqueue                                                              *
 ECHO * 20.5   https://www.drupal.org/project/commerce_license                                                           *
-ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order - disabled                                                    *
+ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order - disabled                                          *
 ECHO * 20.7   https://www.drupal.org/project/commerce_donate                                                            *
 ECHO * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
 ECHO * 20.9   https://www.drupal.org/project/commerce_shipping                                                          *

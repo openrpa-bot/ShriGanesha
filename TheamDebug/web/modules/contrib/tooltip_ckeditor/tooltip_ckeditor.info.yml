@@ -1,0 +1,14 @@
+name: Tooltip Ckeditor
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+description: This module provides tooltip functionality in ckeditor.
+package: User interface
+configure: tooltip_ckeditor_admin.settings
+
+dependencies:
+  - jquery_ui_tooltip:jquery_ui_tooltip
+
+# Information added by Drupal.org packaging script on 2022-07-20
+version: '4.0.1'
+project: 'tooltip_ckeditor'
+datestamp: 1658339207

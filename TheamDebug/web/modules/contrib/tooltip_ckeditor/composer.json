@@ -1,0 +1,14 @@
+{
+  "name": "drupal/tooltip_ckeditor",
+  "description": "Provides tooltip functionality in ckeditor.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/tooltip_ckeditor",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/tooltip_ckeditor"
+  },
+  "require": {
+    "drupal/core": "^8 || ^9",
+    "drupal/jquery_ui_tooltip": "^1.1"
+  }
+}

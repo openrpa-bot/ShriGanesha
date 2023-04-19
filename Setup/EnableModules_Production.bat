@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=RamaDevotee
+set webFolderName=Test1
 
 cd %workingFolder%
 cd %webFolderName%
@@ -163,7 +163,7 @@ call drush -y en commerce
 call drush -y en commerce_ticketing
 call drush -y en advancedqueue
 call drush -y en commerce_license
-call drush -y en commerce_webform_order
+rem call drush -y en commerce_webform_order
 call drush -y en commerce_donate
 call drush -y en commerce_add_to_cart_link
 call drush -y en commerce_shipping
@@ -245,7 +245,7 @@ call drush -y en commerce_stock_local
 call drush -y en commerce_stock_ui
 call drush -y en field_layout
 call drush -y en help_topics
-call drush -y en workspaces
+rem call drush -y en workspaces
 call drush -y en devel_generate
 call drush -y en entity_print_views
 rem call drush -y en checklistapiexample
@@ -385,6 +385,9 @@ call drush -y en bee_webform
 call drush -y en bat_booking
 call drush -y en text_field_formatter
 call drush -y en field_group_table
+call drush -y en commerce_choose_price
+call drush -y en webform_content_creator
+call drush -y en webform_product
 rem call drush -y en webprofiler
 
 GOTO MyEOF

@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_ticketing.commerce_ticket_type.default
+    - core.entity_view_mode.commerce_ticket.receipt
+id: commerce_ticket.default.receipt
+targetEntityType: commerce_ticket
+bundle: default
+mode: receipt
+content:
+  date_purchase:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  date_visit:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  order_number:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  short_uuid:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  ticket_number:
+    type: string
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  name: true
+  qr_code: true
+  state: true
+  uid: true

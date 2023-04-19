@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Commerce ticketing install functions.
+ */
+
+use Drupal\Core\Config\FileStorage;
+
+/**
+ * Update commerce_ticket entity definitions.
+ */
+function commerce_ticketing_update_8001() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('commerce_ticket');
+  $definition_update_manager->updateEntityType($entity_type);
+}
+
+/**
+ * Install default config.
+ */
+function commerce_ticketing_update_9001() {
+  /** @var \Drupal\Core\Config\ConfigInstallerInterface $config_installer */
+  $config_installer = \Drupal::service('config.installer');
+  $config_path = \Drupal::service('extension.list.module')->getPath('commerce_ticketing') . '/config/optional';
+  $config_source = new FileStorage($config_path);
+  $config_installer->installOptionalConfig($config_source);
+}

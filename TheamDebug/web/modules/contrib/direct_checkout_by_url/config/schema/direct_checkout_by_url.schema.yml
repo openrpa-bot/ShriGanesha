@@ -1,0 +1,10 @@
+direct_checkout_by_url.settings:
+  type: config_object
+  label: 'Direct checkout by URL settings'
+  mapping:
+    reset_cart:
+      type: integer
+      label: 'Reset cart'
+    allow_unknown_skus:
+      type: integer
+      label: 'Allow unknown SKUs'

@@ -1,0 +1,12 @@
+name: "Boolean Single State Formatter"
+description: "Additional formatter to Boolean field, that provides display for only one state (on by default)."
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:field
+
+# Information added by Drupal.org packaging script on 2020-05-25
+version: '8.x-1.1'
+project: 'boolean_single_state_formatter'
+datestamp: 1590391163

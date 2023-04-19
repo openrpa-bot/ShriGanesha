@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - commerce_ticketing
+  module:
+    - commerce_ticketing
+id: commerce_ticket_delete_action
+label: 'Delete Commerce Ticket'
+type: commerce_ticket
+plugin: 'entity:delete_action:commerce_ticket'
+configuration: {  }

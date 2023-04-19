@@ -1,0 +1,9 @@
+tooltip_ckeditor:
+  version: 1.x
+  js:
+    js/tooltip.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - jquery_ui_tooltip/tooltip

@@ -264,8 +264,7 @@ $databases = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'BTZMdczDpgFGdakuuD2FiNBSYrgoDYY2d1xA7EucfyOSaFg5n0ZV6aXaxE-Vuf4mrmYmmXv8jQ';
-
+$settings['hash_salt'] = 'QfSMku7FsYI_GnHl9CZ5X5EBdNPGuL1noEMs7nGGQM-2Sc9MePPJY6wWn51aaWtemEq0eZ2c7g';
 /**
  * Deployment identifier.
  *
@@ -809,12 +808,10 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
  *
  * Keep this code block at the end of this file to take full effect.
  */
-#
-# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#   include $app_root . '/' . $site_path . '/settings.local.php';
-# }
+
+
 $databases['default']['default'] = array (
-  'database' => 'sr',
+  'database' => 'SR',
   'username' => 'root',
   'password' => '',
   'prefix' => '',
@@ -824,4 +821,9 @@ $databases['default']['default'] = array (
   'driver' => 'mysql',
   'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
 );
-$settings['config_sync_directory'] = 'sites/default/files/config_sfhTYZFnBB-yaJzc10paCPSIltFjn1FurTBQcY_jZH0GSJ8lWJY3WYFFjhNRypK8GU1WXpc5yw/sync';
+
+$settings['config_sync_directory'] = 'sites/default/files/config_Yf_p0l7cpGbCu5WwkDtnW3lVJCvWTSIPZSToFcKAHkS6qBh_p9leO7gXdMjw2oIDptS_ALl4nA/sync';
+
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
