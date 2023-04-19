@@ -209,9 +209,9 @@ rem call drush -y en tracker
 rem call drush -y en ban
 rem call drush -y en book
 call drush -y en content_moderation
-call drush -y en forum
+rem call drush -y en forum
 call drush -y en inline_form_errors
-call drush -y en pgsql
+rem call drush -y en pgsql
 rem call drush -y en quickedit
 rem call drush -y en rdf
 call drush -y en responsive_image
@@ -388,6 +388,9 @@ call drush -y en field_group_table
 call drush -y en commerce_choose_price
 call drush -y en webform_content_creator
 call drush -y en webform_product
+call drush -y en field_description_tooltip
+call drush -y en social_auth_facebook
+
 rem call drush -y en webprofiler
 
 GOTO MyEOF
