@@ -4,7 +4,7 @@ set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
 set workingFolder=C:\xampp\htdocs\ShriGanesha
 
-set webFolderName=Test1
+set webFolderName=Stage
 
 cd %workingFolder%
 cd %webFolderName%
@@ -122,7 +122,7 @@ call drush -y en sendgrid_integration
 rem call drush -y en externalauth
 call drush -y en social_auth_google
 rem call drush -y en login_destination:8.x-2.0-beta6 --with-all-dependencies
-call drush -y en redirect_after_login
+rem call drush -y en redirect_after_login
 rem call drush -y en openid_connect
 
 
@@ -390,8 +390,12 @@ call drush -y en webform_content_creator
 call drush -y en webform_product
 call drush -y en field_description_tooltip
 call drush -y en social_auth_facebook
+call drush -y en webform_gmap_field
+call drush -y en webform_counter
+call drush -y en webform_hierarchy
+call drush -y en webform_views
 
-rem call drush -y en webprofiler
+
 
 GOTO MyEOF
 

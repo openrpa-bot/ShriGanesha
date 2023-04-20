@@ -195,11 +195,23 @@ ECHO  **************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 12.1   https://www.drupal.org/project/webform                                                                    *
 ECHO  * 12.2   https://www.drupal.org/project/webform_content_creator                                                    *
+ECHO  * 12.3   https://www.drupal.org/project/webform_gmap_field                                                         *
+ECHO  * 12.4   https://www.drupal.org/project/webform_counter                                                            *
+ECHO  * 12.5   https://www.drupal.org/project/webform_hierarchy                                                          *
+ECHO  * 12.6   https://www.drupal.org/project/webform_views                                                              *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/webform:6.2.0-beta5 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/webform_content_creator:4.0.0 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webform_gmap_field:1.1 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webform_counter:1.0 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webform_hierarchy:1.1 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/webform_views:5.1 --with-all-dependencies
 
 
 
@@ -362,7 +374,7 @@ ECHO  * 17.4   https://www.drupal.org/project/tfa                               
 ECHO  * 17.5   https://www.drupal.org/project/prlp                                                                       *
 ECHO  * 17.6   https://www.drupal.org/project/sendgrid_integration                                                       *
 ECHO  * 17.7   https://www.drupal.org/project/r4032login                                                                 *
-ECHO  * 17.8   https://www.drupal.org/project/redirect_after_login                                                       *
+ECHO  * 17.8   https://www.drupal.org/project/redirect_after_login    - Disabled                                         *
 ECHO  * 17.9   https://www.drupal.org/project/login_destination                                                          *
 ECHO  * 17.13  https://www.drupal.org/project/user_email_verification - disabled                                         *
 ECHO  *                                                                                                                  *
@@ -379,7 +391,7 @@ call composer require drupal/sendgrid_integration:2.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/r4032login:2.2.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/redirect_after_login:2.7 --with-all-dependencies
+rem call composer require drupal/redirect_after_login:2.7 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/login_destination:2.0-beta6 --with-all-dependencies
 ECHO ********************************************************************************************************************
@@ -450,7 +462,7 @@ ECHO * 20.9   https://www.drupal.org/project/commerce_shipping                  
 ECHO * 20.10  https://www.drupal.org/project/commerce_stock                                                             *
 ECHO * 20.11  https://www.drupal.org/project/direct_checkout_by_url                                                     *
 ECHO * 20.12  https://www.drupal.org/project/commerce_choose_price                                                      *
-ECHO * 20.13  https://www.drupal.org/project/webform_product                                                     *
+ECHO * 20.13  https://www.drupal.org/project/webform_product                                                            *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
 call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
