@@ -376,7 +376,8 @@ ECHO  * 17.6   https://www.drupal.org/project/sendgrid_integration              
 ECHO  * 17.7   https://www.drupal.org/project/r4032login                                                                 *
 ECHO  * 17.8   https://www.drupal.org/project/redirect_after_login    - Disabled                                         *
 ECHO  * 17.9   https://www.drupal.org/project/login_destination                                                          *
-ECHO  * 17.13  https://www.drupal.org/project/user_email_verification - disabled                                         *
+ECHO  * 17.10  https://www.drupal.org/project/user_email_verification - disabled                                         *
+ECHO  * 17.11  https://www.drupal.org/project/multiple_registration                                                      *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/social_auth:3.1.0 --with-all-dependencies
@@ -397,7 +398,7 @@ call composer require drupal/login_destination:2.0-beta6 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/user_email_verification:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************
-
+call composer require drupal/multiple_registration:3.2.0 --with-all-dependencies
 
 
 ECHO ********************************************************************************************************************
@@ -455,7 +456,7 @@ ECHO * 20.2   https://www.drupal.org/project/commerce                           
 ECHO * 20.3   https://www.drupal.org/project/commerce_ticketing                                                         *
 ECHO * 20.4   https://www.drupal.org/project/advancedqueue                                                              *
 ECHO * 20.5   https://www.drupal.org/project/commerce_license                                                           *
-ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order - disabled                                          *
+ECHO * 20.6   https://www.drupal.org/project/commerce_webform_order                                                     *
 ECHO * 20.7   https://www.drupal.org/project/commerce_donate                                                            *
 ECHO * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
 ECHO * 20.9   https://www.drupal.org/project/commerce_shipping                                                          *
@@ -475,7 +476,7 @@ call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
-rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
+call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
 ECHO ********************************************************************************************************************

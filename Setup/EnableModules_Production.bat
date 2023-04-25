@@ -394,6 +394,7 @@ call drush -y en webform_gmap_field
 call drush -y en webform_counter
 call drush -y en webform_hierarchy
 call drush -y en webform_views
+call drush -y en multiple_registration
 
 
 
