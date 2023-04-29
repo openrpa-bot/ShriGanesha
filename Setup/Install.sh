@@ -117,7 +117,7 @@ echo  * 4.1    https://www.drupal.org/project/admin_toolbar                     
 echo  * 4.2    https://www.drupal.org/project/menu_per_role                                                              *
 echo  * 4.3    https://www.drupal.org/project/tb_megamenu                                                                *
 echo  * 4.4    https://www.drupal.org/project/extlink                                                                    *
-echo  * 4.4    https://www.drupal.org/project/we_megamenu - Disabled                                                     *
+echo  * 4.5    https://www.drupal.org/project/we_megamenu - Disabled                                                     *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/admin_toolbar:^3.3 --with-dependencies
@@ -270,9 +270,10 @@ echo  * 13.5   https://www.drupal.org/project/editor_file                       
 echo  * 13.6   https://www.drupal.org/project/google_map_field                                                           *
 echo  * 13.7   https://www.drupal.org/project/geofield                                                                   *
 echo  * 13.8   https://www.drupal.org/project/geofield_map                                                               *
-echo  * 13.9   https://www.drupal.org/project/multiple_selects                                                           *
-echo  * 13.10  https://www.drupal.org/project/uuid_extra                                                                 *
-echo  * 13.11  https://www.drupal.org/project/edit_uuid                                                                  *
+echo  * 13.9   https://www.drupal.org/project/text_field_formatter                                                       *
+echo  * 13.10  https://www.drupal.org/project/multiple_selects                                                           *
+echo  * 13.11  https://www.drupal.org/project/uuid_extra                                                                 *
+echo  * 13.12  https://www.drupal.org/project/edit_uuid                                                                  *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/tablefield:2.4 --with-dependencies
@@ -334,6 +335,8 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/boolean_single_state_formatter:1.1 --with-dependencies
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/endroid_qr_code:3.0.0 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/barcodes:2.0.5 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/field_token_value:3.0.1 --with-dependencies
 

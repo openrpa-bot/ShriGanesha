@@ -17,6 +17,7 @@ ECHO  **************************************************************************
 call drush -y en layout_builder_restrictions
 call drush -y en layout_builder_modal
 call drush -y en bootstrap_layout_builder
+call drush -y en dxpr_builder
 ECHO  *******************************************************************************
 call drush -y en tb_megamenu
 call drush -y en extlink
@@ -90,6 +91,14 @@ call drush -y en google_map_field
 call drush -y en field_permissions
 call drush -y en field_group
 call drush -y en autocomplete_deluxe
+call drush -y en text_field_formatter
+call drush -y en multiple_selects
+call drush -y en uuid_extra
+call drush -y en edit_uuid
+call drush -y en barcodes
+call drush -y en field_token_value
+call drush -y en jquery_countdown_timer
+
 
 
 
@@ -168,7 +177,9 @@ call drush -y en commerce_donate
 call drush -y en commerce_add_to_cart_link
 call drush -y en commerce_shipping
 call drush -y en commerce_stock
-
+call drush -y en commerce_guest_registration
+call drush -y en commerce_ccavenue
+call drush -y en commerce_razorpay
 
 
 ECHO  *******************************************************************************

@@ -41,11 +41,17 @@ ECHO  **************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 2.1    https://www.drupal.org/project/bootstrap_barrio                                                           *
 ECHO  * 2.2    https://www.drupal.org/project/bootstrap5                                                                 *
+ECHO  * 2.3    https://www.drupal.org/project/dxpr_theme                                                                 *
+ECHO  * 2.4    https://www.drupal.org/project/dxpr_builder                                                               *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap_barrio:5.5.10 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap5:3.0.5 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/dxpr_theme:5.1.0 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/dxpr_builder:2.2.3 --with-dependencies
 
 
 
@@ -74,7 +80,7 @@ ECHO  * 4.1    https://www.drupal.org/project/admin_toolbar                     
 ECHO  * 4.2    https://www.drupal.org/project/menu_per_role                                                              *
 ECHO  * 4.3    https://www.drupal.org/project/tb_megamenu                                                                *
 ECHO  * 4.4    https://www.drupal.org/project/extlink                                                                    *
-ECHO  * 4.4    https://www.drupal.org/project/we_megamenu - Disabled                                                     *
+ECHO  * 4.5    https://www.drupal.org/project/we_megamenu - Disabled                                                     *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/admin_toolbar:^3.3 --with-dependencies
@@ -227,6 +233,10 @@ ECHO  * 13.5   https://www.drupal.org/project/editor_file                       
 ECHO  * 13.6   https://www.drupal.org/project/google_map_field                                                           *
 ECHO  * 13.7   https://www.drupal.org/project/geofield                                                                   *
 ECHO  * 13.8   https://www.drupal.org/project/geofield_map                                                               *
+ECHO  * 13.9   https://www.drupal.org/project/text_field_formatter                                                       *
+ECHO  * 13.10  https://www.drupal.org/project/multiple_selects                                                           *
+ECHO  * 13.11  https://www.drupal.org/project/uuid_extra                                                                 *
+ECHO  * 13.12  https://www.drupal.org/project/edit_uuid                                                                  *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/tablefield:2.4 --with-dependencies
@@ -246,7 +256,12 @@ ECHO  **************************************************************************
 call composer require drupal/geofield_map:3.0.8 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/text_field_formatter:2.0.1  --with-all-dependencies
-
+ECHO  ********************************************************************************************************************
+call composer require drupal/multiple_selects:1.1  --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/uuid_extra:2.0.1  --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/edit_uuid:2.1 --with-all-dependencies
 
 ECHO  ********************************************************************************************************************
 ECHO  * 14     Field Formatters                                                                                          *
@@ -260,6 +275,9 @@ ECHO  * 14.5   https://www.drupal.org/project/field_formatter_class             
 ECHO  * 14.6   https://www.drupal.org/project/field_group                                                                *
 ECHO  * 14.7   https://www.drupal.org/project/field_group_table                                                          *
 ECHO  * 14.8   https://www.drupal.org/project/boolean_single_state_formatter                                             *
+ECHO  * 14.9   https://www.drupal.org/project/endroid_qr_code    -disabled                                               *
+ECHO  * 14.10  https://www.drupal.org/project/barcodes                                                                   *
+ECHO  * 14.11  https://www.drupal.org/project/field_token_value                                                          *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/conditional_fields:4.0.0-alpha2  --with-dependencies
@@ -277,7 +295,12 @@ ECHO  **************************************************************************
 call composer require drupal/field_group_table:1.0 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/boolean_single_state_formatter:1.1 --with-dependencies
-
+ECHO  ********************************************************************************************************************
+rem call composer require drupal/endroid_qr_code:3.0.0 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/barcodes:2.0.5 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/field_token_value:3.0.1 --with-dependencies
 
 
 ECHO  ********************************************************************************************************************
@@ -296,6 +319,7 @@ ECHO  * 15.9   https://www.drupal.org/project/ctools                            
 ECHO  * 15.10  https://www.drupal.org/project/entity_embed                                                               *
 ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
 ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                                                           *
+ECHO  * 15.13  https://www.drupal.org/project/jquery_countdown_timer                                                     *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -322,6 +346,8 @@ ECHO  **************************************************************************
 call composer require drupal/field_description_tooltip:1.0.2 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/jquery_countdown_timer:1.3 --with-dependencies
 
 
 
@@ -464,6 +490,10 @@ ECHO * 20.10  https://www.drupal.org/project/commerce_stock                     
 ECHO * 20.11  https://www.drupal.org/project/direct_checkout_by_url                                                     *
 ECHO * 20.12  https://www.drupal.org/project/commerce_choose_price                                                      *
 ECHO * 20.13  https://www.drupal.org/project/webform_product                                                            *
+ECHO * 20.14  https://www.drupal.org/project/commerce_guest_registration                                                *
+ECHO * 20.15  https://www.drupal.org/project/commerce_ccavenue                                                          *
+ECHO * 20.16  https://www.drupal.org/project/commerce_razorpay                                                          *
+ECHO * 20.17  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
 call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
@@ -491,7 +521,12 @@ ECHO ***************************************************************************
 call composer require drupal/commerce_choose_price:1.3  --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/webform_product:3.0.4  --with-all-dependencies
-
+ECHO ********************************************************************************************************************
+call composer require drupal/commerce_guest_registration:2.0.1  --with-all-dependencies
+ECHO ********************************************************************************************************************
+call composer require drupal/commerce_ccavenue:3.0.3  --with-all-dependencies
+ECHO ********************************************************************************************************************
+call composer require drupal/commerce_razorpay:2.0  --with-all-dependencies
 
 
 ECHO ********************************************************************************************************************
