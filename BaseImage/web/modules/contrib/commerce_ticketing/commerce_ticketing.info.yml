@@ -1,0 +1,22 @@
+name: Commerce Ticketing
+type: module
+description: 'Provides a commerce ticket entity.'
+package: 'Commerce (contrib)'
+core_version_requirement: ^9
+dependencies:
+  - commerce:commerce_cart
+  - commerce:commerce_order
+  - commerce:commerce_number_pattern
+  - drupal:color
+  - drupal:image
+  - drupal:text
+  - drupal:views
+  - entity:entity
+  - entity_print:entity_print
+  - state_machine:state_machine
+configure: entity.commerce_ticket_type.collection
+
+# Information added by Drupal.org packaging script on 2023-02-03
+version: '2.0.0-alpha7'
+project: 'commerce_ticketing'
+datestamp: 1675426793

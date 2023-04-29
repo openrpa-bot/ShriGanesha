@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for tooltip ckeditor module.
+ */
+
+/**
+ * Implements hook_plugin_info_alter().
+ */
+function tooltip_ckeditor_ckeditor_plugin_info_alter(array &$plugins) {
+  $plugins['tooltip_ckeditor'] = [
+    'id' => 'tooltip_ckeditor',
+    'label' => t('Insert Tooltip'),
+    'module' => 'tooltip_ckeditor',
+    'class' => 'Drupal\tooltip_ckeditor\Plugin\CKEditorPlugin\Tooltip',
+    'provider' => 'tooltip_ckeditor',
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function tooltip_ckeditor_page_attachments(array &$attachments) {
+  $config = \Drupal::config('tooltip_ckeditor.settings');
+  $attachments['#attached']['library'][] = 'tooltip_ckeditor/tooltip_ckeditor';
+  $attachments['#attached']['drupalSettings']['data']['tooltip_ckeditor'] = [
+    'tooltipCkeditorSelector' => $config->get('tooltip_ckeditor_selector'),
+  ];
+}

@@ -1,0 +1,12 @@
+name: Webform Hierarchy
+type: module
+description: 'Provides hierarchical widget for webforms.'
+package: Webform
+core_version_requirement: ^8 || ^9
+dependencies:
+  - webform:webform
+
+# Information added by Drupal.org packaging script on 2021-09-19
+version: '8.x-1.1'
+project: 'webform_hierarchy'
+datestamp: 1632068519

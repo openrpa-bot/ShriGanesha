@@ -1,0 +1,13 @@
+name: Webform Counter
+type: module
+description: Provides Submissions Counter feture for webforms.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Webform
+dependencies:
+  - webform:webform
+
+# Information added by Drupal.org packaging script on 2021-02-25
+version: '8.x-1.0'
+project: 'webform_counter'
+datestamp: 1614254187

@@ -1,0 +1,140 @@
+<?php
+
+namespace Drupal\office_hours\Element;
+
+use Drupal\Core\Datetime\Element\Datelist;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\office_hours\OfficeHoursDateHelper;
+
+/**
+ * Provides a one-line text field form element.
+ *
+ * @FormElement("office_hours_datelist")
+ */
+class OfficeHoursDatelist extends Datelist {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getInfo() {
+    $parent_info = parent::getInfo();
+
+    $info = [
+      '#input' => TRUE,
+      '#tree' => TRUE,
+      '#element_validate' => [[static::class, 'validateOfficeHoursSlot']],
+      '#process' => [[static::class, 'processOfficeHoursSlot']],
+      // @see Drupal\Core\Datetime\Element\Datelist.
+      '#date_part_order' => ['year', 'month', 'day', 'hour', 'minute'],
+      // @see Drupal\Core\Datetime\Element\Datetime.
+      '#date_date_element' => 'none', // {'none'|'date'}
+      '#date_time_element' => 'time', // {'none'|'time'|'text'}
+      '#date_date_format' => 'none',
+      // Callbacks, used to add a jQuery time picker or an 'all_day' checkbox.
+      '#date_time_callbacks' => [],
+      '#date_year_range' => '1900:2050',
+      // @see Drupal\Core\Datetime\Element\DateElementBase.
+      '#date_timezone' => '+0000',
+    ];
+
+    // #process, #validate bottom-up.
+    $info['#element_validate'] = array_merge($parent_info['#element_validate'], $info['#element_validate']);
+    $info['#process'] = array_merge($parent_info['#process'], $info['#process']);
+
+    return $info + $parent_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Callback for hours element.
+   *
+   * Takes #default_value and dissects it in hours, minutes and ampm indicator.
+   * Mimics the date_parse() function.
+   * - g = 12-hour format of an hour without leading zeros 1 through 12
+   * - G = 24-hour format of an hour without leading zeros 0 through 23
+   * - h = 12-hour format of an hour with leading zeros   01 through 12
+   * - H = 24-hour format of an hour with leading zeros   00 through 23
+   */
+  public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
+
+    if ($input !== FALSE) {
+      // Set empty minutes field to '00' for better UX.
+      if (is_array($input) && $input['hour'] !== '' && $input['minute'] === '') {
+        $input['minute'] = '00';
+      }
+      // Ensure that 'all_day' checkbox works correctly.
+      // If there is no default value,
+      // then we do not have any hours, so simply return NULL.
+      if ($input !== NULL) {
+        $input = parent::valueCallback($element, $input, $form_state);
+      }
+    }
+    else {
+      // Initial load from database.
+      // Format the integer time into a DateTime object.
+      $date = NULL;
+      try {
+        $time = $element['#default_value'];
+        if (is_array($time)) {
+          $date = OfficeHoursDateHelper::createFromArray($time);
+        }
+        elseif (is_numeric($time)) {
+          $timezone = $element['#date_timezone'];
+          // The Date function needs a fixed format, so format $time to '0030'.
+          $time = OfficeHoursDateHelper::format($time, 'Hi');
+          $date = OfficeHoursDateHelper::createFromFormat('Gi', $time, $timezone);
+        }
+      }
+      catch (\Exception $e) {
+        $date = NULL;
+      }
+      $element['#default_value'] = $date;
+
+      $input = parent::valueCallback($element, $input, $form_state);
+    }
+
+    return $input;
+  }
+
+  /**
+   * Process the hours element before showing it.
+   *
+   * @param array $element
+   *   The form element to process.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param array $complete_form
+   *   The complete form structure.
+   *
+   * @return array
+   *   The screen element.
+   */
+  public static function processOfficeHoursSlot(array &$element, FormStateInterface $form_state, array &$complete_form) {
+    $element['hour']['#options'] = $element['#hour_options'];
+    return $element;
+  }
+
+  /**
+   * Validate the hours selector element.
+   *
+   * @param array $element
+   *   The form element to process.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param array $complete_form
+   *   The complete form structure.
+   */
+  public static function validateOfficeHoursSlot(array &$element, FormStateInterface $form_state, array &$complete_form) {
+    $input = $element['#value'];
+
+    $value = '';
+    if (isset($input['object']) && $input['object']) {
+      $value = (string) $input['object']->format('Gi');
+      // Set value for usage in OfficeHoursBaseSlot::validateOfficeHoursSlot().
+      $element['#value'] = $value;
+    }
+    $form_state->setValueForElement($element, $value);
+  }
+
+}

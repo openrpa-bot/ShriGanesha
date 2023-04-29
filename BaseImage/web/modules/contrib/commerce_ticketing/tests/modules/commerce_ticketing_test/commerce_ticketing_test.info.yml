@@ -1,0 +1,11 @@
+name: Commerce Ticketing Test
+type: module
+description: Contains ticketing entity types and other things needed in tests.
+package: Testing
+dependencies:
+  - commerce_ticketing:commerce_ticketing
+
+# Information added by Drupal.org packaging script on 2023-02-03
+version: '2.0.0-alpha7'
+project: 'commerce_ticketing'
+datestamp: 1675426793
