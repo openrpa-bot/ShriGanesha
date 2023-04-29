@@ -1,0 +1,12 @@
+# Schema for the configuration files of the Shortcut module.
+
+edit_uuid_config.form.*:
+  type: config_entity
+  label: 'Edit UUID configuration settings'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'

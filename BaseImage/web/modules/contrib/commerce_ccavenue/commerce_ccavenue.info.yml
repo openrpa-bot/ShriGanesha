@@ -1,0 +1,13 @@
+name: Commerce CCAvenue
+type: module
+description: 'Provides Commerce integration for CCAvenue Payments.'
+package: Commerce
+core_version_requirement: ^8.8.0 || ^9
+dependencies:
+  - commerce_payment
+# project: 'commerce_ccavenue'
+
+# Information added by Drupal.org packaging script on 2021-05-24
+version: '3.0.3'
+project: 'commerce_ccavenue'
+datestamp: 1621872421

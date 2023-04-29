@@ -1,0 +1,31 @@
+entity.edit_uuid_config.delete_form:
+  path: '/admin/config/development/edit-uuid-config/manage/{edit_uuid_config}/delete'
+  defaults:
+    _entity_form: 'edit_uuid_config.delete'
+    _title: 'Delete Edit UUID configuration'
+  requirements:
+    _permission: 'administer edit_uuid_config configuration'
+
+entity.edit_uuid_config.collection:
+  path: '/admin/config/development/edit-uuid-config'
+  defaults:
+    _entity_list: 'edit_uuid_config'
+    _title: 'Edit UUID configuration'
+  requirements:
+    _permission: 'administer edit_uuid_config configuration'
+
+edit_uuid_config.add:
+  path: '/admin/config/development/edit-uuid-config/add'
+  defaults:
+    _entity_form: 'edit_uuid_config.add'
+    _title: 'Add Edit UUID configuration'
+  requirements:
+    _permission: 'administer edit_uuid_config configuration'
+
+entity.edit_uuid_config.edit_form:
+  path: '/admin/config/development/edit-uuid-config/manage/{edit_uuid_config}'
+  defaults:
+    _entity_form: 'edit_uuid_config.edit'
+    _title: 'Edit Edit UUID configuration'
+  requirements:
+    _entity_access: 'edit_uuid_config.update'  

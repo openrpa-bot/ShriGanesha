@@ -1,0 +1,11 @@
+name: Edit UUID
+description: 'Add or Update custom UUID of an entity'
+core: 8.x
+core_version_requirement: ^8 || ^9
+type: module
+configure: entity.edit_uuid_config.collection
+
+# Information added by Drupal.org packaging script on 2021-07-05
+version: '8.x-2.1'
+project: 'edit_uuid'
+datestamp: 1625502383

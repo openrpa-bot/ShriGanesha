@@ -1,0 +1,9 @@
+view:
+  css:
+    theme:
+      css/dxpr_builder_media.view.css: {}
+  js:
+    js/dxpr_builder_media.view.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

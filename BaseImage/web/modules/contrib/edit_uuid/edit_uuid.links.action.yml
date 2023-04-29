@@ -1,0 +1,5 @@
+edit_uuid_config_add_local_action:
+  route_name: edit_uuid_config.add
+  title: 'Edit UUID configuration'
+  appears_on:
+    - entity.edit_uuid_config.collection

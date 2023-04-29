@@ -1,0 +1,12 @@
+administer edit_uuid_config configuration:
+ title: 'Administer Edit UUID'
+ description: 'Perform administration of EDit UUID'
+ restrict access: false
+show edit_uuid:
+ title: 'Show UUID in Entity Form'
+ description: 'Show UUID in Entity Form'
+ restrict access: false
+edit edit_uuid:
+ title: 'Edit UUID'
+ description: 'this permission will enable editing UUID in form'
+ restrict access: false   

@@ -1,0 +1,6 @@
+entity.edit_uuid_config.collection:
+  title: 'Edit UUID settings'
+  description: 'Edit UUID settings'
+  route_name: entity.edit_uuid_config.collection
+  parent: 'system.admin_config_development'  
+  weight: 1
