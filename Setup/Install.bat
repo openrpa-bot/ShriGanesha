@@ -263,6 +263,7 @@ call composer require drupal/uuid_extra:2.0.1  --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/edit_uuid:2.1 --with-all-dependencies
 
+
 ECHO  ********************************************************************************************************************
 ECHO  * 14     Field Formatters                                                                                          *
 ECHO  ********************************************************************************************************************
@@ -303,6 +304,7 @@ ECHO  **************************************************************************
 call composer require drupal/field_token_value:3.0.1 --with-dependencies
 
 
+
 ECHO  ********************************************************************************************************************
 ECHO  * 15     View Formatters                                                                                           *
 ECHO  ********************************************************************************************************************
@@ -320,6 +322,8 @@ ECHO  * 15.10  https://www.drupal.org/project/entity_embed                      
 ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
 ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                                                           *
 ECHO  * 15.13  https://www.drupal.org/project/jquery_countdown_timer                                                     *
+ECHO  * 15.14  https://www.drupal.org/project/typed_data                                                                 *
+ECHO  * 15.15  https://www.drupal.org/project/rules                                                                      *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -348,6 +352,10 @@ ECHO  **************************************************************************
 call composer require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/jquery_countdown_timer:1.3 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/typed_data:1.0-beta2 --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/rules:3.0-alpha7 --with-dependencies
 
 
 

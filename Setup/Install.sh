@@ -361,6 +361,8 @@ echo  * 15.10  https://www.drupal.org/project/entity_embed                      
 echo  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
 echo  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                                                           *
 echo  * 15.13  https://www.drupal.org/project/jquery_countdown_timer                                                     *
+echo  * 15.14  https://www.drupal.org/project/typed_data                                                                 *
+echo  * 15.15  https://www.drupal.org/project/rules                                                                      *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -389,6 +391,10 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/jquery_countdown_timer:1.3 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/typed_data:1.0-beta2 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/rules:3.0-alpha7 --with-dependencies
 
 
 
