@@ -80,16 +80,18 @@ echo  * 2.1    https://www.drupal.org/project/bootstrap_barrio                  
 echo  * 2.2    https://www.drupal.org/project/bootstrap5                                                                 *
 echo  * 2.3    https://www.drupal.org/project/dxpr_theme                                                                 *
 echo  * 2.4    https://www.drupal.org/project/dxpr_builder                                                               *
+echo  * 2.5    https://www.drupal.org/project/view_modes_display                                                         *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/bootstrap_barrio:5.5.10 --with-dependencies
+sudo php ~/composer.phar require drupal/bootstrap_barrio:5.5.12 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/bootstrap5:3.0.5 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/dxpr_theme:5.1.0 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/dxpr_builder:2.2.3 --with-dependencies
-
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/view_modes_display:3.0.0 --with-dependencies
 
 
 echo  ********************************************************************************************************************
@@ -120,7 +122,7 @@ echo  * 4.4    https://www.drupal.org/project/extlink                           
 echo  * 4.5    https://www.drupal.org/project/we_megamenu - Disabled                                                     *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/admin_toolbar:^3.3 --with-dependencies
+sudo php ~/composer.phar require drupal/admin_toolbar:3.4.0 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/menu_per_role:1.5 --with-all-dependencies
 echo  ********************************************************************************************************************
@@ -215,9 +217,12 @@ echo  * 10     Modal Dialogue                                                   
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
 echo  * 10.1   https://www.drupal.org/project/simple_popup_blocks                                                        *
+echo  * 10.2   https://www.drupal.org/project/modal_page                                                                 *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/simple_popup_blocks:3.1 --with-all-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/modal_page:5.0.1 --with-dependencies
 
 
 
@@ -246,7 +251,7 @@ echo  *                                                                         
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform:6.2.0-beta5 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/webform_content_creator:4.0.0 --with-all-dependencies
+sudo php ~/composer.phar require drupal/webform_content_creator:4.0.4 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_gmap_field:1.1 --with-all-dependencies
 echo  ********************************************************************************************************************
@@ -288,7 +293,7 @@ sudo php ~/composer.phar require drupal/editor_file:1.7  --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/google_map_field:2.0.0  --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/geofield:1.52   --with-dependencies
+sudo php ~/composer.phar require drupal/geofield:1.53   --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/geofield_map:3.0.8 --with-all-dependencies
 echo  ********************************************************************************************************************
@@ -318,7 +323,7 @@ echo  * 14.10  https://www.drupal.org/project/barcodes                          
 echo  * 14.11  https://www.drupal.org/project/field_token_value                                                          *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/conditional_fields:4.0.0-alpha2  --with-dependencies
+sudo php ~/composer.phar require drupal/conditional_fields:4.0.0-alpha3  --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/twig_field_value:2.0.2  --with-dependencies
 echo  ********************************************************************************************************************
@@ -363,6 +368,8 @@ echo  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                  
 echo  * 15.13  https://www.drupal.org/project/jquery_countdown_timer                                                     *
 echo  * 15.14  https://www.drupal.org/project/typed_data                                                                 *
 echo  * 15.15  https://www.drupal.org/project/rules                                                                      *
+echo  * 15.15  https://www.drupal.org/project/entity_class_formatter                                                     *
+echo  * 15.15  https://www.drupal.org/project/background_image                                                           *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -395,6 +402,10 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/typed_data:1.0-beta2 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/rules:3.0-alpha7 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/entity_class_formatter:2.0.0 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/background_image:2.0.1 --with-dependencies
 
 
 
@@ -451,6 +462,7 @@ echo  * 17.8   https://www.drupal.org/project/redirect_after_login    - Disabled
 echo  * 17.9   https://www.drupal.org/project/login_destination                                                          *
 echo  * 17.10  https://www.drupal.org/project/user_email_verification - disabled                                         *
 echo  * 17.11  https://www.drupal.org/project/multiple_registration                                                      *
+echo  * 17.12  https://www.drupal.org/project/smtp                                                      *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/social_auth:3.1.0 --with-all-dependencies
@@ -471,7 +483,9 @@ sudo php ~/composer.phar require drupal/login_destination:2.0-beta6 --with-all-d
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/user_email_verification:1.1 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/multiple_registration:3.2.0 --with-all-dependencies
+sudo php ~/composer.phar require drupal/multiple_registration:3.2.4 --with-all-dependencies
+echo ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/smtp:1.2 --with-dependencies
 
 
 echo ********************************************************************************************************************
