@@ -575,7 +575,8 @@ echo * 20.13  https://www.drupal.org/project/webform_product                    
 echo * 20.14  https://www.drupal.org/project/commerce_guest_registration - Disabled                                     * - NC  - 10
 echo * 20.15  https://www.drupal.org/project/commerce_ccavenue - Disabled                                               * - NC  - 10
 echo * 20.16  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * - NC  - 10 need to enable
-echo * 20.17  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
+echo * 20.17  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * 
+echo * 20.18  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
@@ -608,13 +609,14 @@ rem sudo php ~/composer.phar require drupal/commerce_guest_registration:2.0.1  -
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/commerce_ccavenue:3.0.3  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_razorpay:2.0  --with-all-dependencies
-
+rem sudo php ~/composer.phar require drupal/commerce_razorpay:2.0  --with-all-dependencies
+echo ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/drupal_commerce_razorpay:1.0.0  --with-all-dependencies
 
 
 
 echo ********************************************************************************************************************
-echo * 21     BAT - Booking and Ticketing                                                                               *
+echo * 21     BAT - Booking and Ticketing   (Not Compatible with 10)                                                    *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
 echo * 21.1   https://www.drupal.org/project/services - Disabled                                                        * - 5.0.0-beta7
@@ -636,7 +638,7 @@ rem sudo php ~/composer.phar require drupal/commerce_cart drupal/commerce_checko
 
 
 echo ********************************************************************************************************************
-echo * 22     Misc                                                                                                      *
+echo * 22     Misc (Compatible 10 with disabled modules)                                                                *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
 echo * 22.1   https://www.drupal.org/project/search_api_autocomplete                                                    *
