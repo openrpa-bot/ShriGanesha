@@ -238,26 +238,26 @@ sudo php ~/composer.phar require drupal/poll:1.6  --with-all-dependencies
 
 
 echo  ********************************************************************************************************************
-echo  * 12     Webform (Not Compatible with 10)                                                                          *
+echo  * 12     Webform (Compatible with 10 with disabled module)                                                         *
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
-echo  * 12.1   https://www.drupal.org/project/webform                                                                    * - NC - 10 -beta6
+echo  * 12.1   https://www.drupal.org/project/webform                                                                    * -  6.2.0-beta6@beta
 echo  * 12.2   https://www.drupal.org/project/webform_content_creator                                                    *
 echo  * 12.3   https://www.drupal.org/project/webform_gmap_field                                                         *
 echo  * 12.4   https://www.drupal.org/project/webform_counter - Disabled                                                 * - NC - 10
-echo  * 12.5   https://www.drupal.org/project/webform_hierarchy                                                          * - NC - 10
+echo  * 12.5   https://www.drupal.org/project/webform_hierarchy - Disabled                                               * - NC - 10
 echo  * 12.6   https://www.drupal.org/project/webform_views                                                              *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/webform:6.2.0-beta6 --with-all-dependencies
+sudo php ~/composer.phar require drupal/webform:6.2.0-beta6@beta --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_content_creator:4.0.4 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_gmap_field:1.1 --with-all-dependencies
 echo  ********************************************************************************************************************
-rem sudo php ~/composer.phar require drupal/webform_counter:1.0 --with-all-dependencies
+rem rem sudo php ~/composer.phar require drupal/webform_counter:1.0 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/webform_hierarchy:1.1 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/webform_hierarchy:1.1 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_views:5.1 --with-all-dependencies
 
@@ -339,9 +339,9 @@ sudo php ~/composer.phar require drupal/field_formatter_class:1.6 --with-depende
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/field_group:3.4 --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/field_group_table:1.0 --with-dependencies
+rem sudo php ~/composer.phar require drupal/field_group_table:1.0 --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/boolean_single_state_formatter:1.1 --with-dependencies
+rem sudo php ~/composer.phar require drupal/boolean_single_state_formatter:1.1 --with-dependencies
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/endroid_qr_code:3.0.0 --with-dependencies
 echo  ********************************************************************************************************************
@@ -575,7 +575,7 @@ echo * 20.13  https://www.drupal.org/project/webform_product                    
 echo * 20.14  https://www.drupal.org/project/commerce_guest_registration - Disabled                                     * - NC  - 10
 echo * 20.15  https://www.drupal.org/project/commerce_ccavenue - Disabled                                               * - NC  - 10
 echo * 20.16  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * - NC  - 10 need to enable
-echo * 20.17  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * 
+echo * 20.17  https://www.drupal.org/project/drupal_commerce_razorpay                                                   * 
 echo * 20.18  https://github.com/razorpay/razorpay-php - manual                                                         *
 echo * 20.19  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 echo *                                                                                                                  *
@@ -586,11 +586,11 @@ sudo php ~/composer.phar require drupal/commerce:2.36 --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
 echo ********************************************************************************************************************
