@@ -279,6 +279,7 @@ echo  * 13.9   https://www.drupal.org/project/text_field_formatter              
 echo  * 13.10  https://www.drupal.org/project/multiple_selects                                                           *
 echo  * 13.11  https://www.drupal.org/project/uuid_extra                                                                 *
 echo  * 13.12  https://www.drupal.org/project/edit_uuid                                                                  *
+echo  * 13.12  https://www.drupal.org/project/field_token_value                                                          *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/tablefield:2.4 --with-dependencies
@@ -304,6 +305,9 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/uuid_extra:2.0.1  --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/edit_uuid:2.1 --with-all-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/field_token_value:3.0.1 --with-all-dependencies
+
 
 
 echo  ********************************************************************************************************************
@@ -368,8 +372,13 @@ echo  * 15.12  https://www.drupal.org/project/tooltip_ckeditor                  
 echo  * 15.13  https://www.drupal.org/project/jquery_countdown_timer                                                     *
 echo  * 15.14  https://www.drupal.org/project/typed_data                                                                 *
 echo  * 15.15  https://www.drupal.org/project/rules                                                                      *
-echo  * 15.15  https://www.drupal.org/project/entity_class_formatter                                                     *
-echo  * 15.15  https://www.drupal.org/project/background_image                                                           *
+echo  * 15.16  https://www.drupal.org/project/entity_class_formatter                                                     *
+echo  * 15.17  https://www.drupal.org/project/background_image                                                           *
+echo  * 15.18  https://www.drupal.org/project/workflow                                                                   *
+echo  * 15.19  https://www.drupal.org/project/eca                                                                        *
+echo  * 15.20  https://www.drupal.org/project/bpmn_io                                                                    *
+echo  * 15.21  https://www.drupal.org/project/eca_cm                                                                     *
+echo  * 15.22  https://www.drupal.org/project/eca_state_machine                                                          *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/pdf_api:2.3.0 --with-all-dependencies
@@ -406,6 +415,16 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/entity_class_formatter:2.0.0 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/background_image:2.0.1 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/workflow:1.7 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/eca:1.1.3 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/bpmn_io:1.1.0 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/eca_cm:1.0.5 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/eca_state_machine:1.0.1 --with-dependencies
 
 
 
