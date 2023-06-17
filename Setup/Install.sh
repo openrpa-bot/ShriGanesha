@@ -432,31 +432,33 @@ sudo php ~/composer.phar require drupal/entity_field_condition:1.4 --with-depend
 
 
 echo  ********************************************************************************************************************
-echo  * 16     Geo/Map Module                                                                                            *
+echo  * 16     Geo/Map Module (Compatible 10 )                                                                           *
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
 echo  * 16.1   https://www.drupal.org/project/geolocation                                                                *
 echo  * 16.2   https://www.drupal.org/project/geocoder                                                                   *
 echo  * 16.3   https://www.drupal.org/project/webform_ip_geo                                                             *
-echo  * 16.4   https://www.drupal.org/project/search_api_location                                                        *
+echo  * 16.4   https://www.drupal.org/project/search_api_location  - disabled                                            * 8.x-1.0-alpha3 
+echo  * 16.5   https://www.drupal.org/project/search_api_location  - disabled                                            * 
+echo  * 16.6   https://www.drupal.org/project/search_api_location  - disabled                                            *  
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/geolocation:3.12 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/geocoder:3.32 --with-all-dependencies
+sudo php ~/composer.phar require drupal/geocoder:4.9 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_ip_geo:1.0.4 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require geocodio/geocodio-library-php --with-all-dependencies
+rem sudo php ~/composer.phar require geocodio/geocodio-library-php --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require sibyx/phpgpx:@RC --with-all-dependencies
+rem sudo php ~/composer.phar require sibyx/phpgpx:@RC --with-all-dependencies
 
 
 
 echo  ********************************************************************************************************************
-echo  * 17       Social Login                                                                                            *
+echo  * 17       Social Login (Compatible 10)                                                                            *
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
 echo  * 17.1   https://www.drupal.org/project/social_auth                                                                *
@@ -464,44 +466,40 @@ echo  * 17.2   https://www.drupal.org/project/social_auth_google                
 echo  * 17.3   https://www.drupal.org/project/social_auth_facebook/                                                      *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth:3.1.0 --with-all-dependencies
+sudo php ~/composer.phar require drupal/social_auth:4.0.1 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth_google:3.0.0 --with-all-dependencies
+sudo php ~/composer.phar require drupal/social_auth_google:4.0.0 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth_facebook:3.0.1 --with-all-dependencies
+sudo php ~/composer.phar require drupal/social_auth_facebook:4.0.1 --with-all-dependencies
 
 
 
 echo  ********************************************************************************************************************
-echo  * 17.1     User Login                                                                                              *
+echo  * 17.1     User Login   (Compatible 10 with disabled modules)                                                      *
 echo  ********************************************************************************************************************
-echo  *                                                                                                                  *
-echo  * 17.4   https://www.drupal.org/project/tfa                                                                        *
+echo  *                                                                                                                  * 
+echo  * 17.4   https://www.drupal.org/project/tfa   - Disabled                                                           *  2.0.0-alpha2
 echo  * 17.5   https://www.drupal.org/project/prlp                                                                       *
-echo  * 17.6   https://www.drupal.org/project/sendgrid_integration                                                       *
+echo  * 17.6   https://www.drupal.org/project/sendgrid_integration  - Disabled                                           *
 echo  * 17.7   https://www.drupal.org/project/r4032login                                                                 *
-echo  * 17.8   https://www.drupal.org/project/redirect_after_login    - Disabled                                         *
-echo  * 17.9   https://www.drupal.org/project/login_destination                                                          *
-echo  * 17.10  https://www.drupal.org/project/user_email_verification - disabled                                         *
+echo  * 17.8   https://www.drupal.org/project/redirect_after_login    - Disabled                                         *  - NC - 10
+echo  * 17.9   https://www.drupal.org/project/login_destination       -disabled                                          * 8.x-2.0-beta6
+echo  * 17.10  https://www.drupal.org/project/user_email_verification - disabled                                         *  - NC - 10
 echo  * 17.11  https://www.drupal.org/project/multiple_registration                                                      *
-echo  * 17.12  https://www.drupal.org/project/smtp                                                      *
+echo  * 17.12  https://www.drupal.org/project/smtp                                                                       *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth:3.1.0 --with-all-dependencies
-echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth_google:3.0.0 --with-all-dependencies
-echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/tfa:1.0 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/tfa:1.0 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/prlp:1.10 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/sendgrid_integration:2.1  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/sendgrid_integration:2.1  --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/r4032login:2.2.1 --with-all-dependencies
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/redirect_after_login:2.7 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/login_destination:2.0-beta6 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/login_destination:2.0-beta6 --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/user_email_verification:1.1 --with-all-dependencies
 echo ********************************************************************************************************************
@@ -510,8 +508,9 @@ echo ***************************************************************************
 sudo php ~/composer.phar require drupal/smtp:1.2 --with-dependencies
 
 
+
 echo ********************************************************************************************************************
-echo * 18     Spam Protection                                                                                           *
+echo * 18     Spam Protection  (Compatible 10 )                                                                         *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
 echo * 18.1   https://www.drupal.org/project/recaptcha                                                                  *
@@ -521,9 +520,9 @@ echo * 18.4   https://www.drupal.org/project/antibot                            
 echo * 18.5   https://www.drupal.org/project/flood_control                                                              *
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/recaptcha:3.1  --with-all-dependencies
+sudo php ~/composer.phar require drupal/recaptcha:3.2  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/captcha:1.10 --with-all-dependencies
+sudo php ~/composer.phar require drupal/captcha:2.0.0 --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/recaptcha_v3:1.8 --with-all-dependencies
 echo ********************************************************************************************************************
@@ -534,56 +533,56 @@ sudo php ~/composer.phar require drupal/flood_control:2.3.2 --with-all-dependenc
 
 
 echo ********************************************************************************************************************
-echo * 19     SEO                                                                                                       *
+echo * 19     SEO  (Compatible 10 with disabled modules)                                                                *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
 echo * 19.1   https://www.drupal.org/project/pathauto                                                                   *
-echo * 19.2   https://www.drupal.org/project/linkchecker                                                                *
+echo * 19.2   https://www.drupal.org/project/linkchecker - Disabled                                                     * - NC - 10
 echo * 19.3   https://www.drupal.org/project/xmlsitemap                                                                 *
 echo * 19.4   https://www.drupal.org/project/metatag                                                                    *
-echo * 19.5   https://www.drupal.org/project/seo_checklist                                                              *
+echo * 19.5   https://www.drupal.org/project/seo_checklist - Disabled                                                   * - NC - 10
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/pathauto:1.11 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/linkchecker:1.1 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/linkchecker:1.1 --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/xmlsitemap:1.4 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/metatag:1.22 --with-all-dependencies
+sudo php ~/composer.phar require drupal/metatag:1.25 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/seo_checklist:5.1.0 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/seo_checklist:5.1.0 --with-all-dependencies
 
 
 
 echo ********************************************************************************************************************
-echo * 20     Commerce                                                                                                  *
+echo * 20     Commerce (Compatible 10 with disabled modules)                                                                                                 *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
-echo * 20.1   https://www.drupal.org/project/inline_entity_form                                                         *
+echo * 20.1   https://www.drupal.org/project/inline_entity_form - Disabled                                              * 2.0.0-rc4 
 echo * 20.2   https://www.drupal.org/project/commerce                                                                   *
-echo * 20.3   https://www.drupal.org/project/commerce_ticketing                                                         *
-echo * 20.4   https://www.drupal.org/project/advancedqueue                                                              *
-echo * 20.5   https://www.drupal.org/project/commerce_license                                                           *
-echo * 20.6   https://www.drupal.org/project/commerce_webform_order                                                     *
-echo * 20.7   https://www.drupal.org/project/commerce_donate                                                            *
+echo * 20.3   https://www.drupal.org/project/commerce_ticketing  - Disabled                                             * - NC - 10 - 2.0.0-alpha7
+echo * 20.4   https://www.drupal.org/project/advancedqueue  - Disabled                                                  * 8.x-1.0-rc7 
+echo * 20.5   https://www.drupal.org/project/commerce_license                                                           * 3.0.0-rc6
+echo * 20.6   https://www.drupal.org/project/commerce_webform_order - Disabled                                          * 2.0.0-beta2 
+echo * 20.7   https://www.drupal.org/project/commerce_donate                                                            * - NC - 10 - 8.x-1.1-alpha1
 echo * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
 echo * 20.9   https://www.drupal.org/project/commerce_shipping                                                          *
-echo * 20.10  https://www.drupal.org/project/commerce_stock                                                             *
-echo * 20.11  https://www.drupal.org/project/direct_checkout_by_url                                                     *
-echo * 20.12  https://www.drupal.org/project/commerce_choose_price                                                      *
+echo * 20.10  https://www.drupal.org/project/commerce_stock  - Disabled                                                 * - NC  - 10 
+echo * 20.11  https://www.drupal.org/project/direct_checkout_by_url - Disabled                                          * - NC  - 10
+echo * 20.12  https://www.drupal.org/project/commerce_choose_price - Disabled                                           * - NC  - 10
 echo * 20.13  https://www.drupal.org/project/webform_product                                                            *
-echo * 20.14  https://www.drupal.org/project/commerce_guest_registration                                                *
-echo * 20.15  https://www.drupal.org/project/commerce_ccavenue                                                          *
-echo * 20.16  https://www.drupal.org/project/commerce_razorpay                                                          *
+echo * 20.14  https://www.drupal.org/project/commerce_guest_registration - Disabled                                     * - NC  - 10
+echo * 20.15  https://www.drupal.org/project/commerce_ccavenue - Disabled                                               * - NC  - 10
+echo * 20.16  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * - NC  - 10 need to enable
 echo * 20.17  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce:2.35 --with-all-dependencies
+sudo php ~/composer.phar require drupal/commerce:2.36 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 echo ********************************************************************************************************************
@@ -591,23 +590,23 @@ sudo php ~/composer.phar require drupal/commerce_license:2.0.0-beta2   --with-al
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/commerce_add_to_cart_link:2.0.5  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/commerce_shipping:2.6  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_stock:1.0  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_stock:1.0  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/direct_checkout_by_url:1.1  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/direct_checkout_by_url:1.1  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_choose_price:1.3  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_choose_price:1.3  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_product:3.0.4  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_guest_registration:2.0.1  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_guest_registration:2.0.1  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_ccavenue:3.0.3  --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/commerce_ccavenue:3.0.3  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/commerce_razorpay:2.0  --with-all-dependencies
 
@@ -618,21 +617,21 @@ echo ***************************************************************************
 echo * 21     BAT - Booking and Ticketing                                                                               *
 echo ********************************************************************************************************************
 echo *                                                                                                                  *
-echo * 21.1   https://www.drupal.org/project/services                                                                   *
-echo * 21.2   https://www.drupal.org/project/bat_api                                                                    *
-echo * 21.3   https://www.drupal.org/project/bat                                                                        *
+echo * 21.1   https://www.drupal.org/project/services - Disabled                                                        * - 5.0.0-beta7
+echo * 21.2   https://www.drupal.org/project/bat_api - Disabled                                                         * - NC - 10 - bat_api 8.x-1.1
+echo * 21.3   https://www.drupal.org/project/bat  - Disabled                                                            * - NC - 10 - bat 8.x-2.1-alpha1
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/services:dev-4.x --with-dependencies
+rem sudo php ~/composer.phar require drupal/services:dev-4.x --with-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/bat_api:1.1.0 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/bat_api:1.1.0 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/bat:1.3.0 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/bat:1.3.0 --with-all-dependencies
 rem sudo php ~/composer.phar require drupal/bat:2.1-alpha1 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/bee:1.2 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/bee:1.2 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_cart drupal/commerce_checkout drupal/commerce_number_pattern drupal/commerce_order drupal/commerce_payment drupal/commerce_price drupal/commerce_product drupal/commerce_store drupal/bat drupal/bat_calendar_reference drupal/bat_event drupal/bat_event_ui drupal/bat_fullcalendar drupal/bat_options drupal/bat_unit
+rem sudo php ~/composer.phar require drupal/commerce_cart drupal/commerce_checkout drupal/commerce_number_pattern drupal/commerce_order drupal/commerce_payment drupal/commerce_price drupal/commerce_product drupal/commerce_store drupal/bat drupal/bat_calendar_reference drupal/bat_event drupal/bat_event_ui drupal/bat_fullcalendar drupal/bat_options drupal/bat_unit
 
 
 
@@ -643,10 +642,11 @@ echo *                                                                          
 echo * 22.1   https://www.drupal.org/project/search_api_autocomplete                                                    *
 echo * 22.2   https://www.drupal.org/project/search_api                                                                 *
 echo * 22.3   https://www.drupal.org/project/facets                                                                     *
-echo * 22.4   https://www.drupal.org/project/fullcalendar_library                                                       *
+echo * 22.4   https://www.drupal.org/project/fullcalendar_library - Disabled                                            * - NC - 10
 echo * 22.5   https://www.drupal.org/project/clientside_validation                                                      *
-echo * 22.6   https://www.drupal.org/project/page_manager                                                               *
+echo * 22.6   https://www.drupal.org/project/page_manager                                                               * 4.0-rc2
 echo * 22.7   https://www.drupal.org/project/jquery_ui_checkboxradio                                                    *
+echo * 22.8   https://www.drupal.org/project/search_exclude - Disabled                                                  * - NC - 10 - 3.0.0-beta1
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/search_api_autocomplete:1.7 --with-all-dependencies
@@ -655,7 +655,7 @@ sudo php ~/composer.phar require drupal/search_api:1.29  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/facets:^2.0 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/fullcalendar_library:1.1 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/fullcalendar_library:1.1 --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/clientside_validation:4.0.2 --with-all-dependencies
 echo ********************************************************************************************************************
