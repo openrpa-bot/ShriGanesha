@@ -576,7 +576,8 @@ echo * 20.14  https://www.drupal.org/project/commerce_guest_registration - Disab
 echo * 20.15  https://www.drupal.org/project/commerce_ccavenue - Disabled                                               * - NC  - 10
 echo * 20.16  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * - NC  - 10 need to enable
 echo * 20.17  https://www.drupal.org/project/commerce_razorpay - Disabled                                               * 
-echo * 20.18  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
+echo * 20.18  https://github.com/razorpay/razorpay-php - manual                                                         *
+echo * 20.19  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 echo *                                                                                                                  *
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
