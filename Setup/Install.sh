@@ -241,7 +241,7 @@ echo  **************************************************************************
 echo  * 12     Webform (Not Compatible with 10)                                                                          *
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
-echo  * 12.1   https://www.drupal.org/project/webform                                                                    * - NC - 10 -beta5
+echo  * 12.1   https://www.drupal.org/project/webform                                                                    * - NC - 10 -beta6
 echo  * 12.2   https://www.drupal.org/project/webform_content_creator                                                    *
 echo  * 12.3   https://www.drupal.org/project/webform_gmap_field                                                         *
 echo  * 12.4   https://www.drupal.org/project/webform_counter - Disabled                                                 * - NC - 10
@@ -249,7 +249,7 @@ echo  * 12.5   https://www.drupal.org/project/webform_hierarchy                 
 echo  * 12.6   https://www.drupal.org/project/webform_views                                                              *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/webform:6.2.0-beta5 --with-all-dependencies
+sudo php ~/composer.phar require drupal/webform:6.2.0-beta6 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_content_creator:4.0.4 --with-all-dependencies
 echo  ********************************************************************************************************************
