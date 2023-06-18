@@ -9,6 +9,9 @@ set webFolderName=stage
 cd %workingFolder%
 cd %webFolderName%
 
+
+call drush un locale
+call drush un language
 ECHO  *******************************************************************************
 ECHO  *                                                                             *
 ECHO  *			Drupal Theam and Admin Tools installation in Progress .....			*
@@ -408,26 +411,26 @@ call drush -y en webform_views
 call drush -y en multiple_registration
 call drush -y en color
 call drush -y en drupal_commerce_razorpay
-call drush -y en bpmn_io
-call drush -y en eca_access
-call drush -y en eca_base
-call drush -y en eca_modeller_bpmn
-call drush -y en eca_cache
-call drush -y en eca_config
-call drush -y en eca_content
-call drush -y en eca
-call drush -y en eca_cm
-call drush -y en eca_endpoint
-call drush -y en eca_form
-call drush -y en eca_log
-call drush -y en eca_misc
-call drush -y en eca_queue
-call drush -y en eca_render
-call drush -y en eca_state_machine
-call drush -y en eca_ui
-call drush -y en eca_user
-call drush -y en eca_views
-call drush -y en eca_workflow
+rem call drush -y en bpmn_io
+rem call drush -y en eca_access
+rem call drush -y en eca_base
+rem call drush -y en eca_modeller_bpmn
+rem call drush -y en eca_cache
+rem call drush -y en eca_config
+rem call drush -y en eca_content
+rem call drush -y en eca
+rem call drush -y en eca_cm
+rem call drush -y en eca_endpoint
+rem call drush -y en eca_form
+rem call drush -y en eca_log
+rem call drush -y en eca_misc
+rem call drush -y en eca_queue
+rem call drush -y en eca_render
+rem call drush -y en eca_state_machine
+rem call drush -y en eca_ui
+rem call drush -y en eca_user
+rem call drush -y en eca_views
+rem call drush -y en eca_workflow
 call drush -y en entity_class_formatter
 call drush -y en jquery_ui_checkboxradio
 call drush -y en smtp

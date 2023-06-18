@@ -66,7 +66,7 @@ ECHO  * 3.2    https://www.drupal.org/project/layout_builder_modal              
 ECHO  * 3.3    https://www.drupal.org/project/bootstrap_layout_builder                                                   *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
-call composer require drupal/layout_builder_restrictions:2.17  --with-all-dependencies
+call composer require drupal/layout_builder_restrictions:2.18  --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/layout_builder_modal:1.2  --with-all-dependencies
 ECHO  ********************************************************************************************************************
@@ -216,7 +216,7 @@ call composer require drupal/webform:6.2.0-beta6@beta --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/webform_content_creator:4.0.4 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/webform_gmap_field:1.1 --with-all-dependencies
+call composer require drupal/webform_gmap_field:1.1.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/webform_counter:1.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
@@ -412,10 +412,9 @@ call composer require drupal/webform_ip_geo:1.0.4 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require geocodio/geocodio-library-php --with-all-dependencies
+call composer require geocodio/geocodio-library-php
 ECHO  ********************************************************************************************************************
-call composer require sibyx/phpgpx:@RC --with-all-dependencies
-rem call composer geocodio/geocodio-library-php:* --with-all-dependencies
+call composer require sibyx/phpgpx:@RC
 
 
 
@@ -465,7 +464,7 @@ rem call composer require drupal/login_destination:2.0-beta6 --with-all-dependen
 ECHO ********************************************************************************************************************
 rem call composer require drupal/user_email_verification:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/multiple_registration:3.2.0 --with-all-dependencies
+call composer require drupal/multiple_registration:3.2.4 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/smtp:1.2 --with-all-dependencies
 

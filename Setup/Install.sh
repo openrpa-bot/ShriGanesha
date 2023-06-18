@@ -103,7 +103,7 @@ echo  * 3.2    https://www.drupal.org/project/layout_builder_modal              
 echo  * 3.3    https://www.drupal.org/project/bootstrap_layout_builder                                                   *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/layout_builder_restrictions:2.17  --with-all-dependencies
+sudo php ~/composer.phar require drupal/layout_builder_restrictions:2.18  --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/layout_builder_modal:1.2  --with-all-dependencies
 echo  ********************************************************************************************************************
@@ -253,7 +253,7 @@ sudo php ~/composer.phar require drupal/webform:6.2.0-beta6@beta --with-all-depe
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/webform_content_creator:4.0.4 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/webform_gmap_field:1.1 --with-all-dependencies
+sudo php ~/composer.phar require drupal/webform_gmap_field:1.1.1 --with-all-dependencies
 echo  ********************************************************************************************************************
 rem rem sudo php ~/composer.phar require drupal/webform_counter:1.0 --with-all-dependencies
 echo  ********************************************************************************************************************
@@ -451,9 +451,9 @@ sudo php ~/composer.phar require drupal/webform_ip_geo:1.0.4 --with-all-dependen
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/search_api_location:1.0-alpha3 --with-all-dependencies
 echo  ********************************************************************************************************************
-rem sudo php ~/composer.phar require geocodio/geocodio-library-php --with-all-dependencies
+sudo php ~/composer.phar require geocodio/geocodio-library-php
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require sibyx/phpgpx:@RC --with-all-dependencies
+sudo php ~/composer.phar require sibyx/phpgpx:@RC
 
 
 
