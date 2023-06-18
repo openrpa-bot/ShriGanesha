@@ -50,9 +50,9 @@ call composer require drupal/bootstrap_barrio:5.5.12 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap5:3.0.8 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/dxpr_theme:5.1.0 --with-dependencies
+rem call composer require drupal/dxpr_theme:5.1.0 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/dxpr_builder:2.2.6 --with-dependencies
+rem call composer require drupal/dxpr_builder:2.2.6 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/view_modes_display:3.0.0 --with-dependencies
 
@@ -414,7 +414,8 @@ rem call composer require drupal/search_api_location:1.0-alpha3 --with-all-depen
 ECHO  ********************************************************************************************************************
 rem call composer require geocodio/geocodio-library-php --with-all-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require sibyx/phpgpx:@RC --with-all-dependencies
+call composer require sibyx/phpgpx:@RC --with-all-dependencies
+rem call composer geocodio/geocodio-library-php:* --with-all-dependencies
 
 
 
@@ -615,7 +616,7 @@ call composer require drupal/search_api_autocomplete:1.7 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/search_api:1.29  --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/facets:^2.0 --with-all-dependencies
+rem call composer require drupal/facets:^2.0 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/fullcalendar_library:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************

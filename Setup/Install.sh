@@ -87,9 +87,9 @@ sudo php ~/composer.phar require drupal/bootstrap_barrio:5.5.12 --with-dependenc
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/bootstrap5:3.0.8 --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/dxpr_theme:5.1.0 --with-dependencies
+rem sudo php ~/composer.phar require drupal/dxpr_theme:5.1.0 --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/dxpr_builder:2.2.6 --with-dependencies
+rem sudo php ~/composer.phar require drupal/dxpr_builder:2.2.6 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/view_modes_display:3.0.0 --with-dependencies
 
@@ -453,7 +453,7 @@ rem sudo php ~/composer.phar require drupal/search_api_location:1.0-alpha3 --wit
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require geocodio/geocodio-library-php --with-all-dependencies
 echo  ********************************************************************************************************************
-rem sudo php ~/composer.phar require sibyx/phpgpx:@RC --with-all-dependencies
+sudo php ~/composer.phar require sibyx/phpgpx:@RC --with-all-dependencies
 
 
 
@@ -644,7 +644,7 @@ echo ***************************************************************************
 echo *                                                                                                                  *
 echo * 22.1   https://www.drupal.org/project/search_api_autocomplete                                                    *
 echo * 22.2   https://www.drupal.org/project/search_api                                                                 *
-echo * 22.3   https://www.drupal.org/project/facets                                                                     *
+echo * 22.3   https://www.drupal.org/project/facets  - Disabled                                                                    *
 echo * 22.4   https://www.drupal.org/project/fullcalendar_library - Disabled                                            * - NC - 10
 echo * 22.5   https://www.drupal.org/project/clientside_validation                                                      *
 echo * 22.6   https://www.drupal.org/project/page_manager                                                               * 4.0-rc2
@@ -656,7 +656,7 @@ sudo php ~/composer.phar require drupal/search_api_autocomplete:1.7 --with-all-d
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/search_api:1.29  --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/facets:^2.0 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/facets:^2.0 --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/fullcalendar_library:1.1 --with-all-dependencies
 echo ********************************************************************************************************************

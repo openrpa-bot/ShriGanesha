@@ -17,19 +17,19 @@ ECHO  **************************************************************************
 call drush -y en layout_builder_restrictions
 call drush -y en layout_builder_modal
 call drush -y en bootstrap_layout_builder
-call drush -y en dxpr_builder
+rem call drush -y en dxpr_builder
 ECHO  *******************************************************************************
-call drush -y en tb_megamenu
+rem call drush -y en tb_megamenu
 call drush -y en extlink
 call drush -y en admin_toolbar
 call drush -y en menu_per_role
 ECHO  *******************************************************************************
 call drush -y en google_analytics
-call drush -y en google_analytics_reports
+rem call drush -y en google_analytics_reports
 call drush -y en google_tag
 ECHO  *******************************************************************************
 call drush -y en devel
-call drush -y en dbug
+rem call drush -y en dbug
 ECHO  *******************************************************************************
 rem call drush -y en s3fs
 call drush -y en exclude_node_title
@@ -51,13 +51,13 @@ ECHO  *                                                                         
 ECHO  *			 Drupal User Experience installation in Progress .....  			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
-call drush -y en flexslider
+rem call drush -y en flexslider
 call drush -y en views_slideshow
 ECHO  *******************************************************************************
 call drush -y en addtoany
 ECHO  *******************************************************************************
 call drush -y en better_exposed_filters
-call drush -y en image_resize_filter
+rem call drush -y en image_resize_filter
 ECHO  *******************************************************************************
 call drush -y en views_conditional
 ECHO  *******************************************************************************
@@ -94,10 +94,10 @@ call drush -y en autocomplete_deluxe
 call drush -y en text_field_formatter
 call drush -y en multiple_selects
 call drush -y en uuid_extra
-call drush -y en edit_uuid
+rem call drush -y en edit_uuid
 call drush -y en barcodes
 call drush -y en field_token_value
-call drush -y en jquery_countdown_timer
+rem call drush -y en jquery_countdown_timer
 
 
 
@@ -125,9 +125,9 @@ ECHO  **************************************************************************
 rem call drush -y en user_email_verification
 call drush -y en r4032login
 call drush -y en social_auth
-call drush -y en tfa
+rem call drush -y en tfa
 call drush -y en prlp
-call drush -y en sendgrid_integration
+rem call drush -y en sendgrid_integration
 rem call drush -y en externalauth
 call drush -y en social_auth_google
 rem call drush -y en login_destination:8.x-2.0-beta6 --with-all-dependencies
@@ -142,12 +142,12 @@ ECHO  *			 Drupal SEO Modules installation in Progress .....  	    		*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
 call drush -y en pathauto
-call drush -y en linkchecker
+rem call drush -y en linkchecker
 call drush -y en flood_control
 call drush -y en xmlsitemap
 call drush -y en antibot
 call drush -y en metatag
-call drush -y en seo_checklist
+rem call drush -y en seo_checklist
 
 
 
@@ -158,7 +158,7 @@ ECHO  *                                                                         
 ECHO  *******************************************************************************
 call drush -y en recaptcha
 call drush -y en captcha
-call drush -y en recaptcha_v3
+rem call drush -y en recaptcha_v3
 
 
 
@@ -169,17 +169,17 @@ ECHO  *                                                                         
 ECHO  *******************************************************************************
 call drush -y en inline_entity_form
 call drush -y en commerce
-call drush -y en commerce_ticketing
+rem call drush -y en commerce_ticketing
 call drush -y en advancedqueue
 call drush -y en commerce_license
 rem call drush -y en commerce_webform_order
-call drush -y en commerce_donate
+rem call drush -y en commerce_donate
 call drush -y en commerce_add_to_cart_link
 call drush -y en commerce_shipping
-call drush -y en commerce_stock
-call drush -y en commerce_guest_registration
-call drush -y en commerce_ccavenue
-call drush -y en commerce_razorpay
+rem call drush -y en commerce_stock
+rem call drush -y en commerce_guest_registration
+rem call drush -y en commerce_ccavenue
+rem call drush -y en commerce_razorpay
 
 
 ECHO  *******************************************************************************
@@ -188,8 +188,8 @@ ECHO  *			 Drupal BAT Modules installation in Progress .....      			*
 ECHO  *                                                                             *                                                                                   
 ECHO  *******************************************************************************
 rem call drush -y en services
-call drush -y en bat_api
-call drush -y en bat
+rem call drush -y en bat_api
+rem call drush -y en bat
 
 
 
@@ -201,8 +201,8 @@ ECHO  **************************************************************************
 call drush -y en search_api_autocomplete
 rem composer require drupal/search_exclude:3.0.0-beta1 --with-all-dependencies
 call drush -y en search_api
-call drush -y en facets
-call drush -y en fullcalendar_library
+rem call drush -y en facets
+rem call drush -y en fullcalendar_library
 call drush -y en clientside_validation
 
 
@@ -234,12 +234,12 @@ rem call drush -y en admin_toolbar_tools
 call drush -y en admin_toolbar_links_access_filter
 rem call drush -y en bat_booking_example
 call drush -y en admin_toolbar_search
-call drush -y en bat_calendar_reference
-call drush -y en bat_event_series
-call drush -y en bat_event_ui
-call drush -y en bat_facets
-call drush -y en bat_fullcalendar
-call drush -y en bat_options
+rem call drush -y en bat_calendar_reference
+rem call drush -y en bat_event_series
+rem call drush -y en bat_event_ui
+rem call drush -y en bat_facets
+rem call drush -y en bat_fullcalendar
+rem call drush -y en bat_options
 call drush -y en ctools_block
 call drush -y en ctools_views
 rem call drush -y en clientside_validation_demo
@@ -249,23 +249,23 @@ call drush -y en commerce_payment
 rem call drush -y en commerce_payment_example
 call drush -y en commerce_promotion
 call drush -y en commerce_tax
-call drush -y en commerce_currency_resolver_shipping
-call drush -y en commerce_stock_enforcement
-call drush -y en commerce_stock_field
-call drush -y en commerce_stock_local
-call drush -y en commerce_stock_ui
+rem call drush -y en commerce_currency_resolver_shipping
+rem call drush -y en commerce_stock_enforcement
+rem call drush -y en commerce_stock_field
+rem call drush -y en commerce_stock_local
+rem call drush -y en commerce_stock_ui
 call drush -y en field_layout
 call drush -y en help_topics
 rem call drush -y en workspaces
 call drush -y en devel_generate
-call drush -y en entity_print_views
+rem call drush -y en entity_print_views
 rem call drush -y en checklistapiexample
 call drush -y en tablefield_cellspan
 call drush -y en tablefield_required
 call drush -y en telephone
 rem call drush -y en flexslider_example
-call drush -y en flexslider_fields
-call drush -y en flexslider_views
+rem call drush -y en flexslider_fields
+rem call drush -y en flexslider_views
 call drush -y en geocoder_address
 call drush -y en geocoder_field
 call drush -y en geocoder_geofield
@@ -292,10 +292,10 @@ call drush -y en geolocation_gpx
 call drush -y en geolocation_here
 call drush -y en geolocation_leaflet
 rem call drush -y en geolocation_leaflet_demo
-call drush -y en geolocation_search_api
+rem call drush -y en geolocation_search_api
 call drush -y en geolocation_yandex
 call drush -y en layout_builder_restrictions_by_region
-call drush -y en sendgrid_integration_reports
+rem call drush -y en sendgrid_integration_reports
 rem call drush -y en field_group_migrate
 rem call drush -y en migrate
 rem call drush -y en migrate_drupal
@@ -310,13 +310,13 @@ call drush -y en puphpeteer
 call drush -y en social_media_links_field
 call drush -y en search_api_db
 call drush -y en search_api_db_defaults
-call drush -y en facets_map_widget
-call drush -y en facets_range_widget
-call drush -y en facets_summary
-call drush -y en facets_rest
-call drush -y en search_api_location
-call drush -y en search_api_location_geocoder
-call drush -y en search_api_location_views
+rem call drush -y en facets_map_widget
+rem call drush -y en facets_range_widget
+rem call drush -y en facets_summary
+rem call drush -y en facets_rest
+rem call drush -y en search_api_location
+rem call drush -y en search_api_location_geocoder
+rem call drush -y en search_api_location_views
 call drush -y en metatag_routes
 call drush -y en metatag_extended_perms
 call drush -y en metatag_app_links
@@ -345,10 +345,10 @@ call drush -y en webform_cards
 call drush -y en webform_clientside_validation
 call drush -y en webform_options_custom
 call drush -y en webform_devel
-call drush -y en webform_entity_print
-call drush -y en webform_entity_print_attachment
+rem call drush -y en webform_entity_print
+rem call drush -y en webform_entity_print_attachment
 call drush -y en webform_image_select
-call drush -y en webform_ip_geo_ipapi_co
+rem call drush -y en webform_ip_geo_ipapi_co
 call drush -y en webform_node
 call drush -y en webform_options_limit
 call drush -y en webform_scheduled_email
@@ -385,27 +385,56 @@ call drush -y en xmlsitemap_custom
 call drush -y en xmlsitemap_engines
 call drush -y en page_manager_ui
 
-call drush -y en boolean_single_state_formatter
-call drush -y en direct_checkout_by_url
+rem call drush -y en boolean_single_state_formatter
+rem call drush -y en direct_checkout_by_url
 call drush -y en jquery_ui_tooltip
 rem call drush -y en tooltip
 call drush -y en ctools
 call drush -y en entity_embed
 call drush -y en asset_injector
-call drush -y en bee_webform
-call drush -y en bat_booking
+rem call drush -y en bee_webform
+rem call drush -y en bat_booking
 call drush -y en text_field_formatter
-call drush -y en field_group_table
-call drush -y en commerce_choose_price
+rem call drush -y en field_group_table
+rem call drush -y en commerce_choose_price
 call drush -y en webform_content_creator
 call drush -y en webform_product
-call drush -y en field_description_tooltip
+rem call drush -y en field_description_tooltip
 call drush -y en social_auth_facebook
 call drush -y en webform_gmap_field
-call drush -y en webform_counter
-call drush -y en webform_hierarchy
+rem call drush -y en webform_counter
+rem call drush -y en webform_hierarchy
 call drush -y en webform_views
 call drush -y en multiple_registration
+call drush -y en color
+call drush -y en drupal_commerce_razorpay
+call drush -y en bpmn_io
+call drush -y en eca_access
+call drush -y en eca_base
+call drush -y en eca_modeller_bpmn
+call drush -y en eca_cache
+call drush -y en eca_config
+call drush -y en eca_content
+call drush -y en eca
+call drush -y en eca_cm
+call drush -y en eca_endpoint
+call drush -y en eca_form
+call drush -y en eca_log
+call drush -y en eca_misc
+call drush -y en eca_queue
+call drush -y en eca_render
+call drush -y en eca_state_machine
+call drush -y en eca_ui
+call drush -y en eca_user
+call drush -y en eca_views
+call drush -y en eca_workflow
+call drush -y en entity_class_formatter
+call drush -y en jquery_ui_checkboxradio
+call drush -y en smtp
+
+
+
+
 
 
 
