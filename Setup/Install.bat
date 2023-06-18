@@ -1,4 +1,4 @@
-@ECHO OFF
+rem @ECHO OFF
 cls
 set MySqlCommand="C:\xampp\mysql\bin\mysql.exe"
 
@@ -141,10 +141,10 @@ ECHO  **************************************************************************
 ECHO  * 7      Amazon S3 Ref                                                                                             *
 ECHO  ********************************************************************************************************************
 ECHO  *                                                                                                                  *
-ECHO  * 7.1    https://www.drupal.org/project/s3fs                                                                       *
+ECHO  * 7.1    https://www.drupal.org/project/s3fs   - Disabled                                                          * - NC - 10.1
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
-call composer require drupal/s3fs:3.1 --with-all-dependencies
+rem call composer require drupal/s3fs:3.1 --with-all-dependencies
 
 
 
@@ -327,7 +327,7 @@ ECHO  * 15.7   https://www.drupal.org/project/asset_injector                    
 ECHO  * 15.8   https://www.drupal.org/project/jquery_ui_tooltip                                                          *
 ECHO  * 15.9   https://www.drupal.org/project/ctools                                                                     *
 ECHO  * 15.10  https://www.drupal.org/project/entity_embed                                                               *
-ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
+ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip  - Disabled                                      *
 ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor - Disabled                                                *
 ECHO  * 15.13  https://www.drupal.org/project/jquery_countdown_timer - Disabled                                          *
 ECHO  * 15.14  https://www.drupal.org/project/typed_data - Disabled                                                      *
@@ -363,7 +363,7 @@ call composer require drupal/ctools:4.0.4 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_embed:1.4 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/field_description_tooltip:1.0.2 --with-dependencies
+rem call composer require drupal/field_description_tooltip:1.0.2 --with-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -373,21 +373,21 @@ rem call composer require drupal/typed_data:1.0-beta2 --with-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/rules:3.0-alpha7 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/entity_class_formatter:2.0.0 --with-dependencies
+call composer require drupal/entity_class_formatter:2.0.0 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/background_image:2.0.1 --with-dependencies
+call composer require drupal/background_image:2.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/workflow:1.7 --with-dependencies
+call composer require drupal/workflow:1.7 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/eca:1.1.3 --with-dependencies
+call composer require drupal/eca:1.1.3 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/bpmn_io:1.1.1 --with-dependencies
+call composer require drupal/bpmn_io:1.1.1 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/eca_cm:1.0.5 --with-dependencies
+call composer require drupal/eca_cm:1.0.5 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/eca_state_machine:1.0.1 --with-dependencies
+call composer require drupal/eca_state_machine:1.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
-rem call composer require drupal/entity_field_condition:1.4 --with-dependencies
+call composer require drupal/entity_field_condition:1.4 --with-dependencies
 
 
 
@@ -484,7 +484,7 @@ call composer require drupal/recaptcha:3.2  --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/captcha:2.0.0 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/recaptcha_v3:1.8 --with-all-dependencies
+rem call composer require drupal/recaptcha_v3:1.8 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/antibot:2.0.2 --with-all-dependencies
 ECHO ********************************************************************************************************************
@@ -505,13 +505,13 @@ ECHO *                                                                          
 ECHO ********************************************************************************************************************
 call composer require drupal/pathauto:1.11 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/linkchecker:1.1 --with-all-dependencies
+rem call composer require drupal/linkchecker:1.1 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/xmlsitemap:1.4 --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/metatag:1.25 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/seo_checklist:5.1.0 --with-all-dependencies
+rem call composer require drupal/seo_checklist:5.1.0 --with-all-dependencies
 
 
 
@@ -548,11 +548,11 @@ rem call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-depe
 ECHO ********************************************************************************************************************
 rem call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
+call composer require drupal/commerce_license:3.0.0-rc6   --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
+rem call composer require drupal/commerce_donate:1.1.0-alpha1  --with-all-dependencies
 ECHO ********************************************************************************************************************
 call composer require drupal/commerce_add_to_cart_link:2.0.5  --with-all-dependencies
 ECHO ********************************************************************************************************************

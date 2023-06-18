@@ -178,10 +178,10 @@ echo  **************************************************************************
 echo  * 7      Amazon S3 Ref - (Compatible with 10)                                                                      *
 echo  ********************************************************************************************************************
 echo  *                                                                                                                  *
-echo  * 7.1    https://www.drupal.org/project/s3fs                                                                       *
+echo  * 7.1    https://www.drupal.org/project/s3fs  - Disabled                                                           * - NC - 10.1
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/s3fs:3.3 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/s3fs:3.3 --with-all-dependencies
 
 
 
@@ -367,7 +367,7 @@ echo  * 15.7   https://www.drupal.org/project/asset_injector                    
 echo  * 15.8   https://www.drupal.org/project/jquery_ui_tooltip                                                          *
 echo  * 15.9   https://www.drupal.org/project/ctools                                                                     *
 echo  * 15.10  https://www.drupal.org/project/entity_embed                                                               *
-echo  * 15.11  https://www.drupal.org/project/field_description_tooltip                                                  *
+echo  * 15.11  https://www.drupal.org/project/field_description_tooltip    - disabled                                    *
 echo  * 15.12  https://www.drupal.org/project/tooltip_ckeditor - disabled                                                *
 echo  * 15.13  https://www.drupal.org/project/jquery_countdown_timer  - disabled                                         *  - NC - 10
 echo  * 15.14  https://www.drupal.org/project/typed_data     - disabled                                                  * 8.x-1.0-beta2
@@ -403,7 +403,7 @@ sudo php ~/composer.phar require drupal/ctools:4.0.4 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/entity_embed:1.4 --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/field_description_tooltip:1.0.2 --with-dependencies
+rem sudo php ~/composer.phar require drupal/field_description_tooltip:1.0.2 --with-dependencies
 echo  ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/tooltip_ckeditor:4.0.1 --with-dependencies
 echo  ********************************************************************************************************************
@@ -515,7 +515,7 @@ echo ***************************************************************************
 echo *                                                                                                                  *
 echo * 18.1   https://www.drupal.org/project/recaptcha                                                                  *
 echo * 18.2   https://www.drupal.org/project/captcha                                                                    *
-echo * 18.3   https://www.drupal.org/project/recaptcha_v3                                                               *
+echo * 18.3   https://www.drupal.org/project/recaptcha_v3  - Disabled                                                   * - NC - 10
 echo * 18.4   https://www.drupal.org/project/antibot                                                                    *
 echo * 18.5   https://www.drupal.org/project/flood_control                                                              *
 echo *                                                                                                                  *
@@ -524,7 +524,7 @@ sudo php ~/composer.phar require drupal/recaptcha:3.2  --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/captcha:2.0.0 --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/recaptcha_v3:1.8 --with-all-dependencies
+rem sudo php ~/composer.phar require drupal/recaptcha_v3:1.8 --with-all-dependencies
 echo ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/antibot:2.0.2 --with-all-dependencies
 echo ********************************************************************************************************************
@@ -588,7 +588,7 @@ rem sudo php ~/composer.phar require drupal/commerce_ticketing:2.0.0-alpha7 --wi
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_license:2.0.0-beta2   --with-all-dependencies
+sudo php ~/composer.phar require drupal/commerce_license:3.0.0-rc6   --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 echo ********************************************************************************************************************
