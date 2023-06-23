@@ -28,7 +28,7 @@ ECHO  *                                                                         
 ECHO  * 1.1    https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates *
 ECHO  *                                                                                                                   *
 ECHO  *********************************************************************************************************************
-call composer create-project drupal/recommended-project:10.1.0-rc1@RC %webFolderName%
+call composer create-project drupal/recommended-project:10.1.0 %webFolderName%
 cd %webFolderName%
 call composer update  drupal/core-* --with-all-dependencies
 call composer update  drupal/core-* --with-dependencies
