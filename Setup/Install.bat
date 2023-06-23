@@ -344,7 +344,7 @@ call composer require drupal/better_exposed_filters:6.0.3 --with-all-dependencie
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/image_resize_filter:1.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/views_conditional:1.5 --with-all-dependencies
+call composer require drupal/views_conditional:^1.5 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/autocomplete_deluxe:2.0.3 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -353,7 +353,7 @@ ECHO  **************************************************************************
 call composer require drupal/jquery_ui_tooltip:2.0.0 --with-dependencies
 rem call composer require drupal/jquery_ui_tooltip:1.1.0 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/ctools:4.0.4 --with-dependencies
+call composer require drupal/ctools:^4.0 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_embed:1.4 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -364,8 +364,6 @@ ECHO  **************************************************************************
 rem call composer require drupal/jquery_countdown_timer:1.3 --with-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/typed_data:1.0-beta2 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/rules:3.0-alpha7 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_class_formatter:2.0.0 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -421,11 +419,11 @@ ECHO  * 17.2   https://www.drupal.org/project/social_auth_google                
 ECHO  * 17.3   https://www.drupal.org/project/social_auth_facebook/                                                      *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth:4.0.1 --with-all-dependencies
+call composer require drupal/social_auth:^4.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_google:4.0.2 --with-all-dependencies
+call composer require drupal/social_auth_google:^4.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_facebook:4.0.2 --with-all-dependencies
+call composer require drupal/social_auth_facebook:^4.0 --with-all-dependencies
 
 
 
@@ -534,15 +532,15 @@ ECHO * 20.18  https://github.com/razorpay/razorpay-php - manual                 
 ECHO * 20.19  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
-rem call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
+call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce:2.36 --with-all-dependencies
+call composer require drupal/commerce:^2.36 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 ECHO ********************************************************************************************************************
-rem call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
+call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_license:3.0.0  --with-all-dependencies
+call composer require drupal/commerce_license:^3.0  --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
