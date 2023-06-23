@@ -41,18 +41,12 @@ ECHO  **************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 2.1    https://www.drupal.org/project/bootstrap_barrio                                                           *
 ECHO  * 2.2    https://www.drupal.org/project/bootstrap5                                                                 *
-ECHO  * 2.3    https://www.drupal.org/project/dxpr_theme                                                                 *
-ECHO  * 2.4    https://www.drupal.org/project/dxpr_builder                                                               *
-ECHO  * 2.5    https://www.drupal.org/project/view_modes_display                                                         *
+ECHO  * 2.3    https://www.drupal.org/project/view_modes_display                                                         *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap_barrio:5.5.12 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap5:3.0.8 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/dxpr_theme:5.1.0 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/dxpr_builder:2.2.6 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/view_modes_display:3.0.0 --with-dependencies
 
@@ -429,9 +423,9 @@ ECHO  *                                                                         
 ECHO  ********************************************************************************************************************
 call composer require drupal/social_auth:4.0.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_google:4.0.0 --with-all-dependencies
+call composer require drupal/social_auth_google:4.0.2 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_facebook:4.0.1 --with-all-dependencies
+call composer require drupal/social_auth_facebook:4.0.2 --with-all-dependencies
 
 
 
@@ -548,7 +542,7 @@ rem call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-depe
 ECHO ********************************************************************************************************************
 rem call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_license:3.0.0-rc6   --with-all-dependencies
+call composer require drupal/commerce_license:3.0.0  --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
