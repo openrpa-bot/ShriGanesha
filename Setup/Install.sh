@@ -65,10 +65,10 @@ echo  *                                                                         
 echo  * 1.1    https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates *
 echo  *                                                                                                                   *
 echo  *********************************************************************************************************************
-rem sudo php ~/composer.phar create-project drupal/recommended-project:10.1.0 %webFolderName%
+sudo php ~/composer.phar create-project drupal/recommended-project:10.1.0 %webFolderName%
 rem cd %webFolderName%
-rem sudo php ~/composer.phar update  drupal/core-* --with-all-dependencies
-rem sudo php ~/composer.phar update  drupal/core-* --with-dependencies
+sudo php ~/composer.phar update  drupal/core-* --with-all-dependencies
+sudo php ~/composer.phar update  drupal/core-* --with-dependencies
 
 
 
@@ -78,18 +78,12 @@ echo  **************************************************************************
 echo  *                                                                                                                  *
 echo  * 2.1    https://www.drupal.org/project/bootstrap_barrio                                                           *
 echo  * 2.2    https://www.drupal.org/project/bootstrap5                                                                 *
-echo  * 2.3    https://www.drupal.org/project/dxpr_theme                                                                 *
-echo  * 2.4    https://www.drupal.org/project/dxpr_builder                                                               *
-echo  * 2.5    https://www.drupal.org/project/view_modes_display                                                         *
+echo  * 2.3    https://www.drupal.org/project/view_modes_display                                                         *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/bootstrap_barrio:5.5.12 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/bootstrap5:3.0.8 --with-dependencies
-echo  ********************************************************************************************************************
-rem sudo php ~/composer.phar require drupal/dxpr_theme:5.1.0 --with-dependencies
-echo  ********************************************************************************************************************
-rem sudo php ~/composer.phar require drupal/dxpr_builder:2.2.6 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/view_modes_display:3.0.0 --with-dependencies
 
@@ -468,9 +462,9 @@ echo  *                                                                         
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/social_auth:4.0.1 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth_google:4.0.0 --with-all-dependencies
+sudo php ~/composer.phar require drupal/social_auth_google:4.0.2 --with-all-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/social_auth_facebook:4.0.1 --with-all-dependencies
+sudo php ~/composer.phar require drupal/social_auth_facebook:4.0.2 --with-all-dependencies
 
 
 
@@ -563,7 +557,7 @@ echo * 20.1   https://www.drupal.org/project/inline_entity_form - Disabled      
 echo * 20.2   https://www.drupal.org/project/commerce                                                                   *
 echo * 20.3   https://www.drupal.org/project/commerce_ticketing  - Disabled                                             * - NC - 10 - 2.0.0-alpha7
 echo * 20.4   https://www.drupal.org/project/advancedqueue  - Disabled                                                  * 8.x-1.0-rc7 
-echo * 20.5   https://www.drupal.org/project/commerce_license                                                           * 3.0.0-rc6
+echo * 20.5   https://www.drupal.org/project/commerce_license                                                           * 
 echo * 20.6   https://www.drupal.org/project/commerce_webform_order - Disabled                                          * 2.0.0-beta2 
 echo * 20.7   https://www.drupal.org/project/commerce_donate                                                            * - NC - 10 - 8.x-1.1-alpha1
 echo * 20.8   https://www.drupal.org/project/commerce_add_to_cart_link                                                  *
@@ -588,7 +582,7 @@ rem sudo php ~/composer.phar require drupal/commerce_ticketing:2.0.0-alpha7 --wi
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 echo ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/commerce_license:3.0.0-rc6   --with-all-dependencies
+sudo php ~/composer.phar require drupal/commerce_license:3.0.0   --with-all-dependencies
 echo ********************************************************************************************************************
 rem sudo php ~/composer.phar require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 echo ********************************************************************************************************************
