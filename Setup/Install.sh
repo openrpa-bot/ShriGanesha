@@ -65,7 +65,7 @@ echo  *                                                                         
 echo  * 1.1    https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates *
 echo  *                                                                                                                   *
 echo  *********************************************************************************************************************
-rem sudo php ~/composer.phar create-project drupal/recommended-project:9.5.7 %webFolderName%
+rem sudo php ~/composer.phar create-project drupal/recommended-project:10.1.0 %webFolderName%
 rem cd %webFolderName%
 rem sudo php ~/composer.phar update  drupal/core-* --with-all-dependencies
 rem sudo php ~/composer.phar update  drupal/core-* --with-dependencies
