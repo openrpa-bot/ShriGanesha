@@ -373,7 +373,8 @@ echo  * 15.19  https://www.drupal.org/project/bpmn_io                           
 echo  * 15.20  https://www.drupal.org/project/eca_cm                                                                     *
 echo  * 15.21  https://www.drupal.org/project/eca_state_machine                                                          *
 echo  * 15.22  https://www.drupal.org/project/entity_field_condition                                                     *
-echo  * 15.23  https://www.drupal.org/project/eca_tamper                                                     *
+echo  * 15.23  https://www.drupal.org/project/tamper                                                                     *
+echo  * 15.23  https://www.drupal.org/project/eca_tamper                                                                 *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/pdf_api:2.3.1 --with-all-dependencies
@@ -420,6 +421,8 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/eca_state_machine:1.0.1 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/entity_field_condition:1.4 --with-dependencies
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/tamper:^1.0@alpha --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/eca_tamper:^1.0 --with-dependencies
 
