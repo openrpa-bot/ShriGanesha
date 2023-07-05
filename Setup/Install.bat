@@ -325,15 +325,16 @@ ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip  - Disab
 ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor - Disabled                                                *
 ECHO  * 15.13  https://www.drupal.org/project/jquery_countdown_timer - Disabled                                          *
 ECHO  * 15.14  https://www.drupal.org/project/typed_data - Disabled                                                      *
-ECHO  * 15.15  https://www.drupal.org/project/rules - Disabled                                                           *
-ECHO  * 15.16  https://www.drupal.org/project/entity_class_formatter                                                     *
-ECHO  * 15.17  https://www.drupal.org/project/background_image                                                           *
-ECHO  * 15.18  https://www.drupal.org/project/workflow                                                                   *
-ECHO  * 15.19  https://www.drupal.org/project/eca                                                                        *
-ECHO  * 15.20  https://www.drupal.org/project/bpmn_io                                                                    *
-ECHO  * 15.21  https://www.drupal.org/project/eca_cm                                                                     *
-ECHO  * 15.22  https://www.drupal.org/project/eca_state_machine                                                          *
-ECHO  * 15.23  https://www.drupal.org/project/entity_field_condition                                                     *
+ECHO  * 15.15  https://www.drupal.org/project/entity_class_formatter                                                     *
+ECHO  * 15.16  https://www.drupal.org/project/background_image                                                           *
+ECHO  * 15.17  https://www.drupal.org/project/workflow                                                                   *
+ECHO  * 15.18  https://www.drupal.org/project/eca                                                                        *
+ECHO  * 15.19  https://www.drupal.org/project/bpmn_io                                                                    *
+ECHO  * 15.20  https://www.drupal.org/project/eca_cm                                                                     *
+ECHO  * 15.21  https://www.drupal.org/project/eca_state_machine                                                          *
+ECHO  * 15.22  https://www.drupal.org/project/entity_field_condition                                                     *
+ECHO  * 15.23  https://www.drupal.org/project/tamper                                                                     *
+ECHO  * 15.24  https://www.drupal.org/project/eca_tamper                                                                 *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.1 --with-all-dependencies
@@ -380,7 +381,10 @@ ECHO  **************************************************************************
 call composer require drupal/eca_state_machine:1.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_field_condition:1.4 --with-dependencies
-
+ECHO  ********************************************************************************************************************
+call composer require drupal/tamper:^1.0@alpha --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/eca_tamper:1.0.5 --with-dependencies
 
 
 
