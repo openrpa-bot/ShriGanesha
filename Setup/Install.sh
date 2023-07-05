@@ -424,7 +424,7 @@ sudo php ~/composer.phar require drupal/entity_field_condition:1.4 --with-depend
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/tamper:^1.0@alpha --with-dependencies
 echo  ********************************************************************************************************************
-sudo php ~/composer.phar require drupal/eca_tamper:^1.0 --with-dependencies
+sudo php ~/composer.phar require drupal/eca_tamper:1.0.5 --with-dependencies
 
 
 echo  ********************************************************************************************************************
