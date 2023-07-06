@@ -237,6 +237,7 @@ ECHO  * 13.10  https://www.drupal.org/project/multiple_selects                  
 ECHO  * 13.11  https://www.drupal.org/project/uuid_extra  - Disabled                                                     *
 ECHO  * 13.12  https://www.drupal.org/project/edit_uuid                                                                  *
 ECHO  * 13.13  https://www.drupal.org/project/field_token_value                                                          *
+echo  * 13.14  https://www.drupal.org/project/unique_content_field_validation                                            *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/tablefield:2.4 --with-dependencies
@@ -264,6 +265,8 @@ ECHO  **************************************************************************
 rem call composer require drupal/edit_uuid:2.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/field_token_value:3.0.1 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/unique_content_field_validation:1.1.1 --with-all-dependencies
 
 
 ECHO  ********************************************************************************************************************
