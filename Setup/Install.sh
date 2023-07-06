@@ -274,6 +274,7 @@ echo  * 13.10  https://www.drupal.org/project/multiple_selects                  
 echo  * 13.11  https://www.drupal.org/project/uuid_extra                                                                 *
 echo  * 13.12  https://www.drupal.org/project/edit_uuid - Disabled                                                       * - NC - 10
 echo  * 13.13  https://www.drupal.org/project/field_token_value                                                          *
+echo  * 13.14  https://www.drupal.org/project/unique_content_field_validation                                                          *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/tablefield:2.4 --with-dependencies
@@ -301,7 +302,8 @@ echo  **************************************************************************
 rem sudo php ~/composer.phar require drupal/edit_uuid:2.1 --with-all-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/field_token_value:3.0.1 --with-all-dependencies
-
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/unique_content_field_validation:1.1.1 --with-all-dependencies
 
 
 echo  ********************************************************************************************************************
