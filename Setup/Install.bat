@@ -28,7 +28,7 @@ ECHO  *                                                                         
 ECHO  * 1.1    https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates *
 ECHO  *                                                                                                                   *
 ECHO  *********************************************************************************************************************
-call composer create-project drupal/recommended-project:10.1.0-rc1@RC %webFolderName%
+call composer create-project drupal/recommended-project:10.1.0 %webFolderName%
 cd %webFolderName%
 call composer update  drupal/core-* --with-all-dependencies
 call composer update  drupal/core-* --with-dependencies
@@ -41,18 +41,12 @@ ECHO  **************************************************************************
 ECHO  *                                                                                                                  *
 ECHO  * 2.1    https://www.drupal.org/project/bootstrap_barrio                                                           *
 ECHO  * 2.2    https://www.drupal.org/project/bootstrap5                                                                 *
-ECHO  * 2.3    https://www.drupal.org/project/dxpr_theme                                                                 *
-ECHO  * 2.4    https://www.drupal.org/project/dxpr_builder                                                               *
-ECHO  * 2.5    https://www.drupal.org/project/view_modes_display                                                         *
+ECHO  * 2.3    https://www.drupal.org/project/view_modes_display                                                         *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap_barrio:5.5.12 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/bootstrap5:3.0.8 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/dxpr_theme:5.1.0 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/dxpr_builder:2.2.6 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/view_modes_display:3.0.0 --with-dependencies
 
@@ -243,6 +237,7 @@ ECHO  * 13.10  https://www.drupal.org/project/multiple_selects                  
 ECHO  * 13.11  https://www.drupal.org/project/uuid_extra  - Disabled                                                     *
 ECHO  * 13.12  https://www.drupal.org/project/edit_uuid                                                                  *
 ECHO  * 13.13  https://www.drupal.org/project/field_token_value                                                          *
+echo  * 13.14  https://www.drupal.org/project/unique_content_field_validation                                            *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/tablefield:2.4 --with-dependencies
@@ -270,6 +265,8 @@ ECHO  **************************************************************************
 rem call composer require drupal/edit_uuid:2.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/field_token_value:3.0.1 --with-all-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/unique_content_field_validation:1.1.1 --with-all-dependencies
 
 
 ECHO  ********************************************************************************************************************
@@ -331,15 +328,16 @@ ECHO  * 15.11  https://www.drupal.org/project/field_description_tooltip  - Disab
 ECHO  * 15.12  https://www.drupal.org/project/tooltip_ckeditor - Disabled                                                *
 ECHO  * 15.13  https://www.drupal.org/project/jquery_countdown_timer - Disabled                                          *
 ECHO  * 15.14  https://www.drupal.org/project/typed_data - Disabled                                                      *
-ECHO  * 15.15  https://www.drupal.org/project/rules - Disabled                                                           *
-ECHO  * 15.16  https://www.drupal.org/project/entity_class_formatter                                                     *
-ECHO  * 15.17  https://www.drupal.org/project/background_image                                                           *
-ECHO  * 15.18  https://www.drupal.org/project/workflow                                                                   *
-ECHO  * 15.19  https://www.drupal.org/project/eca                                                                        *
-ECHO  * 15.20  https://www.drupal.org/project/bpmn_io                                                                    *
-ECHO  * 15.21  https://www.drupal.org/project/eca_cm                                                                     *
-ECHO  * 15.22  https://www.drupal.org/project/eca_state_machine                                                          *
-ECHO  * 15.23  https://www.drupal.org/project/entity_field_condition                                                     *
+ECHO  * 15.15  https://www.drupal.org/project/entity_class_formatter                                                     *
+ECHO  * 15.16  https://www.drupal.org/project/background_image                                                           *
+ECHO  * 15.17  https://www.drupal.org/project/workflow                                                                   *
+ECHO  * 15.18  https://www.drupal.org/project/eca                                                                        *
+ECHO  * 15.19  https://www.drupal.org/project/bpmn_io                                                                    *
+ECHO  * 15.20  https://www.drupal.org/project/eca_cm                                                                     *
+ECHO  * 15.21  https://www.drupal.org/project/eca_state_machine                                                          *
+ECHO  * 15.22  https://www.drupal.org/project/entity_field_condition                                                     *
+ECHO  * 15.23  https://www.drupal.org/project/tamper                                                                     *
+ECHO  * 15.24  https://www.drupal.org/project/eca_tamper                                                                 *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
 call composer require drupal/pdf_api:2.3.1 --with-all-dependencies
@@ -350,7 +348,7 @@ call composer require drupal/better_exposed_filters:6.0.3 --with-all-dependencie
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/image_resize_filter:1.1 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/views_conditional:1.5 --with-all-dependencies
+call composer require drupal/views_conditional:^1.5 --with-all-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/autocomplete_deluxe:2.0.3 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -359,7 +357,7 @@ ECHO  **************************************************************************
 call composer require drupal/jquery_ui_tooltip:2.0.0 --with-dependencies
 rem call composer require drupal/jquery_ui_tooltip:1.1.0 --with-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/ctools:4.0.4 --with-dependencies
+call composer require drupal/ctools:^4.0 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_embed:1.4 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -370,8 +368,6 @@ ECHO  **************************************************************************
 rem call composer require drupal/jquery_countdown_timer:1.3 --with-dependencies
 ECHO  ********************************************************************************************************************
 rem call composer require drupal/typed_data:1.0-beta2 --with-dependencies
-ECHO  ********************************************************************************************************************
-rem call composer require drupal/rules:3.0-alpha7 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_class_formatter:2.0.0 --with-dependencies
 ECHO  ********************************************************************************************************************
@@ -388,7 +384,10 @@ ECHO  **************************************************************************
 call composer require drupal/eca_state_machine:1.0.1 --with-dependencies
 ECHO  ********************************************************************************************************************
 call composer require drupal/entity_field_condition:1.4 --with-dependencies
-
+ECHO  ********************************************************************************************************************
+call composer require drupal/tamper:^1.0@alpha --with-dependencies
+ECHO  ********************************************************************************************************************
+call composer require drupal/eca_tamper:1.0.5 --with-dependencies
 
 
 
@@ -427,11 +426,11 @@ ECHO  * 17.2   https://www.drupal.org/project/social_auth_google                
 ECHO  * 17.3   https://www.drupal.org/project/social_auth_facebook/                                                      *
 ECHO  *                                                                                                                  *
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth:4.0.1 --with-all-dependencies
+call composer require drupal/social_auth:^4.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_google:4.0.0 --with-all-dependencies
+call composer require drupal/social_auth_google:^4.0 --with-all-dependencies
 ECHO  ********************************************************************************************************************
-call composer require drupal/social_auth_facebook:4.0.1 --with-all-dependencies
+call composer require drupal/social_auth_facebook:^4.0 --with-all-dependencies
 
 
 
@@ -540,15 +539,15 @@ ECHO * 20.18  https://github.com/razorpay/razorpay-php - manual                 
 ECHO * 20.19  https://github.com/paytm/Paytm_Drupal_Commerce_Plugin/tree/master/PaytmCommerceV8.x - manual              *
 ECHO *                                                                                                                  *
 ECHO ********************************************************************************************************************
-rem call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
+call composer require drupal/inline_entity_form:1.0-rc15 --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce:2.36 --with-all-dependencies
+call composer require drupal/commerce:^2.36 --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_ticketing:2.0.0-alpha7 --with-all-dependencies
 ECHO ********************************************************************************************************************
-rem call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
+call composer require drupal/advancedqueue:1.0-RC7   --with-all-dependencies
 ECHO ********************************************************************************************************************
-call composer require drupal/commerce_license:3.0.0-rc6   --with-all-dependencies
+call composer require drupal/commerce_license:^3.0  --with-all-dependencies
 ECHO ********************************************************************************************************************
 rem call composer require drupal/commerce_webform_order:2.0.0-beta2   --with-all-dependencies
 ECHO ********************************************************************************************************************
