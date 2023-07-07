@@ -321,6 +321,7 @@ echo  * 14.8   https://www.drupal.org/project/boolean_single_state_formatter  - 
 echo  * 14.9   https://www.drupal.org/project/endroid_qr_code -disabled      - Disabled                                  * - NC - 10
 echo  * 14.10  https://www.drupal.org/project/barcodes                                                                   *
 echo  * 14.11  https://www.drupal.org/project/field_token_value                                                          *
+echo  * 14.12  https://www.drupal.org/project/hide_revision_field                                                        *
 echo  *                                                                                                                  *
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/conditional_fields:4.0.0-alpha3  --with-dependencies
@@ -344,9 +345,8 @@ echo  **************************************************************************
 sudo php ~/composer.phar require drupal/barcodes:2.0.5 --with-dependencies
 echo  ********************************************************************************************************************
 sudo php ~/composer.phar require drupal/field_token_value:3.0.1 --with-dependencies
-
-
-
+echo  ********************************************************************************************************************
+sudo php ~/composer.phar require drupal/hide_revision_field:2.3 --with-dependencies
 
 
 echo  ********************************************************************************************************************
