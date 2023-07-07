@@ -1,52 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\Compiler;
 
 use Drupal\Core\StreamWrapper\PublicStream;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Drupal\webprofiler\DataCollector\TemplateAwareDataCollectorInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ProfilerPass.
+ * Register data collectors services.
  */
 class ProfilerPass implements CompilerPassInterface {
 
   /**
-   * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-   *
-   * @throws \InvalidArgumentException
+   * {@inheritDoc}
    */
   public function process(ContainerBuilder $container) {
-    // Configure the profiler service.
-    if (FALSE === $container->hasDefinition('profiler')) {
+    if (FALSE === $container->hasDefinition('webprofiler.profiler')) {
       return;
     }
 
-    $definition = $container->getDefinition('profiler');
+    $definition = $container->getDefinition('webprofiler.profiler');
 
     $collectors = new \SplPriorityQueue();
     $order = PHP_INT_MAX;
-    foreach ($container->findTaggedServiceIds('data_collector') as $id => $attributes) {
-      $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+    foreach ($container->findTaggedServiceIds('data_collector', TRUE) as $id => $attributes) {
+      $priority = $attributes[0]['priority'] ?? 0;
       $template = NULL;
 
-      if (isset($attributes[0]['template'])) {
-        if (!isset($attributes[0]['id'])) {
-          throw new \InvalidArgumentException(sprintf('Data collector service "%s" must have an id attribute in order to specify a template', $id));
+      $collectorClass = $container->findDefinition($id)->getClass();
+      $isTemplateAware = is_subclass_of($collectorClass, TemplateAwareDataCollectorInterface::class);
+      if (isset($attributes[0]['template']) || $isTemplateAware) {
+        $idForTemplate = $attributes[0]['id'] ?? $collectorClass;
+        if (!$idForTemplate) {
+          throw new InvalidArgumentException(sprintf('Data collector service "%s" must have an id attribute in order to specify a template.', $id));
         }
-        if (!isset($attributes[0]['title'])) {
-          throw new \InvalidArgumentException(sprintf('Data collector service "%s" must have a title attribute', $id));
+        if (!isset($attributes[0]['label'])) {
+          throw new InvalidArgumentException(sprintf('Data collector service "%s" must have a label attribute', $id));
         }
-
-        $template = [
-          $attributes[0]['id'],
-          $attributes[0]['template'],
-          $attributes[0]['title'],
-        ];
+        $template =
+          [
+            $idForTemplate,
+            $attributes[0]['template'] ?? $collectorClass::getTemplate(),
+            $attributes[0]['label'] ?? "",
+          ];
       }
 
-      $collectors->insert([$id, $template], [-$priority, --$order]);
+      $collectors->insert([$id, $template], [$priority, --$order]);
     }
 
     $templates = [];
@@ -55,11 +59,11 @@ class ProfilerPass implements CompilerPassInterface {
       $templates[$collector[0]] = $collector[1];
     }
 
-    $container->setParameter('data_collector.templates', $templates);
+    $container->setParameter('webprofiler.templates', $templates);
 
-    // Set parameter to store the public folder path.
+    // Set a parameter with the storage dns.
     $path = 'file:' . DRUPAL_ROOT . '/' . PublicStream::basePath() . '/profiler';
-    $container->setParameter('data_collector.storage', $path);
+    $container->setParameter('webprofiler.file_profiler_storage_dns', $path);
   }
 
 }

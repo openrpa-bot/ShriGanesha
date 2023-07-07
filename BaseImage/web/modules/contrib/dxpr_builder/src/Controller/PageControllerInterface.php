@@ -10,7 +10,7 @@ interface PageControllerInterface {
   /**
    * Page controller for the dxpr builder configuration page.
    *
-   * @return array
+   * @return mixed[]
    *   A render array representing the page, and containing
    *   the configuration form
    */
@@ -19,7 +19,7 @@ interface PageControllerInterface {
   /**
    * Page controller for the dxpr builder paths page.
    *
-   * @return array
+   * @return mixed[]
    *   A render array representing the page, and containing the paths form
    */
   public function pathsPage();
@@ -27,7 +27,7 @@ interface PageControllerInterface {
   /**
    * Page controller for the DXPR Builder user licenses page.
    *
-   * @return array
+   * @return mixed[]
    *   A render array representing the page.
    */
   public function userLicensesPage();
@@ -35,7 +35,7 @@ interface PageControllerInterface {
   /**
    * Page controller for the user licenses sites modal.
    *
-   * @return array
+   * @return mixed[]
    *   A render array representing the page.
    */
   public function userLicensesSitesPage();

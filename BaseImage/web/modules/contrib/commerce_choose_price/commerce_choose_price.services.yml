@@ -1,5 +1,0 @@
-services:
-  commerce_choose_price.orderitemcomparisonfields:
-    class: Drupal\commerce_choose_price\EventSubscriber\OrderItemComparisonFieldsEventSubscriber
-    tags:
-      - { name: event_subscriber }

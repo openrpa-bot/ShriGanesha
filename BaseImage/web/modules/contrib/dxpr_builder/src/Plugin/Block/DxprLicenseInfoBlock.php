@@ -39,18 +39,24 @@ class DxprLicenseInfoBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * Block constructor.
    *
-   * @param array $configuration
+   * @param mixed[] $configuration
    *   Block configuration.
    * @param string $plugin_id
    *   Plugin ID.
-   * @param mixed $plugin_definition
+   * @param mixed[] $plugin_definition
    *   Plugin definitions.
    * @param \Drupal\dxpr_builder\Service\DxprBuilderLicenseServiceInterface $license
    *   The DXPR license service.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   The request stack.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, DxprBuilderLicenseServiceInterface $license, RequestStack $requestStack) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    array $plugin_definition,
+    DxprBuilderLicenseServiceInterface $license,
+    RequestStack $requestStack
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->license = $license;
     $this->requestStack = $requestStack;
@@ -58,8 +64,15 @@ class DxprLicenseInfoBlock extends BlockBase implements ContainerFactoryPluginIn
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<mixed> $configuration
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+  ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -71,8 +84,11 @@ class DxprLicenseInfoBlock extends BlockBase implements ContainerFactoryPluginIn
 
   /**
    * {@inheritdoc}
+   *
+   * @return mixed[]
+   *   Build array with licenses information.
    */
-  public function build() {
+  public function build(): array {
     $info = $this->license->getLicenseInfo();
     if ($info) {
       $request = $this->requestStack->getCurrentRequest();

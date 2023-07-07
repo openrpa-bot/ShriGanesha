@@ -12,9 +12,15 @@ interface DxprBuilderProfileInterface extends ConfigEntityInterface {
   /**
    * Loads the first profile available for specified roles.
    *
-   * @return self
-   *   return array of roles.
+   * @param array $roles
+   *   The roles.
+   *
+   * @phpstan-param array<string, mixed> $roles
+   * @phpstan-return \Drupal\dxpr_builder\DxprBuilderProfileInterface|null
+   *
+   * @return \Drupal\dxpr_builder\DxprBuilderProfileInterface|null
+   *   User profile or empty array.
    */
-  public static function loadByRoles(array $roles);
+  public static function loadByRoles(array $roles): ?DxprBuilderProfileInterface;
 
 }

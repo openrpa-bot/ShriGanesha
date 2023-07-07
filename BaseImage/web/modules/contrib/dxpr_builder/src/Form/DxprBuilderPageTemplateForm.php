@@ -37,6 +37,8 @@ class DxprBuilderPageTemplateForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return mixed
    */
   public static function create(ContainerInterface $container) {
     return new static($container->get('entity_type.manager'));
@@ -44,8 +46,11 @@ class DxprBuilderPageTemplateForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
+   * @phpstan-return array<string, mixed>
    */
-  public function form(array $form, FormStateInterface $form_state) {
+  public function form(array $form, FormStateInterface $form_state): array {
     $form = parent::form($form, $form_state);
     /** @var \Drupal\dxpr_builder\Entity\DxprBuilderPageTemplate $entity */
     $entity = $this->entity;
@@ -124,8 +129,10 @@ class DxprBuilderPageTemplateForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function save(array $form, FormStateInterface $form_state) {
+  public function save(array $form, FormStateInterface $form_state): int {
     if ($fid = $form_state->getValue('image')) {
       if ($file = $this->fileStorage->load($fid[0])) {
         $image = file_get_contents($file->getFileUri());

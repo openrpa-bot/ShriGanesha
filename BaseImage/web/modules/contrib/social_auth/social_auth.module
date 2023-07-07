@@ -13,7 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 function social_auth_theme() {
   return [
     'login_with' => [
-      'variables' => ['social_networks' => NULL, 'destination' => NULL],
+      'variables' => ['networks' => NULL, 'destination' => NULL],
     ],
   ];
 }
@@ -37,6 +37,7 @@ function social_auth_user_delete(EntityInterface $account) {
     $storage = \Drupal::entityTypeManager()
       ->getStorage('social_auth');
 
+    /** @var \Drupal\social_auth\Entity\SocialAuth[] $socialAuthUser */
     $users = $storage->loadByProperties([
       'user_id' => $account->id(),
     ]);

@@ -41,6 +41,9 @@ class ProfileHandler {
 
   /**
    * Method description.
+   *
+   * @return mixed[]
+   *   The dxpr builder profiles array values.
    */
   public function buildSettings(DxprBuilderProfileInterface $profile) {
     $hide_main_elements = array_diff_key(self::getMainElements(), array_combine($profile->get('elements'), $profile->get('elements')));
@@ -63,6 +66,9 @@ class ProfileHandler {
 
   /**
    * Returns main elements.
+   *
+   * @return mixed[]
+   *   The html main elements values.
    */
   protected static function getMainElements() {
     return [
@@ -101,6 +107,9 @@ class ProfileHandler {
 
   /**
    * Return block elements.
+   *
+   * @return mixed[]
+   *   The block elements values.
    */
   protected function getBlockElements() {
 
@@ -130,6 +139,9 @@ class ProfileHandler {
 
   /**
    * Returns view elements.
+   *
+   * @return mixed[]
+   *   The view elements values.
    */
   protected function getViewElements() {
     $views_elements = [];
@@ -149,7 +161,10 @@ class ProfileHandler {
   }
 
   /**
-   * Return CKEditor config.
+   * Return CKEditor.
+   *
+   * @return mixed[]
+   *   The CKEditor config values.
    */
   protected static function getCkeConfig(DxprBuilderProfileInterface $profile) {
 

@@ -22,7 +22,7 @@ class DxprBuilderUserRegisterBlock extends BlockBase implements ContainerFactory
   /**
    * Constructs a DxprBuilderUserReistrationBlock object.
    *
-   * @param array $configuration
+   * @param mixed[] $configuration
    *   User configuration.
    * @param string $plugin_id
    *   The ID of the plugin.
@@ -31,7 +31,12 @@ class DxprBuilderUserRegisterBlock extends BlockBase implements ContainerFactory
    * @param \Drupal\Core\Form\FormBuilderInterface $formBuilder
    *   The form builder service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, FormBuilderInterface $formBuilder) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    FormBuilderInterface $formBuilder
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->formBuilder = $formBuilder;
@@ -39,8 +44,15 @@ class DxprBuilderUserRegisterBlock extends BlockBase implements ContainerFactory
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<mixed> $configuration
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+  ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -51,8 +63,13 @@ class DxprBuilderUserRegisterBlock extends BlockBase implements ContainerFactory
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
+   *   Build array with form.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function build() {
+  public function build(): array {
     return [
       '#prefix' => '<div id="dxpr_builder_user_registration_form_block">',
       '#suffix' => '</div>',

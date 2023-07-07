@@ -19,9 +19,9 @@ config:
     - field.field.node.drag_and_drop_page.field_dth_main_content_width
     - field.field.node.drag_and_drop_page.field_dth_page_layout
 # project: 'dxpr_builder'
-# version: '2.2.3'
+# version: '2.2.6'
 
-# Information added by Drupal.org packaging script on 2023-04-17
-version: '2.2.3'
+# Information added by Drupal.org packaging script on 2023-06-13
+version: '2.2.6'
 project: 'dxpr_builder'
-datestamp: 1681736182
+datestamp: 1686668259

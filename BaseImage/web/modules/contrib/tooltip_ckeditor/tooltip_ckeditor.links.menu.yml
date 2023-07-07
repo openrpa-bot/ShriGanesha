@@ -1,5 +1,0 @@
-tooltip_ckeditor_admin.settings:
-  title: Tooltip Ckeditor
-  description: 'Tooltip Ckeditor administration page.'
-  route_name: tooltip_ckeditor_admin.settings
-  parent: system.admin_config_ui

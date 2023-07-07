@@ -1,47 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\StringTranslation;
 
 use Drupal\Core\StringTranslation\TranslationManager;
 
 /**
- * Class TranslationManagerWrapper.
+ * Wrap the string_translation service to collect translation data.
  */
 class TranslationManagerWrapper extends TranslationManager {
 
   /**
-   * @var \Drupal\webprofiler\StringTranslation\TranslationManagerWrapper
+   * List of translated strings.
+   *
+   * @var string[]
    */
-  private $translationManager;
+  private array $translated = [];
 
   /**
-   * @var array
+   * List of untranslated strings.
+   *
+   * @var string[]
    */
-  private $translated;
-
-  /**
-   * @var array
-   */
-  private $untranslated;
-
-  /**
-   * @param \Drupal\webprofiler\StringTranslation\TranslationManagerWrapper $translationManager
-   */
-  public function setDataCollector(TranslationManagerWrapper $translationManager) {
-    $this->translationManager = $translationManager;
-  }
+  private array $untranslated = [];
 
   /**
    * {@inheritdoc}
    */
-  protected function doTranslate($string, array $options = []) {
-    // Merge in defaults.
-    if (empty($options['langcode'])) {
-      $options['langcode'] = $this->defaultLangcode;
+  protected function doTranslate($string, array $options = []): string {
+    // If a NULL langcode has been provided, unset it.
+    if (!isset($options['langcode']) && array_key_exists('langcode', $options)) {
+      unset($options['langcode']);
     }
-    if (empty($options['context'])) {
-      $options['context'] = '';
-    }
+
+    // Merge in options defaults.
+    $options = $options + [
+        'langcode' => $this->defaultLangcode,
+        'context' => '',
+      ];
     $translation = $this->getStringTranslation($options['langcode'], $string, $options['context']);
 
     if ($translation) {
@@ -55,17 +52,23 @@ class TranslationManagerWrapper extends TranslationManager {
   }
 
   /**
-   * @return array
+   * Return the list of translated strings.
+   *
+   * @return string[]
+   *   The list of translated strings.
    */
-  public function getTranslated() {
-    return $this->translated ?? [];
+  public function getTranslated(): array {
+    return $this->translated;
   }
 
   /**
-   * @return array
+   * Return the list of untranslated strings.
+   *
+   * @return string[]
+   *   The list of untranslated strings.
    */
-  public function getUntranslated() {
-    return $this->untranslated ?? [];
+  public function getUntranslated(): array {
+    return $this->untranslated;
   }
 
 }

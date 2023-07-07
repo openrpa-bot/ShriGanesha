@@ -67,4 +67,19 @@ class LicenseListBuilder extends EntityListBuilder {
     return $row + parent::buildRow($entity);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefaultOperations(EntityInterface $entity) {
+    $operations = parent::getDefaultOperations($entity);
+    if ($entity->access('view') && $entity->hasLinkTemplate('canonical')) {
+      $operations['view'] = [
+        'title' => $this->t('View'),
+        'weight' => 1,
+        'url' => $this->ensureDestination($entity->toUrl('canonical')),
+      ];
+    }
+    return $operations;
+  }
+
 }

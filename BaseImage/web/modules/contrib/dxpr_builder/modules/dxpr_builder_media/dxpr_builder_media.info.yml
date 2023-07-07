@@ -27,7 +27,7 @@ config_devel:
   - image.style.dxpr_builder_media_thumbnail
   - entity_browser.browser.dxpr_builder_media_modal
 
-# Information added by Drupal.org packaging script on 2023-04-17
-version: '2.2.3'
+# Information added by Drupal.org packaging script on 2023-06-13
+version: '2.2.6'
 project: 'dxpr_builder'
-datestamp: 1681736182
+datestamp: 1686668259

@@ -21,6 +21,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Url;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dxpr_builder\Entity\DxprBuilderProfile;
 use Drupal\dxpr_builder\Service\DxprBuilderLicenseServiceInterface;
 use Drupal\dxpr_builder\Service\DxprBuilderServiceInterface;
@@ -44,6 +45,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * )
  */
 class DxprBuilderFormatter extends FormatterBase {
+
+  use StringTranslationTrait;
 
   /**
    * The current user.
@@ -180,13 +183,13 @@ class DxprBuilderFormatter extends FormatterBase {
    *   The formatter definition.
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
    *   The definition of the field.
-   * @param array $settings
+   * @param mixed[] $settings
    *   The settings of the formatter.
    * @param string $label
    *   The position of the lable when the field is rendered.
    * @param string $view_mode
    *   The current view mode.
-   * @param array $third_party_settings
+   * @param mixed[] $third_party_settings
    *   Any third-party settings.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The current user.
@@ -283,9 +286,16 @@ class DxprBuilderFormatter extends FormatterBase {
   }
 
   /**
-   * Description.
+   * {@inheritdoc}
+   *
+   * @phpstan-param array<mixed> $configuration
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+  ) {
     return new static(
       $plugin_id,
       $plugin_definition,
@@ -327,9 +337,22 @@ class DxprBuilderFormatter extends FormatterBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Builds a renderable array for a field value.
+   *
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   The field values to be rendered.
+   * @param mixed $langcode
+   *   The language that should be used to render the field.
+   *
+   * @phpstan-param \Drupal\Core\Field\FieldItemListInterface<\Drupal\Core\Field\FieldItemInterface> $items
+   *
+   * @return array
+   *   A renderable array for $items, as an array of child elements keyed by
+   *   consecutive numeric indexes starting from 0.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $element = [];
 
     $config = $this->configFactory->get('dxpr_builder.settings');
@@ -362,7 +385,7 @@ class DxprBuilderFormatter extends FormatterBase {
       $within_users_limit = $this->dxprBuilderLicenseService->withinUsersLimit($this->currentUser);
 
       // Allow user with UID 1 always to have access.
-      if ($this->currentUser->id() === '1') {
+      if ($this->currentUser->id() === 1) {
         $within_users_limit = TRUE;
       }
 
@@ -415,6 +438,7 @@ class DxprBuilderFormatter extends FormatterBase {
       if ($item->getEntity()->id() == NULL) {
         continue;
       }
+      /* @phpstan-ignore-next-line */
       $value = $item->value;
       $element[$delta] = [];
       if ($item->getLangcode()) {
@@ -502,12 +526,12 @@ class DxprBuilderFormatter extends FormatterBase {
    *
    * @param string $container_name
    *   Unique container identifier.
-   * @param array $element
+   * @param mixed[] $element
    *   A renderable array for the $items, as an array of child
    *   elements keyed by numeric indexes starting from 0.
    * @param string $content
    *   Raw field value.
-   * @param string $html_format
+   * @param mixed[] $html_format
    *   Valid HTML field value.
    * @param bool $enable_editor
    *   When FALSE only frontend rendering assets will be attached. When TRUE
@@ -517,20 +541,18 @@ class DxprBuilderFormatter extends FormatterBase {
    * @param string $dxpr_lang
    *   Two letter language code.
    *
+   * @phpstan-return array<string, mixed>
+   *
    * @see https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_formatter_view/7.x
    */
-  public function attachAssets($container_name, array &$element, $content, $html_format, $enable_editor, $mode, $dxpr_lang) {
+  public function attachAssets($container_name, array &$element, $content, $html_format, $enable_editor, $mode, $dxpr_lang): array {
     $config = $this->configFactory->get('dxpr_builder.settings');
 
     $settings = [];
     $settings['disallowContainers'] = [];
     $settings['currentPath'] = $this->currentPathStack->getPath();
 
-    $offset_selector = $config->get('offset_selector') ?: '.dxpr-theme-header--sticky, .dxpr-theme-header--fixed';
-
-    if ($offset_selector) {
-      $settings['offsetSelector'] = $offset_selector;
-    }
+    $settings['offsetSelector'] = $config->get('offset_selector') ?: '.dxpr-theme-header--sticky, .dxpr-theme-header--fixed';
 
     if ($enable_editor) {
       $settings['dxprEditor'] = TRUE;
@@ -589,7 +611,7 @@ class DxprBuilderFormatter extends FormatterBase {
 
       $settings['dxprSiteInfo'] = [
         'dxpr_builder_editors' => $this->dxprBuilderLicenseService->getUsersCount(),
-        'dxpr_builder_items' => $this->dxprBuilderLicenseService->getValuesCount(),
+        'dxpr_builder_items' => $this->dxprBuilderLicenseService->getValuesCount(NULL, NULL),
       ];
     }
 
@@ -665,6 +687,8 @@ class DxprBuilderFormatter extends FormatterBase {
     }
 
     $element['#attached']['drupalSettings']['dxprBuilder'] = $settings;
+
+    return [];
   }
 
   /**
@@ -692,8 +716,13 @@ class DxprBuilderFormatter extends FormatterBase {
 
   /**
    * Get the theme color pallette for the current theme.
+   *
+   * @return array|null
+   *   Return color palette if possible.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  private function colorGetPalette() {
+  private function colorGetPalette(): ?array {
     $default_theme = $this->configFactory->get('system.theme')->get('default');
 
     $info = color_get_info($default_theme);
@@ -701,7 +730,7 @@ class DxprBuilderFormatter extends FormatterBase {
       return color_get_palette($default_theme);
     }
 
-    return FALSE;
+    return NULL;
   }
 
   /**

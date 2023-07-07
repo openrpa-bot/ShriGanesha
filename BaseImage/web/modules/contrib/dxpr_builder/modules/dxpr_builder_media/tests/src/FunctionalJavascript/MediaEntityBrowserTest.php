@@ -24,6 +24,8 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
    * Modules to install.
    *
    * @var array
+   *
+   * @phpstan-var array<string>
    */
   protected static $modules = [
     'media',
@@ -55,9 +57,10 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   /**
    * Test the media entity browser.
    */
-  public function testMediaBrowser() {
+  public function testMediaBrowser(): void {
     $this->drupalGet('entity-browser/iframe/dxpr_builder_media');
     $this->clickLink('Choose existing media');
+    /* @phpstan-ignore-next-line */
     $this->assertSession()->assertWaitOnAjaxRequest();
 
     $this->assertSession()->elementExists('css', '.view-dxpr-builder-media-view');

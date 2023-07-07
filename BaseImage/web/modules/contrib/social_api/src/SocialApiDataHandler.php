@@ -14,14 +14,14 @@ abstract class SocialApiDataHandler {
    *
    * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
    */
-  protected $session;
+  protected SessionInterface $session;
 
   /**
    * The prefix each session variable will have.
    *
    * @var string
    */
-  protected $sessionPrefix;
+  protected string $sessionPrefix;
 
   /**
    * Constructor.
@@ -42,7 +42,7 @@ abstract class SocialApiDataHandler {
    * @return mixed
    *   The session variable value.
    */
-  public function get($key) {
+  public function get(string $key): mixed {
     return $this->session->get($this->getSessionPrefix() . $key);
   }
 
@@ -54,7 +54,7 @@ abstract class SocialApiDataHandler {
    * @param mixed $value
    *   The session variable value.
    */
-  public function set($key, $value) {
+  public function set(string $key, mixed $value) {
     $this->session->set($this->getSessionPrefix() . $key, $value);
   }
 
@@ -64,7 +64,7 @@ abstract class SocialApiDataHandler {
    * @return string
    *   The session prefix.
    */
-  public function getSessionPrefix() {
+  public function getSessionPrefix(): string {
     return $this->sessionPrefix;
   }
 
@@ -74,8 +74,8 @@ abstract class SocialApiDataHandler {
    * @param string $prefix
    *   The session prefix.
    */
-  public function setSessionPrefix($prefix) {
-    $this->sessionPrefix = $prefix . '_';
+  public function setSessionPrefix(string $prefix): void {
+    $this->sessionPrefix = "{$prefix}_";
   }
 
 }

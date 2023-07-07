@@ -10,14 +10,14 @@ use Drupal\dxpr_builder\Common\ConfigEnforceDependency;
 /**
  * Implements hook install.
  */
-function dxpr_builder_page_install() {
+function dxpr_builder_page_install(): void {
   dxpr_builder_page_update_8001();
 }
 
 /**
  * Adds enforced dependencies to config.
  */
-function dxpr_builder_page_update_8001() {
+function dxpr_builder_page_update_8001(): void {
   // Previous configuration to be fixed.
   $config_list = [
     'core.entity_form_display.node.drag_and_drop_page.default',

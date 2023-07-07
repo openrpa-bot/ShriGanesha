@@ -5,6 +5,8 @@ namespace Drupal\social_auth_facebook;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\social_auth\AuthManager\OAuth2Manager;
+use Drupal\social_auth\User\SocialAuthUser;
+use Drupal\social_auth\User\SocialAuthUserInterface;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -18,7 +20,7 @@ class FacebookAuthManager extends OAuth2Manager {
    *
    * @var \League\OAuth2\Client\Provider\Facebook
    */
-  protected $client;
+  protected mixed $client;
 
   /**
    * Constructor.
@@ -44,7 +46,7 @@ class FacebookAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function authenticate() {
+  public function authenticate(): void {
     try {
       $this->setAccessToken($this->client->getLongLivedAccessToken($this->client->getAccessToken('authorization_code',
         ['code' => $this->request->query->get('code')])));
@@ -58,19 +60,17 @@ class FacebookAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getUserInfo() {
-    try {
-      $access_token = $this->getAccessToken();
-      if (!$this->user && $access_token != NULL) {
-        $this->user = $this->client->getResourceOwner($access_token);
-      }
-      else {
-        $this->loggerFactory->get('social_auth_facebook')
-          ->error('There was an error fetching the access token for user.');
-      }
-    }
-    catch (\Exception $e) {
-      watchdog_exception('social_auth_facebook', $e);
+  public function getUserInfo(): SocialAuthUserInterface {
+    if (!$this->user) {
+      $owner = $this->client->getResourceOwner($this->getAccessToken());
+      $this->user = new SocialAuthUser(
+        $owner->getName(),
+        $owner->getId(),
+        $this->getAccessToken(),
+        $owner->getEmail(),
+        $owner->getPictureUrl(),
+        $this->getExtraDetails()
+      );
     }
     return $this->user;
   }
@@ -78,7 +78,7 @@ class FacebookAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getAuthorizationUrl() {
+  public function getAuthorizationUrl(): string {
     $scopes = ['email', 'public_profile'];
 
     $extra_scopes = $this->getScopes();
@@ -95,7 +95,7 @@ class FacebookAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function requestEndPoint($method, $path, $domain = NULL, array $options = []) {
+  public function requestEndPoint(string $method, string $path, ?string $domain = NULL, array $options = []): mixed {
     if (!$domain) {
       $domain = 'https://graph.facebook.com';
     }
@@ -124,7 +124,7 @@ class FacebookAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getState() {
+  public function getState(): string {
     return $this->client->getState();
   }
 

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\DataCollector;
 
-use Drupal\webprofiler\DrupalDataCollectorInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,18 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Provides a data collector which shows all available routes.
+ * Collects routing data.
  */
-class RoutingDataCollector extends DataCollector implements DrupalDataCollectorInterface {
+class RoutingDataCollector extends DataCollector implements HasPanelInterface {
 
-  use StringTranslationTrait, DrupalDataCollectorTrait;
-
-  /**
-   * The route profiler.
-   *
-   * @var \Drupal\Core\Routing\RouteProviderInterface
-   */
-  protected $routeProvider;
+  use StringTranslationTrait, PanelTrait;
 
   /**
    * Constructs a new RoutingDataCollector.
@@ -29,28 +23,42 @@ class RoutingDataCollector extends DataCollector implements DrupalDataCollectorI
    * @param \Drupal\Core\Routing\RouteProviderInterface $routeProvider
    *   The route provider.
    */
-  public function __construct(RouteProviderInterface $routeProvider) {
-    $this->routeProvider = $routeProvider;
+  public function __construct(private readonly RouteProviderInterface $routeProvider) {
   }
 
   /**
    * {@inheritdoc}
    */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
+  public function getName(): string {
+    return 'routing';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function collect(Request $request, Response $response, \Throwable $exception = NULL) {
     $this->data['routing'] = [];
     foreach ($this->routeProvider->getAllRoutes() as $route_name => $route) {
-      // @TODO Find a better visual representation.
       $this->data['routing'][] = [
         'name' => $route_name,
         'path' => $route->getPath(),
-      ];
+        ];
     }
   }
 
   /**
+   * Reset the collected data.
+   */
+  public function reset() {
+    $this->data = [];
+  }
+
+  /**
+   * Return the number of routes.
+   *
    * @return int
    */
-  public function getRoutesCount() {
+  public function getRoutesCount(): int {
     return count($this->routing());
   }
 
@@ -64,29 +72,33 @@ class RoutingDataCollector extends DataCollector implements DrupalDataCollectorI
   /**
    * {@inheritdoc}
    */
-  public function getTitle() {
-    return $this->t('Routing');
-  }
+  public function getPanel(): array {
+    $data = $this->data['routing'];
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getName() {
-    return 'routing';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPanelSummary() {
-    return $this->t('Defined routes: @route', ['@route' => $this->getRoutesCount()]);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIcon() {
-    return 'iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPxJREFUeNrkVsERREAQ7D0koXwlIAISkIGXvwAkoJSfHITg5SMUVR4eMuCxZ1xxV+5uuTL30lV8bPX09PSuFVJKcOOGP+DipLrrusoFdV1Lz/NgmiaKosC0XrAopYT0fc/f/jAMa41Pj23bkrpi9bRpGmRZ9lRKFSzLkl9UHMI4jijLcuaaSZMkQdd1fNMn5r0EHIFhGEjTlDenYRjCcZyHUnqRwXEcz77sYepM+Z1yTOEXZEFVVYcUba2iItsNcbr9IAiw5HMd1CJZtU1VpG3bIooi3gPF933keY43pb9gb1Bskdrap58luMjvRNO04wcK18RfIa59mbgLMAASuWsKAyoEhgAAAABJRU5ErkJggg==';
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+      '#type' => 'table',
+      '#header' => [
+        $this->t('Name'),
+        $this->t('Path'),
+      ],
+      '#rows' => array_map(
+          function ($data) {
+              return [
+              $data['name'],
+              $data['path'],
+              ];
+          }, $data
+      ),
+      '#attributes' => [
+        'class' => [
+          'webprofiler__table',
+        ],
+      ],
+      '#sticky' => TRUE,
+      ],
+    ];
   }
 
 }

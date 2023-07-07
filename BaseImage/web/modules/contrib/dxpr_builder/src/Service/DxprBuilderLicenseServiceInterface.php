@@ -4,6 +4,7 @@ namespace Drupal\dxpr_builder\Service;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Description.
@@ -73,7 +74,7 @@ interface DxprBuilderLicenseServiceInterface {
   /**
    * Retrieves license information.
    *
-   * @return array|bool
+   * @return mixed[]
    *   Array of license information or FALSE in case of fail.
    */
   public function getLicenseInfo();
@@ -108,61 +109,89 @@ interface DxprBuilderLicenseServiceInterface {
    * @param string $mail
    *   User mail address.
    */
-  public function removeMailFromCentralStorage(string $mail);
+  public function removeMailFromCentralStorage(string $mail): void;
 
   /**
    * Sends DXPR Users to central storage.
    *
-   * @param \Drupal\user\UserInterface[] $users
+   * @param mixed[] $users
    *   Users with a permission to edit with DXPR Builder.
    * @param string $operation
    *   Operation on user storage, add or remove.
+   * @param string $json_web_token
+   *   DXPR product key in JWT.
    */
-  public function syncUsersWithCentralStorage(array $users, string $operation);
+  public function syncUsersWithCentralStorage(array $users, string $operation, string $json_web_token = ''): void;
 
   /**
    * Sends all DXPR editor users to central storage.
    *
    * @param string $operation
    *   Operation on user storage, add or remove.
+   * @param string $json_web_token
+   *   DXPR product key in JWT.
    */
-  public function syncAllUsersWithCentralStorage(string $operation);
+  public function syncAllUsersWithCentralStorage(string $operation, string $json_web_token = '') :void;
 
   /**
    * Process a single item from the sync queue, if not empty.
    */
-  public function processSyncQueue();
+  public function processSyncQueue(): void;
 
   /**
    * Collects User License information.
    *
-   * @return array
+   * @return mixed[]
    *   Information to be displayed on people page.
    */
   public function getUserLicenseInfo();
 
   /**
-   * Get count of DXPR Builder Editor users.
+   * Retrieve count of users with 'edit with dxpr builder' permission.
    *
    * @return int
-   *   Count of users.
+   *   The count of users.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getUsersCount(int $before_id);
+  public function getUsersCount();
 
   /**
-   * Get count of DXPR Builder content items.
+   * Retrieve count of content items with 'text_dxpr_builder' field formatter.
+   *
+   * @param string|null $entity_type_filter
+   *   Only count entities with the given entity type.
+   * @param string|null $before_id
+   *   Only count users with a user id lower than $before_id.
+   *   This is used for checking the users limit and must be used in conjuction
+   *   with the $entity_type_filter parameter.
    *
    * @return int
-   *   Count of entities.
+   *   The count of fields.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getValuesCount(string $entity_type_filter, int $before_id);
+  public function getValuesCount(?string $entity_type_filter = NULL, ?string $before_id = NULL);
 
   /**
    * List users for license across all sites.
    *
-   * @return array
+   * @return mixed[]
    *   List of users.
    */
   public function getLicenseUsers();
+
+  /**
+   * Determine if user is a dxpr editor.
+   *
+   * @param \Drupal\user\UserInterface $account
+   *   The user account to check.
+   *
+   * @return bool
+   *   Is billable.
+   */
+  public function isBillableUser(UserInterface $account);
 
 }

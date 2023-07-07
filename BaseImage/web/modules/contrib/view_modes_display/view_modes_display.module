@@ -1,0 +1,53 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+/**
+ * @file
+ * Contains view_modes_display.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use \Drupal\view_modes_display\EntityTypeInfo;
+
+/**
+ * Implements hook_help().
+ */
+function view_modes_display_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the view_modes_display module.
+    case 'help.page.view_modes_display':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Preview view modes for every entity type') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function view_modes_display_theme() {
+  $theme = [];
+
+  return $theme;
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function view_modes_display_entity_type_alter(array &$entity_types) {
+  return \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityTypeInfo::class)
+    ->entityTypeAlter($entity_types);
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function view_modes_display_entity_operation(EntityInterface $entity) {
+  return \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityTypeInfo::class)
+    ->entityOperation($entity);
+}

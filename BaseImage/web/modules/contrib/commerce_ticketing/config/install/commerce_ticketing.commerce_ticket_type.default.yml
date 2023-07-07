@@ -1,6 +1,0 @@
-langcode: en
-status: true
-id: default
-label: Default
-numberPattern: ticket_default
-workflow: ticket_default

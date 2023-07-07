@@ -17,7 +17,7 @@ class BlockContent extends BlockContentEntity {
    *
    * {@inheritdoc}
    */
-  public function preSave(EntityStorageInterface $storage) {
+  public function preSave(EntityStorageInterface $storage): void {
     parent::presave($storage);
 
     \Drupal::service('dxpr_builder.service')->setEmptyStringToDxprFieldsOnEntity($this);

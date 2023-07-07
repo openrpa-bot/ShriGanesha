@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Legacy Webprofiler module file.
+ * Drupal Webprofiler.
  */
 
 /**
@@ -10,29 +10,68 @@
  */
 function webprofiler_theme() {
   return [
-    'webprofiler_loader' => [
-      'template' => 'Profiler/webprofiler_loader',
-      'variables' => ['token' => NULL, 'profiler_url' => NULL],
-    ],
-    'webprofiler_toolbar' => [
-      'template' => 'Profiler/webprofiler_toolbar',
+    'webprofiler_toolbar_js' => [
+      'template' => 'Profiler/toolbar_js',
       'variables' => [
-        'token' => NULL,
-        'toolbar' => NULL,
+        'excluded_ajax_paths' => '^\/.*\/profiler\/[a-z0-9]*',
+        'token' => '',
+        'request' => NULL,
+        'csp_script_nonce' => '',
+        'csp_style_nonce' => '',
       ],
     ],
-    'webprofiler_panel' => [
-      'template' => 'Profiler/webprofiler_panel',
+    'webprofiler_toolbar' => [
+      'template' => 'Profiler/toolbar',
       'variables' => [
-        'panel' => NULL,
+        'request' => NULL,
+        'profile' => NULL,
+        'templates' => '',
+        'profiler_url' => '',
+        'token' => '',
+        'csp_script_nonce' => '',
+        'csp_style_nonce' => '',
+      ],
+    ],
+    'webprofiler_toolbar_redirect' => [
+      'template' => 'Profiler/toolbar_redirect',
+      'variables' => [
+        'location' => '',
       ],
     ],
     'webprofiler_dashboard' => [
-      'template' => 'Profiler/webprofiler_dashboard',
+      'template' => 'Profiler/dashboard',
       'variables' => [
-        'profile' => [],
-        'panels' => [],
-        'spinner_path' => NULL,
+        'collectors' => [],
+        'token' => '',
+        'profile' => NULL,
+      ],
+    ],
+    'webprofiler_dashboard_panel' => [
+      'template' => 'Profiler/dashboard_panel',
+      'variables' => [
+        'name' => '',
+        'template' => '',
+        'profile' => NULL,
+      ],
+    ],
+    'webprofiler_dashboard_section' => [
+      'template' => 'Profiler/dashboard_section',
+      'variables' => [
+        'title' => '',
+        'data' => [],
+      ],
+    ],
+    'webprofiler_dashboard_tabs' => [
+      'template' => 'Profiler/dashboard_tabs',
+      'variables' => [
+        'tabs' => [],
+      ],
+    ],
+    'webprofiler_dashboard_frontend' => [
+      'template' => 'Profiler/frontend',
+      'variables' => [
+        'performance' => [],
+        'cwv' => [],
       ],
     ],
   ];
@@ -42,10 +81,10 @@ function webprofiler_theme() {
  * Implements hook_cache_flush().
  */
 function webprofiler_cache_flush() {
-  $config = \Drupal::configFactory()->get('webprofiler.config');
+  $config = \Drupal::configFactory()->get('webprofiler.settings');
 
   if ($config->get('purge_on_cache_clear')) {
-    $profiler = \Drupal::service('profiler');
+    $profiler = \Drupal::service('webprofiler.profiler');
     $profiler->purge();
   }
 }

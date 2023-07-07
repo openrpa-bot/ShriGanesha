@@ -82,6 +82,8 @@ class DxprBuilderSettingsForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return mixed
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -102,8 +104,11 @@ class DxprBuilderSettingsForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
+   * @phpstan-return array<string, mixed>
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     // $form = parent::buildForm($form, $form_state);
     $config = $this->configFactory->get('dxpr_builder.settings');
@@ -196,7 +201,7 @@ class DxprBuilderSettingsForm extends FormBase {
     ];
     $default = ['' => $this->t('None (Use basic file upload widget)')];
     if ($this->moduleHandler->moduleExists('entity_browser')) {
-      /** @var array $media_browsers */
+      /** @var array<mixed> $media_browsers */
       $media_browsers = $this->entityTypeManager->getStorage('entity_browser')->getQuery()->execute();
       $media_browsers = $default + $media_browsers;
     }
@@ -260,8 +265,10 @@ class DxprBuilderSettingsForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $jwtPayloadData = $this->jwtDecoder->decodeJwt($form_state->getValue('json_web_token'));
     if ($jwtPayloadData['sub'] === NULL || $jwtPayloadData['scope'] === NULL) {
       $form_state->setErrorByName('json_web_token', $this->t('Your DXPR Builder product key can’t be read, please make sure you copy the whole key without any trailing or leading spaces into the form.'));
@@ -277,8 +284,10 @@ class DxprBuilderSettingsForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $config = $this->configFactory->getEditable('dxpr_builder.settings');
 
     $old_editor_assets_source = $config->get('editor_assets_source');

@@ -10,7 +10,7 @@ class ConfigEnforceDependency {
   /**
    * Config list.
    *
-   * @var array
+   * @var mixed[]
    */
   private $configs;
 
@@ -26,7 +26,7 @@ class ConfigEnforceDependency {
    *
    * @param string $module_name
    *   Module name.
-   * @param array $configs
+   * @param mixed[] $configs
    *   Config list.
    */
   public function __construct($module_name, array $configs) {
@@ -37,7 +37,7 @@ class ConfigEnforceDependency {
   /**
    * Adds enforced dependencies to config.
    */
-  public function execute() {
+  public function execute(): void {
     $config_factory = \Drupal::configFactory();
     $list_all = $config_factory->listAll();
 

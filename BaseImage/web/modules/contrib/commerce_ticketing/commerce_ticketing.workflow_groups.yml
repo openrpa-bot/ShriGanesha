@@ -1,3 +1,0 @@
-commerce_ticketing:
-  label: Ticket
-  entity_type: commerce_ticket

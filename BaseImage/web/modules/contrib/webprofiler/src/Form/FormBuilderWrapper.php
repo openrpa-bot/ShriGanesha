@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\Form;
 
 use Drupal\Core\Form\FormBuilder;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 
 /**
- * Class FormBuilderWrapper.
+ * Wrap the form builder to collect form data.
  */
 class FormBuilderWrapper extends FormBuilder {
 
   /**
    * @var array
    */
-  private $buildForms;
+  private array $buildForms = [];
 
   /**
    * @return array
    */
-  public function getBuildForm() {
+  public function getBuildForm(): array {
     return $this->buildForms;
   }
 
@@ -28,35 +31,54 @@ class FormBuilderWrapper extends FormBuilder {
   public function prepareForm($form_id, &$form, FormStateInterface &$form_state) {
     parent::prepareForm($form_id, $form, $form_state);
 
-    if (!$this->buildForms) {
-      $this->buildForms = [];
-    }
-
-    $elements = [];
-    foreach ($form as $key => $value) {
-      if (strpos($key, '#') !== 0) {
-        $elements[$key]['#title'] = isset($value['#title']) ? $value['#title'] : NULL;
-        $elements[$key]['#access'] = isset($value['#access']) ? $value['#access'] : NULL;
-        $elements[$key]['#type'] = isset($value['#type']) ? $value['#type'] : NULL;
-      }
-    }
-
+    $elements = $this->extractElement($form);
     $buildInfo = $form_state->getBuildInfo();
 
     $class = get_class($buildInfo['callback_object']);
-    $method = new \ReflectionMethod($class, 'buildForm');
+    try {
+      $method = new \ReflectionMethod($class, 'buildForm');
 
-    $this->buildForms[$buildInfo['form_id']] = [
-      'class' => [
-        'class' => $class,
-        'method' => 'buildForm',
-        'file' => $method->getFilename(),
-        'line' => $method->getStartLine(),
-      ],
-      'form' => $elements,
-    ];
+      $this->buildForms[$buildInfo['form_id']] = [
+        'class' => [
+          'class' => $class,
+          'method' => 'buildForm',
+          'file' => $method->getFilename(),
+          'line' => $method->getStartLine(),
+        ],
+        'elements' => $elements,
+        'action' => $form['#action'],
+        'method' => $form['#method'],
+      ];
+    }
+    catch (\ReflectionException $e) {
+    }
 
     return $form;
+  }
+
+  /**
+   * Extract element information from the form.
+   *
+   * @param array $form
+   *   The form.
+   *
+   * @return array
+   *   Element information from the form.
+   */
+  private function extractElement(array $form): array {
+    $elements = [];
+
+    $children = Element::children($form);
+
+    foreach ($children as $child) {
+      $elements[$child]['#title'] = $form[$child]['#title'] ?? NULL;
+      $elements[$child]['#access'] = $form[$child]['#access'] ?? NULL;
+      $elements[$child]['#type'] = $form[$child]['#type'] ?? NULL;
+
+      $elements[$child]['#children'] = $this->extractElement($form[$child]);
+    }
+
+    return $elements;
   }
 
 }

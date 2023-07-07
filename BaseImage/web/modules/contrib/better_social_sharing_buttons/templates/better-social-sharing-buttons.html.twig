@@ -123,7 +123,7 @@
     {% else %}
       {% set href = "javascript:window.print()" %}
     {% endif %}
-    <a href="{{ href }}" rel="{{ rel }}" id="printlink" class="share-print">
+    <a href="{{ href }}" rel="{{ rel }}" class="bssb-printlink" class="share-print">
       <svg width="{{ items.width }}" height="{{ items.width }}" style="border-radius:{{ items.radius }};">
         <use href="{{ social_buttons_sprite }}#print" />
       </svg>

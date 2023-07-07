@@ -50,8 +50,10 @@ class PathsForm extends ConfirmFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $field_data = [];
 
     $entity_definitions = \Drupal::service('entity_type.manager')->getDefinitions();
@@ -97,9 +99,17 @@ class PathsForm extends ConfirmFormBase {
   }
 
   /**
-   * Description.
+   * Batch callback to expand tokens.
+   *
+   * @param array $field_info
+   *   Information about selected field.
+   * @param array $context
+   *   Field context.
+   *
+   * @phpstan-param array<string, mixed> $field_info
+   * @phpstan-param array<string, mixed> $context
    */
-  public static function expandTokens($field_info, &$context) {
+  public static function expandTokens(array $field_info, array &$context): void {
     $iteration_count = $context['sandbox']['iteration'] ?? 0;
     $context['sandbox']['iteration'] = $iteration_count + 1;
 

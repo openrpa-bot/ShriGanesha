@@ -1,86 +1,33 @@
 [[_TOC_]]
 
-#### Dependencies
-- d3.js: WebProfiler module requires D3 library 3.x (not 4.x) to render data.
-- highlight.js: WebProfiler module requires highlight 9.7.x library to syntax highlight collected queries.
+#### Introduction
 
-#### Install using Composer (recommended)
-If you use Composer to manage dependencies, edit [composer.json](composer.json) as follows:
+WebProfiler module extract, collect, store and display profiling information for Drupal.
 
-1. Run `composer require composer/installers` to ensure that you have the `composer/installers` package installed. This package facilitates the installation of packages into directories other than `/vendor` (e.g. `/libraries`) using Composer.
-1. Add the following to the `installer-paths` section of `composer.json`:
-    ```
-    "libraries/{$name}": ["type:drupal-library"],
-    ```
-    When you are using the drupal-composer/drupal-project template add the following instead:
-    ```
-    "web/libraries/{$name}": ["type:drupal-library"],
-    ```
-1. Add the following to the "repositories" section of `composer.json`:
-    ```
-    {
-        "type": "package",
-        "package": {
-            "name": "d3/d3",
-            "version": "v3.5.17",
-            "type": "drupal-library",
-            "source": {
-                "url": "https://github.com/d3/d3.git",
-                "type": "git",
-                "reference": "tags/v3.5.17"
-            }
-        }
-    },
-    {
-        "type": "package",
-        "package": {
-            "name": "highlightjs/highlightjs",
-            "version": "11.2.0",
-            "type": "drupal-library",
-            "source": {
-                "url": "https://github.com/highlightjs/highlight.js.git",
-                "type": "git",
-                "reference": "tags/11.2.0"
-            }
-        }
-    }
-    ```
-1. Run `composer require d3/d3 highlightjs/highlightjs` - you should find that new directories have been created
-under `libraries`
+For every request, WebProfiler create a profile file that contains all the collected information. This
+information are then rendered on a toolbar on every HTML response, and on a dedicated dashboard in the
+backoffice.
 
-#### Install manually
+A lot of Drupal subsystems are replaced by WebProfiler to collect profiling information, and this
+can lead to some performance issues. For this reason, WebProfiler must not be used in production.
 
-- d3.js:
+#### Installation
 
-  - Create a `/libraries/d3/` directory below your Drupal root directory
-  - Download https://d3js.org/d3.v3.min.js
-  - Rename it to `/libraries/d3/d3.min.js`
+WebProfiler can be downloaded and installed like any other Drupal module.
 
-  For further details on how to obtain D3.js, see https://github.com/d3/d3/
+#### Collect time metrics
 
-- highlight.js:
+To enable the collection of time metrics you need to add this line to the `settings.php` file:
 
-  - Create `/libraries/highlightjs/` directory below your Drupal root directory
-  - Download the library and CSS from http://highlightjs.org into it
+```php
+$settings['tracer_plugin'] = 'stopwatch_tracer';
+```
 
-#### IDE link
+Anyway a better solution to trace Drupal internals is to use the `tracer` plugin to send
+data to an external trace database like [Grafana Tempo](https://grafana.com/oss/tempo/). You can
+find more information on [this](https://www.youtube.com/watch?v=6UKIbbbflAs) YouTube video.
 
-Each class name discovered while profiling (controller class, event class) is specially linked to open the class in
-an IDE. You can configure the URLs for these links to work for your IDE.
+#### Configuration
 
-- [Sublime text (2 and 3) - macOS](https://github.com/dhoulb/subl)
-- Textmate. Use `txmt://open?url=file://@file&line=@line`
-- PhpStorm. Use `phpstorm://open?file=@file&line=@line`
-
-#### Timeline
-
-It is also possible to collect the time needed to instantiate every single service used in a request.
-
-Add the following two lines to `settings.php` (or, even better, to `settings.local.php`):
-
-    ```
-    $class_loader->addPsr4('Drupal\\webprofiler\\', [ __DIR__ . '/../../modules/contrib/devel/webprofiler/src']);
-    $settings['container_base_class'] = '\Drupal\webprofiler\DependencyInjection\TraceableContainer';
-    ```
-
-Check if the path from the WebProfiler module in your `settings.php` file matches the location of the installed WebProfiler module in your project.
+After enabling the module, only some widgets are displayed, you can enable all the others in the
+WebProfiler settings page (`/admin/config/development/devel/webprofiler`).

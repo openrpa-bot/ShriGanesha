@@ -31,7 +31,7 @@ class ViewHandler implements ViewHandlerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getView($viewId, $exp_input, $displayId, array $data, AttachedAssets $assets) {
+  public function getView($viewId, $exp_input, $displayId, $data, AttachedAssets $assets) {
     /** @var \Drupal\views\ViewExecutable|null $view */
     $view = Views::getView($viewId);
     if ($view) {
@@ -45,7 +45,7 @@ class ViewHandler implements ViewHandlerInterface {
       foreach ($filters as $name => $filter) {
         if (!empty($filters[$name]['expose']) && !empty($filters[$name]['expose']['remember'])) {
           $session = $view->getRequest()->getSession();
-          if (empty($session)) {
+          if ($session !== FALSE) {
             $filters[$name]['expose']['remember'] = NULL;
           }
         }

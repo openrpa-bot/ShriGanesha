@@ -1,3 +1,0 @@
-manage user email verification settings:
-  title: 'Manage user email verification settings'
-  restrict access: true

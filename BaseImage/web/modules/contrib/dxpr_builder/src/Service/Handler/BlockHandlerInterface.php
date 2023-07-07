@@ -12,7 +12,7 @@ interface BlockHandlerInterface {
   /**
    * Generate a block given it's module and delta.
    *
-   * @param array $blockInfo
+   * @param mixed[] $blockInfo
    *   An array of info providing information on how the
    *   block should be loaded. Keys:
    *   - type: Will always be block
@@ -24,7 +24,7 @@ interface BlockHandlerInterface {
    *   Block configuration.
    * @param \Drupal\Core\Asset\AttachedAssets $assets
    *   Any retrieved libraries and/or settings should be attached to this.
-   * @param array $data
+   * @param mixed[] $data
    *   Element data.
    *
    * @return string
@@ -37,7 +37,7 @@ interface BlockHandlerInterface {
    *
    * @param string $block_id
    *   The id of the block.
-   * @param array $definition
+   * @param mixed[] $definition
    *   Block definition array.
    *
    * @return bool|\Drupal\Core\Access\AccessResultInterface

@@ -35,6 +35,8 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return mixed
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -44,8 +46,11 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
+   * @phpstan-return array<string, mixed>
    */
-  public function form(array $form, FormStateInterface $form_state) {
+  public function form(array $form, FormStateInterface $form_state): array {
 
     $form = parent::form($form, $form_state);
 
@@ -272,8 +277,10 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $values = $form_state->getValues();
     // Make the roles export more readable.
     $values['roles'] = array_values(array_filter($values['roles']));
@@ -289,8 +296,10 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-param array<string, mixed> $form
    */
-  public function save(array $form, FormStateInterface $form_state) {
+  public function save(array $form, FormStateInterface $form_state): int {
 
     $result = parent::save($form, $form_state);
     $message_args = ['%label' => $this->entity->label()];
@@ -307,8 +316,13 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * Returns element options.
+   *
+   * @return array
+   *   List of DXPR Builder elements.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function getElements() {
+  public function getElements(): array {
     return [
       'az_accordion' => $this->t('Accordion'),
       'az_alert' => $this->t('Alert'),
@@ -345,8 +359,13 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * Returns all available CKEditor buttons.
+   *
+   * @return array
+   *   List of DXPR Builder buttons.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  protected static function getAllButtons() {
+  protected static function getAllButtons(): array {
     return [
       'Bold' => 'Bold',
       'Italic' => 'Italic',
@@ -408,8 +427,13 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * Returns default buttons for inline mode.
+   *
+   * @return array
+   *   List of DXPR Builder inline buttons.
+   *
+   * @phpstan-return array<int, string>
    */
-  protected static function getInlineButtons() {
+  protected static function getInlineButtons(): array {
     return [
       'Bold',
       'Italic',
@@ -434,8 +458,13 @@ class DxprBuilderProfileForm extends EntityForm {
 
   /**
    * Returns default buttons form modal mode.
+   *
+   * @return array
+   *   List of DXPR Builder modal buttons.
+   *
+   * @phpstan-return array<int, string>
    */
-  protected static function getModalButtons() {
+  protected static function getModalButtons(): array {
     return [
       'Bold',
       'Italic',

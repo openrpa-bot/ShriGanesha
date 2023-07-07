@@ -1,37 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\DataCollector;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\webprofiler\DrupalDataCollectorInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Collects data about the used assets (CSS/JS).
+ * Collects assets data.
  */
-class AssetsDataCollector extends DataCollector implements DrupalDataCollectorInterface {
+class AssetsDataCollector extends DataCollector implements HasPanelInterface {
 
-  use StringTranslationTrait, DrupalDataCollectorTrait;
-
-  /**
-   * The app root.
-   *
-   * @var string
-   */
-  protected $root;
+  use StringTranslationTrait, DataCollectorTrait, PanelTrait;
 
   /**
-   * Constructs a AssetDataCollector object.
+   * AssetDataCollector constructor.
    *
    * @param string $root
    *   The app root.
    */
-  public function __construct($root) {
-    $this->root = $root;
-
+  public function __construct(private readonly string $root) {
     $this->data['js'] = [];
     $this->data['css'] = [];
   }
@@ -39,14 +31,31 @@ class AssetsDataCollector extends DataCollector implements DrupalDataCollectorIn
   /**
    * {@inheritdoc}
    */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
+  public function getName(): string {
+    return 'assets';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function collect(Request $request, Response $response, \Throwable $exception = NULL) {
     $this->data['assets']['installation_path'] = $this->root . '/';
   }
 
   /**
-   * @param $jsAsset
+   * Reset the collected data.
    */
-  public function addJsAsset($jsAsset) {
+  public function reset() {
+    $this->data = [];
+  }
+
+  /**
+   * Add a javascript asset to collected data.
+   *
+   * @param array $jsAsset
+   *   A javascript asset.
+   */
+  public function addJsAsset(array $jsAsset) {
     $this->data['js'] = NestedArray::mergeDeepArray([
       $jsAsset,
       $this->data['js'],
@@ -54,9 +63,12 @@ class AssetsDataCollector extends DataCollector implements DrupalDataCollectorIn
   }
 
   /**
-   * @param $cssAsset
+   * Add a css asset to collected data.
+   *
+   * @param array $cssAsset
+   *   A css asset.
    */
-  public function addCssAsset($cssAsset) {
+  public function addCssAsset(array $cssAsset) {
     $this->data['css'] = NestedArray::mergeDeepArray([
       $cssAsset,
       $this->data['css'],
@@ -64,45 +76,143 @@ class AssetsDataCollector extends DataCollector implements DrupalDataCollectorIn
   }
 
   /**
-   * Twig callback to return the amount of CSS files.
+   * Return the number of css files used in page.
+   *
+   * @return int
+   *   The number of css files used in page.
    */
-  public function getCssCount() {
+  public function getCssCount(): int {
     return count($this->data['css']);
   }
 
   /**
-   * Twig callback to return the amount of JS files.
+   * Return the number of javascript files used in page.
+   *
+   * @return int
+   *   The number of javascript files used in page.
    */
-  public function getJsCount() {
+  public function getJsCount(): int {
     return count($this->data['js']) - 1;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return 'assets';
+  public function getPanel(): array {
+    return [
+      '#theme' => 'webprofiler_dashboard_tabs',
+      '#tabs' => [
+        [
+          'label' => $this->t('CSS'),
+          'content' => $this->renderCss($this->data['css']),
+        ],
+        [
+          'label' => $this->t('Settings'),
+          'content' => $this->renderSettings($this->data['js'] ?? ['drupalSettings']),
+        ],
+        [
+          'label' => $this->t('JS'),
+          'content' => $this->renderJs($this->data['js']),
+        ],
+      ],
+    ];
   }
 
   /**
-   * {@inheritdoc}
+   * Render a list of CSS files.
+   *
+   * @param array $data
+   *   A list of CSS files.
+   *
+   * @return array
+   *   The render array of the list of CSS files.
    */
-  public function getTitle() {
-    return $this->t('Assets');
+  private function renderCss(array $data): array {
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Asset'),
+          $this->t('Version'),
+          $this->t('Type'),
+          $this->t('Media'),
+        ],
+        '#rows' => array_map(function ($asset) {
+          return [
+            $asset['data'],
+            $asset['version'],
+            $asset['type'],
+            $asset['media'],
+          ];
+        }, $data),
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+        '#sticky' => TRUE,
+      ],
+    ];
   }
 
   /**
-   * {@inheritdoc}
+   * Render the DrupalSettings array.
+   *
+   * @param array $settings
+   *   The DrupalSettings array.
+   *
+   * @return array
+   *   The render array of the DrupalSettings array.
    */
-  public function getPanelSummary() {
-    return $this->t('Total: @count', ['@count' => ($this->getCssCount() + $this->getJsCount())]);
+  private function renderSettings(array $settings): array {
+    return [
+      '#type' => 'inline_template',
+      '#template' => '{{ data|raw }}',
+      '#context' => [
+        'data' => array_key_exists('drupalSettings', $settings) ? $this->dumpData($this->cloneVar($settings['drupalSettings'])) : 'n/a',
+      ],
+    ];
   }
 
   /**
-   * {@inheritdoc}
+   * Render a list of javascript files.
+   *
+   * @param array $data
+   *   A list of javascript files.
+   *
+   * @return array
+   *   The render array of the list of javascript files.
    */
-  public function getIcon() {
-    return 'iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxQUE0NEI2NTlCQTkxMUUzQkFDRjg2NUVCQ0NFNTcwQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxQUE0NEI2NjlCQTkxMUUzQkFDRjg2NUVCQ0NFNTcwQiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjFBQTQ0QjYzOUJBOTExRTNCQUNGODY1RUJDQ0U1NzBCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjFBQTQ0QjY0OUJBOTExRTNCQUNGODY1RUJDQ0U1NzBCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+C1mVdgAAAktJREFUeNrUlk+I6VEUx48/4SVKpkgiCywkK8ksWVhYSFm9hYXFqxfbt2KnLJS9hbKQhZXtFMVmUrKYkZmslPxLSvnvYZx37+2NTDPP03ss5tTpcu/xued77rm/Hw4iwqWNC1cwzv8CPlJ6lUypfSf+k256Ad8R/0HlL4l/uWCSL5zfO/xTLTkczrvx9aDwU7QUX61Ww/Pz88WAdrv9Oplyzz0UPp8PIpEIzrnWJ6EUJBAI2DgYDOD+/h7EYjFwuadz4X80SUFCoRB6vR6Mx2Mwm82QTqfh4eEBNBoN3NzcgFQqhdVqBbvd7s+ZUlkUJpFIoN1uQyQSAYvFAqlUiq2Xy2VwuVwQCoXAZrNBMpmE6XTK4nk83lsqOX0ki0h2xUajgYFAAJVKJRoMBoxGo9hqtXA4HCKNq1ar+Pj4iMFgEFUqFer1egyHw9jv93GxWDCOyWTCA5RaLBZjd9jhcGCz2cRXKxQKqNVqcTQaHeZKpRLqdDoWf3d3h6QMB+hB/nK5BL/fD4lEAsiPmUSfzwf1eh1qtRoYjUaQy+WQz+eBbAoej4fVN5PJgNVqZfV9J586lUBtMplgLpdDEoyktuj1ejEej7M1p9OJbrcbi8UirtdrNjebzQ6MN/KPfT6f436/Z3XudDp4e3uLlUqFQej37XbL5B7DjqEfthQBAgGzfpTJZJDNZpn0zWbDRgI/eQlOdjGFU1coFIfHGu3Lv90qbrfbXRFpJ4POAVGjh/r09PRCP38l3r3Q62RA/NtV3qb8T/Nn4irQXwIMANMNuV/Q8qbhAAAAAElFTkSuQmCC';
+  private function renderJs(array $data): array {
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Asset'),
+          $this->t('Version'),
+          $this->t('Type'),
+          $this->t('Scope'),
+        ],
+        '#rows' => array_map(function ($asset) {
+          return [
+            $asset['data'],
+            $asset['version'],
+            $asset['type'],
+            $asset['scope'],
+          ];
+        }, array_filter($data, function ($asset) {
+          return $asset['type'] !== 'setting';
+        })),
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+        '#sticky' => TRUE,
+      ],
+    ];
   }
 
 }

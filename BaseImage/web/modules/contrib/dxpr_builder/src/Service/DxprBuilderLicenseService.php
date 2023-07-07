@@ -21,8 +21,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\user\UserInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -233,7 +233,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
     try {
       $result = $this->client->request('GET', $end_point, $request_options);
     }
-    catch (GuzzleException $e) {
+    catch (\Exception $e) {
       $this->messenger->addMessage($this->t('DXPR Subscription lookup failed due to an error.'), 'warning');
       watchdog_exception('dxpr_builder', $e);
       $result = FALSE;
@@ -276,7 +276,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
     try {
       $result = $this->client->request('GET', $end_point);
     }
-    catch (GuzzleException $e) {
+    catch (\Exception $e) {
       watchdog_exception('dxpr_builder', $e);
       $result = FALSE;
     }
@@ -302,7 +302,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   /**
    * {@inheritdoc}
    */
-  public function removeMailFromCentralStorage(string $mail) {
+  public function removeMailFromCentralStorage(string $mail): void {
     $this->queue->createItem([
       'users_data' => [
         [
@@ -317,7 +317,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   /**
    * {@inheritdoc}
    */
-  public function syncUsersWithCentralStorage(array $user_ids, string $operation, string $json_web_token = '') {
+  public function syncUsersWithCentralStorage(array $user_ids, string $operation, string $json_web_token = ''): void {
     // Build a list of users.
     $users_data = [];
     foreach ($user_ids as $user_id) {
@@ -349,15 +349,33 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   /**
    * {@inheritdoc}
    */
-  public function syncAllUsersWithCentralStorage(string $operation, string $json_web_token = '') {
+  public function syncAllUsersWithCentralStorage(string $operation, string $json_web_token = ''): void {
     $dxpr_editors = $this->getEditors();
     $this->syncUsersWithCentralStorage($dxpr_editors, $operation, $json_web_token);
   }
 
   /**
-   * Get user ids for DXPR editors.
+   * {@inheritdoc}
    */
-  private function getEditors() {
+  public function isBillableUser(UserInterface $account) {
+    if ($account->isBlocked()) {
+      return FALSE;
+    }
+    if ($account->id() == 1 || $account->hasPermission('edit with dxpr builder')) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get user ids for DXPR editors.
+   *
+   * @return array
+   *   User ID's.
+   *
+   * @phpstan-return array<int, string>
+   */
+  private function getEditors(): array {
     $dxpr_builder_role_ids = [];
     foreach ($this->entityTypeManager->getStorage('user_role')->loadMultiple() as $user_role) {
       if ($user_role->hasPermission('edit with dxpr builder')) {
@@ -383,6 +401,9 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
 
   /**
    * Check if a hostname is available.
+   *
+   * @return bool
+   *   Returns boolean value
    */
   private function hasHostname() {
     return $this->requestStack->getCurrentRequest()->getHost() !== 'default';
@@ -390,8 +411,15 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
 
   /**
    * Send to license storage API.
+   *
+   * @param mixed[] $users_data
+   *   The user data.
+   * @param string $operation
+   *   The opertion.
+   * @param string $json_web_token
+   *   DXPR product key in JWT.
    */
-  private function sendToCentralStorage(array $users_data, string $operation, string $json_web_token = '') {
+  private function sendToCentralStorage(array $users_data, string $operation, string $json_web_token = ''): void {
     $hostname = $this->requestStack->getCurrentRequest()->getHost();
     $config = $this->configFactory->get('dxpr_builder.settings');
     if (empty($json_web_token)) {
@@ -414,7 +442,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
         // Clear cache to immediately reflect changes on admin pages.
         $this->cache->invalidate('dxpr_builder_license_info');
       }
-      catch (GuzzleException $e) {
+      catch (\Exception $e) {
         watchdog_exception('dxpr_builder', $e);
         // Add item to queue to try again later.
         $this->queue->createItem([
@@ -428,7 +456,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   /**
    * {@inheritdoc}
    */
-  public function processSyncQueue() {
+  public function processSyncQueue(): void {
     $account = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
     if (!$account->hasPermission('edit with dxpr builder')) {
       // Only execute process for editors to minimize performance impact.
@@ -443,6 +471,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
     $data = [];
     $limit = 100;
     while (($item = $this->queue->claimItem()) && --$limit) {
+      /** @var object|null $item */
       if (!isset($data[$item->data['operation']])) {
         $data[$item->data['operation']] = [];
       }
@@ -480,19 +509,9 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   }
 
   /**
-   * Retrieve count of users with 'edit with dxpr builder' permission.
-   *
-   * @param int $before_id
-   *   Only count users with a user id lower than $before_id.
-   *   This is used for checking the users limit.
-   *
-   * @return int
-   *   The count of users.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * {@inheritdoc}
    */
-  public function getUsersCount($before_id = NULL) {
+  public function getUsersCount() {
     $users = $this->getLicenseUsers();
     return count(array_keys($users));
   }
@@ -520,22 +539,9 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
   }
 
   /**
-   * Retrieve count of content items with 'text_dxpr_builder' field formatter.
-   *
-   * @param string $entity_type_filter
-   *   Only count entities with the given entity type.
-   * @param int $before_id
-   *   Only count users with a user id lower than $before_id.
-   *   This is used for checking the users limit and must be used in conjuction
-   *   with the $entity_type_filter parameter.
-   *
-   * @return int
-   *   The count of fields.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * {@inheritdoc}
    */
-  public function getValuesCount($entity_type_filter = NULL, $before_id = NULL) {
+  public function getValuesCount(string $entity_type_filter = NULL, string $before_id = NULL) {
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $entity_view_displays */
     $entity_view_displays = $this->entityTypeManager->getStorage('entity_view_display')
       ->loadMultiple();
@@ -636,7 +642,7 @@ class DxprBuilderLicenseService implements DxprBuilderLicenseServiceInterface, E
         $this->cache->set('dxpr_builder_license_users', $result['site_users'], $now + $interval);
       }
     }
-    catch (GuzzleException $e) {
+    catch (\Exception $e) {
       watchdog_exception('dxpr_builder', $e);
       $this->messenger->addError($this->t('We are having trouble connecting to the DXPR servers, the data will refresh when the network is working again.'));
       return [];

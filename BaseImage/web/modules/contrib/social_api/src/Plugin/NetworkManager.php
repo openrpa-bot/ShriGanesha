@@ -29,4 +29,14 @@ class NetworkManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'social_api_network_plugins');
   }
 
+  /**
+   * Gets the module handler.
+   *
+   * @return \Drupal\Core\Extension\ModuleHandlerInterface
+   *   Module handler.
+   */
+  public function getModuleHandler(): ModuleHandlerInterface {
+    return $this->moduleHandler;
+  }
+
 }

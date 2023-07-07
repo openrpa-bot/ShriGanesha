@@ -28,7 +28,13 @@ class DxprBuilderJWTDecoder {
   }
 
   /**
-   * {@inheritdoc}
+   * Decodes jwt token.
+   *
+   * @param string $access_token
+   *   The token.
+   *
+   * @return mixed[]
+   *   The token properties.
    */
   public function decodeJwt(string $access_token) {
     $cid = 'config:dxpr_builder.settings';

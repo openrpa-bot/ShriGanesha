@@ -1,244 +1,144 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Datetime\DateFormatter;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
-use Drupal\webprofiler\Profiler\ProfilerStorageManager;
+use Drupal\webprofiler\DataCollector\HasPanelInterface;
 use Drupal\webprofiler\Profiler\TemplateManager;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Drupal\webprofiler\Profiler\Profiler;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Profiler\Profile;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
 
 /**
- * Class DashboardController.
+ * Controller for the Webprofiler dashboard.
  */
 class DashboardController extends ControllerBase {
 
   /**
-   * @var \Drupal\webprofiler\Profiler\Profiler
+   * The Profiler service.
+   *
+   * @var \Symfony\Component\HttpKernel\Profiler\Profiler
    */
-  private $profiler;
+  private Profiler $profiler;
 
   /**
-   * @var \Symfony\Cmf\Component\Routing\ChainRouter
-   */
-  private $router;
-
-  /**
+   * The Template manager service.
+   *
    * @var \Drupal\webprofiler\Profiler\TemplateManager
    */
-  private $templateManager;
-
-  /**
-   * @var \Drupal\Core\Datetime\DateFormatter
-   */
-  private $date;
-
-  /**
-   * @var \Drupal\webprofiler\Profiler\ProfilerStorageManager
-   */
-  private $storageManager;
+  private TemplateManager $templateManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('profiler'),
-      $container->get('router'),
-      $container->get('template_manager'),
-      $container->get('date.formatter'),
-      $container->get('profiler.storage_manager')
+      $container->get('webprofiler.profiler'),
+      $container->get('webprofiler.template_manager')
     );
   }
 
   /**
-   * Constructs a new WebprofilerController.
+   * DashboardController constructor.
    *
-   * @param \Drupal\webprofiler\Profiler\Profiler $profiler
-   * @param \Symfony\Component\Routing\RouterInterface $router
+   * @param \Symfony\Component\HttpKernel\Profiler\Profiler $profiler
+   *   The Profiler service.
    * @param \Drupal\webprofiler\Profiler\TemplateManager $templateManager
-   * @param \Drupal\Core\Datetime\DateFormatter $date
-   * @param \Drupal\webprofiler\Profiler\ProfilerStorageManager $storageManager
+   *   The Template manager service.
    */
-  public function __construct(Profiler $profiler, RouterInterface $router, TemplateManager $templateManager, DateFormatter $date, ProfilerStorageManager $storageManager) {
+  final public function __construct(
+    Profiler $profiler,
+    TemplateManager $templateManager
+  ) {
     $this->profiler = $profiler;
-    $this->router = $router;
     $this->templateManager = $templateManager;
-    $this->date = $date;
-    $this->storageManager = $storageManager;
   }
 
   /**
-   * Generates the dashboard page.
-   *
-   * @param \Symfony\Component\HttpKernel\Profiler\Profile $profile
-   *
-   * @return array
-   */
-  public function dashboardAction(Profile $profile) {
-    $this->profiler->disable();
-
-    $templateManager = $this->templateManager;
-    $templates = $templateManager->getTemplates($profile);
-
-    $panels = [];
-    $libraries = ['webprofiler/dashboard'];
-    $drupalSettings = [
-      'webprofiler' => [
-        'token' => $profile->getToken(),
-        'ide_link' => $this->config('webprofiler.config')->get('ide_link'),
-        'ide_link_remote' => $this->config('webprofiler.config')->get('ide_link_remote'),
-        'ide_link_local' => $this->config('webprofiler.config')->get('ide_link_local'),
-        'collectors' => [],
-      ],
-    ];
-
-    foreach ($templates as $name => $template) {
-      /** @var \Drupal\webprofiler\DrupalDataCollectorInterface $collector */
-      $collector = $profile->getCollector($name);
-
-      if ($collector->hasPanel()) {
-        $rendered = $template->renderBlock('panel', [
-          'token' => $profile->getToken(),
-          'name' => $name,
-        ]);
-
-        $panels[] = [
-          '#theme' => 'webprofiler_panel',
-          '#panel' => $rendered,
-        ];
-
-        $drupalSettings['webprofiler']['collectors'][] = [
-          'id' => $name,
-          'name' => $name,
-          'label' => $collector->getTitle(),
-          'summary' => $collector->getPanelSummary(),
-          'icon' => $collector->getIcon(),
-        ];
-
-        $libraries = array_merge($libraries, $collector->getLibraries());
-        $drupalSettings['webprofiler'] += $collector->getDrupalSettings();
-      }
-    }
-
-    $build = [];
-    $build['panels'] = [
-      '#theme' => 'webprofiler_dashboard',
-      '#profile' => $profile,
-      '#panels' => $panels,
-      '#spinner_path' => '/' . $this->moduleHandler()
-        ->getModule('webprofiler')
-        ->getPath() . '/images/searching.gif',
-      '#attached' => [
-        'drupalSettings' => $drupalSettings,
-        'library' => $libraries,
-      ],
-    ];
-
-    return $build;
-  }
-
-  /**
-   * Generates the list page.
+   * Controller for the whole dashboard page.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
+   *   A Request.
    *
    * @return array
+   *   A render array for webprofiler_dashboard theme.
    */
-  public function listAction(Request $request) {
-    $limit = $request->get('limit', 10);
+  public function dashboard(Request $request): array {
     $this->profiler->disable();
 
-    $ip = $request->query->get('ip');
-    $method = $request->query->get('method');
-    $url = $request->query->get('url');
+    $token = $request->get('token');
 
-    $profiles = $this->profiler->find($ip, $url, $limit, $method, '', '');
+    $profile = $this->profiler->loadProfile($token);
 
-    $rows = [];
-    if (count($profiles)) {
-      foreach ($profiles as $profile) {
-        $row = [];
-        $row[] = Link::fromTextAndUrl($profile['token'], new Url('webprofiler.dashboard', ['profile' => $profile['token']]))->toString();
-        $row[] = $profile['ip'];
-        $row[] = $profile['method'];
-        $row[] = $profile['url'];
-        $row[] = $this->date->format($profile['time']);
-
-        $rows[] = $row;
-      }
-    }
-    else {
-      $rows[] = [
-        [
-          'data' => $this->t('No profiles found'),
-          'colspan' => 6,
-        ],
-      ];
+    if ($profile == NULL) {
+      return [];
     }
 
-    $build = [];
+    $collectors = array_filter($profile->getCollectors(), function (DataCollectorInterface $el) {
+      return $el instanceof HasPanelInterface;
+    });
 
-    $storage_id = $this->config('webprofiler.config')->get('storage');
-    $storage = $this->storageManager->getStorage($storage_id);
-
-    $build['resume'] = [
-      '#type' => 'inline_template',
-      '#template' => '<p>{{ message }}</p>',
-      '#context' => [
-        'message' => $this->t('Profiles stored with %storage service.', ['%storage' => $storage['title']]),
-      ],
-    ];
-
-    $build['filters'] = $this->formBuilder()
-      ->getForm('Drupal\\webprofiler\\Form\\ProfilesFilterForm');
-
-    $build['table'] = [
-      '#type' => 'table',
-      '#rows' => $rows,
-      '#header' => [
-        $this->t('Token'),
-        [
-          'data' => $this->t('Ip'),
-          'class' => [RESPONSIVE_PRIORITY_LOW],
-        ],
-        [
-          'data' => $this->t('Method'),
-          'class' => [RESPONSIVE_PRIORITY_LOW],
-        ],
-        $this->t('Url'),
-        [
-          'data' => $this->t('Time'),
-          'class' => [RESPONSIVE_PRIORITY_MEDIUM],
+    return [
+      '#theme' => 'webprofiler_dashboard',
+      '#collectors' => $collectors,
+      '#token' => $token,
+      '#profile' => $profile,
+      '#attached' => [
+        'library' => [
+          'webprofiler/dashboard',
         ],
       ],
-      '#sticky' => TRUE,
     ];
-
-    return $build;
   }
 
   /**
-   * Exposes collector's data as JSON.
+   * Renders a profiler panel for the given token and type.
    *
-   * @param \Symfony\Component\HttpKernel\Profiler\Profile $profile
-   * @param $collector
+   * @param string $token
+   *   The profiler token.
+   * @param string $name
+   *   The panel name to render.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   An ajax response.
    */
-  public function restCollectorAction(Profile $profile, $collector) {
+  public function panel(string $token, string $name): AjaxResponse {
     $this->profiler->disable();
 
-    $data = $profile->getCollector($collector)->getData();
+    if ('empty' === $token) {
+      return new AjaxResponse('');
+    }
 
-    return new JsonResponse(['data' => $data]);
+    if (!$profile = $this->profiler->loadProfile($token)) {
+      return new AjaxResponse('');
+    }
+
+    $collector = $profile->getCollector($name);
+    if (!($collector instanceof HasPanelInterface)) {
+      return new AjaxResponse('');
+    }
+
+    $response = new AjaxResponse();
+    $response->addCommand(
+      new HtmlCommand(
+        '#js-webprofiler-panel',
+      [
+        '#theme' => 'webprofiler_dashboard_panel',
+        '#name' => $name,
+        '#template' => $this->templateManager->getName($profile, $name),
+        '#profile' => $profile,
+      ])
+    );
+    $response->addCommand(new InvokeCommand('.webprofiler__collector', 'removeClass', ['active']));
+    $response->addCommand(new InvokeCommand('.webprofiler__collector-' . $name, 'addClass', ['active']));
+
+    return $response;
   }
 
 }

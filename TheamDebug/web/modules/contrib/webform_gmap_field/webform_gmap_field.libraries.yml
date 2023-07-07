@@ -1,0 +1,8 @@
+global:
+  version: VERSION
+  js:
+    js/webform_gmap_field.js: {}
+    //maps.googleapis.com/maps/api/js?callback=initMap&libraries=&v=weekly&key=your_gmap_key: {type: external}
+  css:
+    layout:
+      css/webform_gmap_field.css: {}

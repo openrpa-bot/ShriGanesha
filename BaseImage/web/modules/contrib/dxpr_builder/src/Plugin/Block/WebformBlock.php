@@ -31,8 +31,13 @@ class WebformBlock extends BlockBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
+   *   Build array with webform.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function build() {
+  public function build(): array {
     $build = [];
     if (Webform::load($this->getDerivativeId())) {
       $build = [

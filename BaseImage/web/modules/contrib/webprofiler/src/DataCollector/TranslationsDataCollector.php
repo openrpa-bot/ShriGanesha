@@ -1,41 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\DataCollector;
 
-use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\webprofiler\DrupalDataCollectorInterface;
+use Drupal\Core\Url;
 use Drupal\webprofiler\StringTranslation\TranslationManagerWrapper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Class TranslationsDataCollector.
+ * Collects translations data.
  */
-class TranslationsDataCollector extends DataCollector implements DrupalDataCollectorInterface {
+class TranslationsDataCollector extends DataCollector implements HasPanelInterface {
 
-  use StringTranslationTrait, DrupalDataCollectorTrait;
-
-  /**
-   * @var \Drupal\Core\StringTranslation\TranslationInterface
-   */
-  private $translation;
+  use StringTranslationTrait;
 
   /**
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface
-   */
-  private $urlGenerator;
-
-  /**
+   * TranslationsDataCollector constructor.
+   *
    * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
-   * @param \Drupal\Core\Routing\UrlGeneratorInterface $urlGenerator
+   *   The translation service.
    */
-  public function __construct(TranslationInterface $translation, UrlGeneratorInterface $urlGenerator) {
-    $this->translation = $translation;
-    $this->urlGenerator = $urlGenerator;
-
+  public function __construct(
+    private readonly TranslationInterface $translation,
+  ) {
     $this->data['translations']['translated'] = [];
     $this->data['translations']['untranslated'] = [];
   }
@@ -43,27 +35,11 @@ class TranslationsDataCollector extends DataCollector implements DrupalDataColle
   /**
    * {@inheritdoc}
    */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
+  public function collect(Request $request, Response $response, \Throwable $exception = NULL) {
     if ($this->translation instanceof TranslationManagerWrapper) {
-      /** \Drupal\webprofiler\StringTranslation\TranslationManagerWrapper $this->translation */
       $this->data['translations']['translated'] = $this->translation->getTranslated();
       $this->data['translations']['untranslated'] = $this->translation->getUntranslated();
     }
-    $this->data['user_interface_translations_path'] = $this->urlGenerator->generateFromRoute('locale.translate_page');
-  }
-
-  /**
-   * @return int
-   */
-  public function getTranslatedCount() {
-    return count($this->data['translations']['translated']);
-  }
-
-  /**
-   * @return int
-   */
-  public function getUntranslatedCount() {
-    return count($this->data['translations']['untranslated']);
   }
 
   /**
@@ -74,27 +50,147 @@ class TranslationsDataCollector extends DataCollector implements DrupalDataColle
   }
 
   /**
-   * {@inheritdoc}
+   * Reset the collected data.
    */
-  public function getTitle() {
-    return $this->t('Translations');
+  public function reset() {
+    $this->data = [];
+  }
+
+  /**
+   * Return the number of translated strings.
+   *
+   * @return int
+   *   The number of translated strings.
+   */
+  public function getTranslatedCount(): int {
+    return count($this->data['translations']['translated']);
+  }
+
+  /**
+   * Return the number of untranslated strings.
+   *
+   * @return int
+   *   The number of untranslated strings.
+   */
+  public function getUntranslatedCount(): int {
+    return count($this->data['translations']['untranslated']);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getPanelSummary() {
-    return $this->t('Translated: @translated, untranslated: @untranslated', [
-      '@translated' => $this->getTranslatedCount(),
-      '@untranslated' => $this->getUntranslatedCount(),
-    ]);
+  public function getPanel(): array {
+    return [
+      '#theme' => 'webprofiler_dashboard_tabs',
+      '#tabs' => [
+        [
+          'label' => $this->t('Translated'),
+          'content' => $this->renderTranslated($this->data['translations']['translated']),
+        ],
+        [
+          'label' => $this->t('Untranslated'),
+          'content' => $this->renderUntranslated($this->data['translations']['untranslated']),
+        ],
+      ],
+    ];
   }
 
   /**
-   * {@inheritdoc}
+   * Render a list of translated strings.
+   *
+   * @param array $translated
+   *   A list of translated strings.
+   *
+   * @return array
+   *   The render array of the list of translated strings.
    */
-  public function getIcon() {
-    return 'iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAgpJREFUeNrUVrFuwjAQPUcZiAQDQ6WEbgwwMCJVqhjgBxhYGSvEDzBkZYSBH+ADoFJHlg4MdIMKxiLBXKAbUmEm9bPiyAREEgRDTzqZ2Mfzu7tnJ8xxHLq1aXQHuwsos2078p9arVYg0yL3CXcnwCdubKDp3F+5myFin9xYK0xNzQiZm1c3KpVKUb1ep2QyebvuFwoFSqfTlM/nbweay+VoOBxeDar7JwC03W49UO5fs9nsZTwef8qYUqkUjSmAYrGYqKlhGFSpVH45oBFFdkdM0RjUst1uC7Z45ofjWdO0t8Ph8CDjyuUyZTIZ6na7tNvtTmSn+2s5n88FIMwdPzhgUWYBA2A2mxVjIpEQarEsiwaDAS2XSxPH9OI1xVNnbmo0Go28eTDkAOL3YrGg/X4v1tfr9WmjLplsULVaFawbjYbHkjfzqPsr7o9RwJE2HOkifbAGS1ljdL/G/ScsWK/XE+NmsxGMkW6/3xfgWMMIpu9hLgkEN5tNDwClgAoADjAYRszr8m7kD2gGU5uh1hEjmoGUUU/oGLVEXaVhA2yoKYAwRwFx/Ezj8bjHEIYaSgVgDptNp1NiePG5QCfS4qyZXANop9MR7JANWAFA6hWgWEcmqqTYOWBVl0jZf0ViU+hUNk0AyVf0ObYK0+8IslupF8qlkxVWdoipsaCPiaBr7uwr+t98ofwJMADuIP9IDjFbLwAAAABJRU5ErkJggg==';
+  private function renderTranslated(array $translated): array {
+    array_walk(
+      $translated,
+      function (&$key, $data) {
+        $key = [
+          $data,
+          $key,
+          [
+            'data' => [
+              '#type' => 'inline_template',
+              '#template' => '<a href="{{ link }}" target="_blank">{{ "Edit"|t }}</a>',
+              '#context' => [
+                'link' => Url::fromRoute('locale.translate_page', ['string' => $data])
+                  ->toString(),
+              ],
+            ],
+          ],
+        ];
+      }
+    );
+
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Original'),
+          $this->t('Translation'),
+          $this->t('Action'),
+        ],
+        '#rows' => $translated,
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+        '#sticky' => TRUE,
+      ],
+    ];
+  }
+
+  /**
+   * Render a list of untranslated strings.
+   *
+   * @param array $untranslated
+   *   A list of untranslated strings.
+   *
+   * @return array
+   *   The render array of the list of untranslated strings.
+   */
+  private function renderUntranslated(array $untranslated): array {
+    array_walk(
+      $untranslated,
+      function (&$key, $data) {
+        $key = [
+          $data,
+          [
+            'data' => [
+              '#type' => 'inline_template',
+              '#template' => '<a href="{{ link }}" target="_blank">{{ "Translate"|t }}</a>',
+              '#context' => [
+                'link' => Url::fromRoute('locale.translate_page', ['string' => $data])
+                  ->toString(),
+              ],
+            ],
+          ],
+        ];
+      }
+    );
+
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Original'),
+          $this->t('Action'),
+        ],
+        '#rows' => $untranslated,
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+        '#sticky' => TRUE,
+      ],
+    ];
   }
 
 }

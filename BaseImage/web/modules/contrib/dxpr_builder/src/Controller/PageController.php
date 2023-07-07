@@ -69,6 +69,8 @@ class PageController extends ControllerBase implements PageControllerInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return mixed
    */
   public static function create(ContainerInterface $container) {
     return new static(

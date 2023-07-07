@@ -18,7 +18,7 @@ interface ViewHandlerInterface {
    *   The input.
    * @param string $displayId
    *   The ID of the view to retrieve.
-   * @param array $data
+   * @param mixed[] $data
    *   The data.
    * @param \Drupal\Core\Asset\AttachedAssets $assets
    *   Any retrieved libraries and/or settings should be attached to this.

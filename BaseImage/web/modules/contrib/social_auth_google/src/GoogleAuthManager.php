@@ -4,6 +4,8 @@ namespace Drupal\social_auth_google;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\social_auth\AuthManager\OAuth2Manager;
+use Drupal\social_auth\User\SocialAuthUser;
+use Drupal\social_auth\User\SocialAuthUserInterface;
 use Drupal\Core\Config\ConfigFactory;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,14 +16,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class GoogleAuthManager extends OAuth2Manager {
 
   /**
-   * Constructor.
-   *
-   * @param \Drupal\Core\Config\ConfigFactory $configFactory
-   *   Used for accessing configuration object factory.
-   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
-   *   The logger factory.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
-   *   Used to get the authorization code from the callback request.
+   * GoogleAuthManager constructor.
    */
   public function __construct(ConfigFactory $configFactory,
                               LoggerChannelFactoryInterface $logger_factory,
@@ -35,7 +30,7 @@ class GoogleAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function authenticate() {
+  public function authenticate(): void {
     try {
       $this->setAccessToken($this->client->getAccessToken('authorization_code',
         ['code' => $this->request->query->get('code')]));
@@ -49,14 +44,18 @@ class GoogleAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getUserInfo() {
-    $access_token = $this->getAccessToken();
-    if (!$this->user && $access_token != NULL) {
-      $this->user = $this->client->getResourceOwner($this->getAccessToken());
-    }
-    else {
-      $this->loggerFactory->get('social_auth_google')
-        ->error('There was an error fetching the access token for user.');
+  public function getUserInfo(): SocialAuthUserInterface {
+    if (!$this->user) {
+      /** @var \League\OAuth2\Client\Provider\GoogleUser $owner */
+      $owner = $this->client->getResourceOwner($this->getAccessToken());
+      $this->user = new SocialAuthUser(
+        $owner->getName(),
+        $owner->getId(),
+        $this->getAccessToken(),
+        $owner->getEmail(),
+        $owner->getAvatar(),
+        $this->getExtraDetails()
+      );
     }
     return $this->user;
   }
@@ -64,7 +63,7 @@ class GoogleAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getAuthorizationUrl() {
+  public function getAuthorizationUrl(): string {
     $scopes = [
       'email',
       'profile',
@@ -84,7 +83,7 @@ class GoogleAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function requestEndPoint($method, $path, $domain = NULL, array $options = []) {
+  public function requestEndPoint(string $method, string $path, ?string $domain = NULL, array $options = []): mixed {
     if (!$domain) {
       $domain = 'https://www.googleapis.com';
     }
@@ -107,7 +106,7 @@ class GoogleAuthManager extends OAuth2Manager {
   /**
    * {@inheritdoc}
    */
-  public function getState() {
+  public function getState(): string {
     return $this->client->getState();
   }
 

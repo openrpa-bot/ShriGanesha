@@ -58,7 +58,7 @@ class PageRenderTest extends KernelTestBase {
     $page = [];
     try {
       $html_renderer->invokePageAttachmentHooks($page);
-      $this->error($assertion);
+      $this->fail($assertion);
     }
     catch (\LogicException $e) {
       $this->assertEquals('Only #attached and #cache may be set in ' . $hook . '().', $e->getMessage());
@@ -71,7 +71,7 @@ class PageRenderTest extends KernelTestBase {
     $page = [];
     try {
       $html_renderer->invokePageAttachmentHooks($page);
-      $this->error($assertion);
+      $this->fail($assertion);
     }
     catch (\LogicException $e) {
       $this->assertEquals('Only #attached and #cache may be set in ' . $hook . '().', $e->getMessage());
@@ -80,8 +80,7 @@ class PageRenderTest extends KernelTestBase {
   }
 
   /**
-   * Assert that HtmlRenderer::invokePageAttachmentHooks is called in a render
-   * context.
+   * Tests HtmlRenderer::invokePageAttachmentHooks in a render context.
    */
   public function testHtmlRendererAttachmentsRenderContext(): void {
     $this->enableModules(['common_test', 'system']);

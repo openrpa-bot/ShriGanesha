@@ -2,40 +2,32 @@
 
 namespace Drupal\webprofiler\State;
 
-use Drupal\Core\Cache\CacheCollector;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\State\State;
 use Drupal\Core\State\StateInterface;
 use Drupal\webprofiler\DataCollector\StateDataCollector;
 
 /**
- * Class StateWrapper.
+ * Wrap the state service to collect which keys are loaded.
  */
-class StateWrapper extends CacheCollector implements StateInterface {
-
-  /**
-   * The system state.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  private $state;
-
-  /**
-   * The state data collector.
-   *
-   * @var \Drupal\webprofiler\DataCollector\StateDataCollector
-   */
-  private $dataCollector;
+class StateWrapper extends State {
 
   /**
    * StateWrapper constructor.
    *
+   * @param \Drupal\Core\KeyValueStore\KeyValueFactoryInterface $key_value_factory
+   *   The key value store to use.
    * @param \Drupal\Core\State\StateInterface $state
-   *   The system state.
+   *   The original state service.
    * @param \Drupal\webprofiler\DataCollector\StateDataCollector $dataCollector
    *   The state data collector.
    */
-  public function __construct(StateInterface $state, StateDataCollector $dataCollector) {
-    $this->state = $state;
-    $this->dataCollector = $dataCollector;
+  public function __construct(
+    KeyValueFactoryInterface $key_value_factory,
+    private readonly StateInterface $state,
+    private readonly StateDataCollector $dataCollector
+  ) {
+    parent::__construct($key_value_factory);
   }
 
   /**
@@ -56,70 +48,6 @@ class StateWrapper extends CacheCollector implements StateInterface {
     }
 
     return $this->state->getMultiple($keys);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function set($key, $value) {
-    $this->state->set($key, $value);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setMultiple(array $data) {
-    $this->state->setMultiple($data);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function delete($key) {
-    $this->state->delete($key);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function deleteMultiple(array $keys) {
-    $this->state->deleteMultiple($keys);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function resetCache() {
-    $this->state->resetCache();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function resolveCacheMiss($key) {
-    return $this->state->resolveCacheMiss($key);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function destruct() {
-    $this->updateCache();
-  }
-
-  /**
-   * Passes through all non-tracked calls onto the decorated object.
-   *
-   * @param string $method
-   *   The called method.
-   * @param mixed $args
-   *   The passed in arguments.
-   *
-   * @return mixed
-   *   The return argument of the call.
-   */
-  public function __call($method, $args) {
-    return call_user_func_array([$this->state, $method], $args);
   }
 
 }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\Routing;
 
 use Drupal\Core\ParamConverter\ParamConverterInterface;
 use Symfony\Component\Routing\Route;
 
 /**
- * Class TokenConverter.
+ * Param converter to convert the token to a profile.
  */
 class TokenConverter implements ParamConverterInterface {
 
@@ -18,10 +20,12 @@ class TokenConverter implements ParamConverterInterface {
     // more than one language is active and "Account administration pages" is
     // enabled on admin/config/regional/language/detection. See #2710787 for
     // more information.
+    // phpcs:disable
     /** @var \Drupal\webprofiler\Profiler\Profiler $profiler */
-    $profiler = \Drupal::service('profiler');
+    $profiler = \Drupal::service('webprofiler.profiler');
+    // phpcs:enable
 
-    if (NULL === $profiler) {
+    if (NULL == $profiler) {
       return NULL;
     }
 

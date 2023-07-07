@@ -1,39 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\DataCollector;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\webprofiler\DrupalDataCollectorInterface;
 use Drupal\webprofiler\Views\ViewExecutableFactoryWrapper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Collects data about rendered views.
+ * Collects views data.
  */
-class ViewsDataCollector extends DataCollector implements DrupalDataCollectorInterface {
+class ViewsDataCollector extends DataCollector implements HasPanelInterface {
 
-  use StringTranslationTrait, DrupalDataCollectorTrait;
-
-  /**
-   * @var \Drupal\webprofiler\Views\ViewExecutableFactoryWrapper
-   */
-  private $view_executable_factory;
+  use StringTranslationTrait, PanelTrait;
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * ViewsDataCollector constructor.
+   *
+   * @param \Drupal\webprofiler\Views\ViewExecutableFactoryWrapper $viewExecutableFactory
+   *   The view executable factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityManager
+   *   The entity manager.
    */
-  private $entityTypeManager;
-
-  /**
-   * @param \Drupal\webprofiler\Views\ViewExecutableFactoryWrapper $view_executable_factory
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   */
-  public function __construct(ViewExecutableFactoryWrapper $view_executable_factory, EntityTypeManagerInterface $entity_type_manager) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->view_executable_factory = $view_executable_factory;
+  public function __construct(
+    private readonly ViewExecutableFactoryWrapper $viewExecutableFactory,
+    private readonly EntityTypeManagerInterface $entityManager) {
 
     $this->data['views'] = [];
   }
@@ -41,11 +36,17 @@ class ViewsDataCollector extends DataCollector implements DrupalDataCollectorInt
   /**
    * {@inheritdoc}
    */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
-    $views = $this->view_executable_factory->getViews();
-    $storage = $this->entityTypeManager->getStorage('view');
+  public function getName(): string {
+    return 'views';
+  }
 
-    /** @var \Drupal\webprofiler\Views\TraceableViewExecutable $view */
+  /**
+   * {@inheritdoc}
+   */
+  public function collect(Request $request, Response $response, \Throwable $exception = NULL) {
+    $views = $this->viewExecutableFactory->getViews();
+    $storage = $this->entityManager->getStorage('view');
+
     foreach ($views as $view) {
       if ($view->executed) {
         $data = [
@@ -66,53 +67,78 @@ class ViewsDataCollector extends DataCollector implements DrupalDataCollectorInt
         $this->data['views'][] = $data;
       }
     }
-
-    // TODO: also use those data.
-    //    $loaded = $this->entityTypeManager->getLoaded('view');
-    //
-    //    if ($loaded) {
-    //      /** @var \Drupal\webprofiler\Entity\EntityStorageDecorator $views */
-    //      foreach ($loaded->getEntities() as $views) {
-    //        $this->data['views'][] = array(
-    //          'id' => $views->get('id'),
-    //        );
-    //      }
-    //    }.
   }
 
   /**
-   * @return int
+   * Reset the collected data.
    */
-  public function getViewsCount() {
+  public function reset() {
+    $this->data = [];
+  }
+
+  /**
+   * Return the number of rendered views.
+   *
+   * @return int
+   *   The number of rendered views.
+   */
+  public function getViewsCount(): int {
     return count($this->data['views']);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return 'views';
-  }
+  public function getPanel(): array {
+    $views = $this->data['views'];
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getTitle() {
-    return $this->t('Views');
-  }
+    if (count($views) == 0) {
+      return [
+        '#markup' => '<p>' . $this->t('No views collected') . '</p>',
+      ];
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getPanelSummary() {
-    return $this->t('Total: @count', ['@count' => $this->getViewsCount()]);
-  }
+    $rows = [];
+    foreach ($views as $view) {
+      $rows[] = [
+        $view['id'],
+        $view['current_display'],
+        $this->renderTime($view['build_time'], 's'),
+        $this->renderTime($view['execute_time'], 's'),
+        $this->renderTime($view['render_time'], 's'),
+        [
+          'data' => [
+            '#type' => 'inline_template',
+            '#template' => '<a href="{{ route }}" target="_blank">{{ "Edit"|t }}</a>',
+            '#context' => [
+              'route' => $view['route'],
+            ],
+          ],
+        ],
+      ];
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getIcon() {
-    return 'iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowNDgwMTE3NDA3MjA2ODExOEY2MkNCNjI0NDY3NzkwRCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNEVFREM2NkQ4MUMxMUUzQkMwRUNBMkQwMzE4QjVBMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNEVFREM2NUQ4MUMxMUUzQkMwRUNBMkQwMzE4QjVBMyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQ4MDExNzQwNzIwNjgxMThGNjJDQjYyNDQ2Nzc5MEQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDQ4MDExNzQwNzIwNjgxMThGNjJDQjYyNDQ2Nzc5MEQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6vqYfFAAAAXUlEQVR42mL8//8/A7UBEwMNwKih1AcsIGLz5s1USwK+vr6MLMgcSg2EOW6IhSkycHR0BHth//79jMh8fACmlr4uRbcVnT8apqNhOhqmAxZR1CyoGUfrfaoDgAADAA4QNs9x67RnAAAAAElFTkSuQmCC';
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Name'),
+          $this->t('Display'),
+          $this->t('Build time'),
+          $this->t('Execute time'),
+          $this->t('Render time'),
+          $this->t('Action'),
+        ],
+        '#rows' => $rows,
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+        '#sticky' => TRUE,
+      ],
+    ];
   }
 
 }

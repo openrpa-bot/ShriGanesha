@@ -1,31 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\DataCollector;
 
-use Drupal\webprofiler\DrupalDataCollectorInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Collects the used cache bins and cache CIDs.
+ * Collects cache data.
  */
-class CacheDataCollector extends DataCollector implements DrupalDataCollectorInterface {
+class CacheDataCollector extends DataCollector implements HasPanelInterface {
 
-  use StringTranslationTrait, DrupalDataCollectorTrait;
+  use StringTranslationTrait, DataCollectorTrait, PanelTrait;
 
   const WEBPROFILER_CACHE_HIT = 'bin_cids_hit';
+
   const WEBPROFILER_CACHE_MISS = 'bin_cids_miss';
 
   /**
-   * {@inheritdoc}
-   */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
-  }
-
-  /**
-   *
+   * CacheDataCollector constructor.
    */
   public function __construct() {
     $this->data['total'][CacheDataCollector::WEBPROFILER_CACHE_HIT] = 0;
@@ -34,15 +30,38 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
   }
 
   /**
-   * Registers a cache get on a specific cache bin.
-   *
-   * @param $cache
+   * {@inheritdoc}
    */
-  public function registerCacheHit($bin, $cache) {
-    $current = isset($this->data['cache'][$bin][$cache->cid]) ? $this->data['cache'][$bin][$cache->cid] : NULL;
+  public function getName(): string {
+    return 'cache';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function collect(Request $request, Response $response, \Throwable $exception = NULL) {
+  }
+
+  /**
+   * Reset the collected data.
+   */
+  public function reset() {
+    $this->data = [];
+  }
+
+  /**
+   * Registers a cache hit on a specific cache bin.
+   *
+   * @param string $bin
+   *   The bin name.
+   * @param object $cache
+   *   The cache object.
+   */
+  public function registerCacheHit(string $bin, object $cache) {
+    $current = $this->data['cache'][$bin][$cache->cid] ?? NULL;
 
     if (!$current) {
-      $current = $cache;
+      $current = clone($cache);
       $current->{CacheDataCollector::WEBPROFILER_CACHE_HIT} = 0;
       $current->{CacheDataCollector::WEBPROFILER_CACHE_MISS} = 0;
       $this->data['cache'][$bin][$cache->cid] = $current;
@@ -53,17 +72,19 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
   }
 
   /**
-   * Registers a cache get on a specific cache bin.
+   * Registers a cache miss on a specific cache bin.
    *
-   * @param $bin
-   * @param $cid
+   * @param string $bin
+   *   The bin name.
+   * @param string $cid
+   *   The cache cid.
    */
-  public function registerCacheMiss($bin, $cid) {
-    $current = isset($this->data['cache'][$bin][$cid]) ?
-      $this->data['cache'][$bin][$cid] : NULL;
+  public function registerCacheMiss(string $bin, string $cid) {
+    $current = $this->data['cache'][$bin][$cid] ?? NULL;
 
     if (!$current) {
       $current = new \StdClass();
+      $current->cid = $cid;
       $current->{CacheDataCollector::WEBPROFILER_CACHE_HIT} = 0;
       $current->{CacheDataCollector::WEBPROFILER_CACHE_MISS} = 0;
       $this->data['cache'][$bin][$cid] = $current;
@@ -77,10 +98,12 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
    * Callback to return the total amount of requested cache CIDS.
    *
    * @param string $type
+   *   The type of collected data.
    *
    * @return int
+   *   The total amount of requested cache CIDS.
    */
-  public function getCacheCidsCount($type) {
+  public function getCacheCidsCount(string $type): int {
     return $this->data['total'][$type];
   }
 
@@ -88,8 +111,9 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
    * Callback to return the total amount of hit cache CIDS.
    *
    * @return int
+   *   The total amount of hit cache CIDS.
    */
-  public function getCacheHitsCount() {
+  public function getCacheHitsCount(): int {
     return $this->getCacheCidsCount(CacheDataCollector::WEBPROFILER_CACHE_HIT);
   }
 
@@ -97,19 +121,22 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
    * Callback to return the total amount of miss cache CIDS.
    *
    * @return int
+   *   The total amount of miss cache CIDS.
    */
-  public function getCacheMissesCount() {
+  public function getCacheMissesCount(): int {
     return $this->getCacheCidsCount(CacheDataCollector::WEBPROFILER_CACHE_MISS);
   }
 
   /**
    * Callback to return the total amount of hit cache CIDs keyed by bin.
    *
-   * @param $type
+   * @param string $type
+   *   The type of collected data.
    *
    * @return array
+   *   The total amount of hit cache CIDs keyed by bin.
    */
-  public function cacheCids($type) {
+  public function cacheCids(string $type): array {
     $hits = [];
     foreach ($this->data['cache'] as $bin => $caches) {
       $hits[$bin] = 0;
@@ -125,8 +152,9 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
    * Callback to return hit cache CIDs keyed by bin.
    *
    * @return array
+   *   Hit cache CIDs keyed by bin.
    */
-  public function getCacheHits() {
+  public function getCacheHits(): array {
     return $this->cacheCids(CacheDataCollector::WEBPROFILER_CACHE_HIT);
   }
 
@@ -134,40 +162,73 @@ class CacheDataCollector extends DataCollector implements DrupalDataCollectorInt
    * Callback to return miss cache CIDs keyed by bin.
    *
    * @return array
+   *   Miss cache CIDs keyed by bin.
    */
-  public function getCacheMisses() {
+  public function getCacheMisses(): array {
     return $this->cacheCids(CacheDataCollector::WEBPROFILER_CACHE_MISS);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return 'cache';
+  public function getPanel(): array {
+    $tabs = [];
+    foreach (array_keys($this->data['cache']) as $bin) {
+      $tabs[] = [
+        'label' => $bin,
+        'content' => $this->renderTable($this->data['cache'][$bin]),
+      ];
+    }
+
+    return [
+      '#theme' => 'webprofiler_dashboard_tabs',
+      '#tabs' => $tabs,
+    ];
   }
 
   /**
-   * {@inheritdoc}
+   * Render cache bin table.
+   *
+   * @param array $data
+   *   The cache data for the bin.
+   *
+   * @return array
+   *   A render array for the cache bin table.
    */
-  public function getTitle() {
-    return $this->t('Cache');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPanelSummary() {
-    return $this->t('Hit: @cache_hit, miss: @cache_miss', [
-      '@cache_hit' => $this->getCacheCidsCount(CacheDataCollector::WEBPROFILER_CACHE_HIT),
-      '@cache_miss' => $this->getCacheCidsCount(CacheDataCollector::WEBPROFILER_CACHE_MISS),
-    ]);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIcon() {
-    return 'iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2Njc3QTVEQTkxNkMxMUUzQjA3OUEzQTNEMUVGMjVDOCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2Njc3QTVEQjkxNkMxMUUzQjA3OUEzQTNEMUVGMjVDOCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjRGQTVBQzYxOTE2QzExRTNCMDc5QTNBM0QxRUYyNUM4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjRGQTVBQzYyOTE2QzExRTNCMDc5QTNBM0QxRUYyNUM4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+BsBwAAAAAJtJREFUeNpi/P//PwM1ARMDlcEIMdDBweEZjM0IihSgwEx8Gg4cOJCOrhGHOimqe5kF2QVYvDITl0vQvQwTo4oLkS1gQrPpPwiTEBkY6pnwKJ5JyOskJRvkcMUVxjgjhRhDsUUGSQZu3rwZb1j6+voyjhYOI9VAFmKTBTC3oMsTbyAx+RndAqxejo2NJdmL6HoYR6vRwWcgQIABAOn0PsqqgQzcAAAAAElFTkSuQmCC';
+  public function renderTable(array $data): array {
+    return [
+      '#theme' => 'webprofiler_dashboard_section',
+      '#data' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('CID'),
+          $this->t('Hit'),
+          $this->t('Miss'),
+          $this->t('Tags'),
+        ],
+        '#rows' => array_map(function (\stdClass $cache) {
+          return [
+            $cache->cid,
+            $cache->{CacheDataCollector::WEBPROFILER_CACHE_HIT},
+            $cache->{CacheDataCollector::WEBPROFILER_CACHE_MISS},
+            [
+              'data' => [
+                '#type' => 'inline_template',
+                '#template' => '{{ data|raw }}',
+                '#context' => [
+                  'data' => !empty($cache->tags) ? $this->dumpData($this->cloneVar($cache->tags)) : '',
+                ],
+              ],
+            ],
+          ];
+        }, $data),
+        '#attributes' => [
+          'class' => [
+            'webprofiler__table',
+          ],
+        ],
+      ],
+    ];
   }
 
 }

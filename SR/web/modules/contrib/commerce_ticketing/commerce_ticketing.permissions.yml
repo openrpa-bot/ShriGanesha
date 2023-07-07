@@ -1,4 +1,0 @@
-administer commerce ticket types:
-  title: 'Administer commerce ticket types'
-  description: 'Maintain the types of commerce ticket entity.'
-  restrict access: true

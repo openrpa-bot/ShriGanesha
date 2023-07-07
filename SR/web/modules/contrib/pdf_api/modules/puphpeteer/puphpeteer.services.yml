@@ -1,3 +1,0 @@
-services:
-  puphpeteer:
-    class: Nesk\Puphpeteer\Puppeteer

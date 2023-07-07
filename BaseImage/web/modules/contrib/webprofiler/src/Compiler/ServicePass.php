@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -8,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * Class ServicePass.
+ * Register data about existing services.
  */
 class ServicePass implements CompilerPassInterface {
 
@@ -27,12 +29,17 @@ class ServicePass implements CompilerPassInterface {
   }
 
   /**
+   * Extract service data from the service container.
+   *
    * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+   *   The service container.
    * @param \Symfony\Component\DependencyInjection\Compiler\ServiceReferenceGraph $graph
+   *   The service reference graph.
    *
    * @return array
+   *   Service data.
    */
-  private function extractData(ContainerBuilder $container, ServiceReferenceGraph $graph) {
+  private function extractData(ContainerBuilder $container, ServiceReferenceGraph $graph): array {
     $data = [];
 
     foreach ($container->getDefinitions() as $id => $definition) {
@@ -42,25 +49,23 @@ class ServicePass implements CompilerPassInterface {
       if ($graph->hasNode($id)) {
         $node = $graph->getNode($id);
 
-        /** @var \Symfony\Component\DependencyInjection\Compiler\ServiceReferenceGraphEdge $edge */
         foreach ($node->getInEdges() as $edge) {
-          /** @var \Symfony\Component\DependencyInjection\Reference $edgeValue */
+          /** @var \Symfony\Component\DependencyInjection\Reference|null $edgeValue */
           $edgeValue = $edge->getValue();
 
           $inEdges[] = [
             'id' => $edge->getSourceNode()->getId(),
-            'invalidBehavior' => $edgeValue ? $edgeValue->getInvalidBehavior() : NULL,
+            'invalidBehavior' => $edgeValue?->getInvalidBehavior(),
           ];
         }
 
-        /** @var \Symfony\Component\DependencyInjection\Compiler\ServiceReferenceGraphEdge $edge */
         foreach ($node->getOutEdges() as $edge) {
-          /** @var \Symfony\Component\DependencyInjection\Reference $edgeValue */
+          /** @var \Symfony\Component\DependencyInjection\Reference|null $edgeValue */
           $edgeValue = $edge->getValue();
 
           $outEdges[] = [
             'id' => $edge->getDestNode()->getId(),
-            'invalidBehavior' => $edgeValue ? $edgeValue->getInvalidBehavior() : NULL,
+            'invalidBehavior' => $edgeValue?->getInvalidBehavior(),
           ];
         }
       }
@@ -82,14 +87,6 @@ class ServicePass implements CompilerPassInterface {
         $tags = $definition->getTags();
         $public = $definition->isPublic();
         $synthetic = $definition->isSynthetic();
-      }
-      else {
-        $id = $definition->__toString();
-        $class = NULL;
-        $file = NULL;
-        $tags = [];
-        $public = NULL;
-        $synthetic = NULL;
       }
 
       $data[$id] = [

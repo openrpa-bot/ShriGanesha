@@ -77,7 +77,7 @@ class BlockHandler implements BlockHandlerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBlock(array $blockInfo, $configuration, AttachedAssets $assets, array $data) {
+  public function getBlock(array $blockInfo, string $configuration, AttachedAssets $assets, array $data) {
     if ($blockInfo['provider'] === 'block_content') {
       // Content blocks are loaded by UUID.
       $block = $this->entityRepository->loadEntityByUuid('block_content', $blockInfo['uuid']);
@@ -166,10 +166,10 @@ class BlockHandler implements BlockHandlerInterface {
   /**
    * Cast boolean values in the settings string.
    *
-   * @param array $settings
+   * @param mixed[] $settings
    *   Parsed settings.
    */
-  private function castSettings(array &$settings) {
+  private function castSettings(array &$settings): void {
     foreach ($settings as $key => $value) {
       if ($value === '0') {
         // Prevent unchecked boolean from being overridden by default values.
@@ -187,7 +187,7 @@ class BlockHandler implements BlockHandlerInterface {
    * @param string $configuration
    *   The settings string sent by the client.
    *
-   * @return array
+   * @return mixed[]
    *   Parsed settings.
    */
   private function parseSettings(string $configuration) {

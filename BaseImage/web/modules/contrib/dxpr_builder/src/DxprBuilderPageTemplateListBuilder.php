@@ -13,14 +13,16 @@ class DxprBuilderPageTemplateListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'dxpr_builder_page_template';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function buildHeader() {
+  public function buildHeader(): array {
     $header['label'] = $this->t('Label');
     $header['id'] = $this->t('Machine name');
     $header['category'] = $this->t('Category');
@@ -31,8 +33,10 @@ class DxprBuilderPageTemplateListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function buildRow(EntityInterface $entity) {
+  public function buildRow(EntityInterface $entity): array {
     /** @var \Drupal\Core\Config\Entity\ConfigEntityInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();

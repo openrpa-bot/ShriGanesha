@@ -1,9 +1,0 @@
-# Schema for the configuration files of the tooltip ckeditor module.
-
-tooltip_ckeditor.settings:
-  type: config_object
-  label: 'Tooltip Ckeditor Settings'
-  mapping:
-    tooltip_ckeditor_selector:
-      type: string
-      label: 'Apply tooltip on those CSS selectors'

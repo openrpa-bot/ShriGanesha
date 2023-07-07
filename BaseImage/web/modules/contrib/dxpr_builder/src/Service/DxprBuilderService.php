@@ -262,7 +262,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function replaceBaseTokens(&$content) {
+  public function replaceBaseTokens(&$content): void {
     // Get url-safe path, replace backslashes from windows paths.
     $filesDirectoryPath = str_replace('\\', '/', $this->getFilesDirectoryPath('public'));
     $filesPrivateDirectoryPath = str_replace('\\', '/', $this->getFilesDirectoryPath('private'));
@@ -286,7 +286,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function replaceDeprecatedStrings(&$content) {
+  public function replaceDeprecatedStrings(&$content): void {
     $replacements = [
       'glazed_builder' => 'dxpr_builder',
       'glazed-builder' => 'dxpr-builder',
@@ -323,7 +323,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function editorAttach(array &$element, array &$settings) {
+  public function editorAttach(array &$element, array &$settings): void {
 
     $config = $this->configFactory->get('dxpr_builder.settings');
 
@@ -437,7 +437,13 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Cke css classes parsing styles.
+   *
+   * @param string $css_classes
+   *   The css classes.
+   *
+   * @return mixed[]|false
+   *   The css classes.
    */
   public function ckeParseStyles($css_classes) {
     $set = [];
@@ -574,7 +580,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFilesDirectoryPath($default_scheme = NULL) {
+  public function getFilesDirectoryPath($default_scheme = NULL): string {
     if (!$default_scheme) {
       $default_scheme = $this->configFactory->get('system.file')->get('default_scheme');
     }
@@ -590,7 +596,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function loadCmsElement($element_info, $settings, $data = [], AttachedAssets $assets = NULL) {
+  public function loadCmsElement(array $element_info, string $settings, array $data = [], AttachedAssets $assets = NULL) {
     if ($element_info['type'] === 'block') {
       $output = $this->dxprBlockHandler->getBlock($element_info, $settings, $assets, $data);
     }
@@ -697,7 +703,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function setEmptyStringToDxprFieldsOnEntity(ContentEntityInterface $entity) {
+  public function setEmptyStringToDxprFieldsOnEntity(ContentEntityInterface $entity): void {
     $entity_type = $entity->getEntityType()->id();
     $bundle = $entity->bundle();
 
@@ -735,7 +741,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * Retrieves and caches list of views displays and their settings and fields.
    *
-   * @return array
+   * @return mixed[]
    *   Array of views displayscontaining all metadata that the DXPR Builder
    *   interface uses for modifying the display using various settings. Keyed by
    *   an identifier with the view and display name.
@@ -832,6 +838,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
                   $field_name = Html::escape($handler->adminLabel(TRUE));
                 }
 
+                /* @phpstan-ignore-next-line */
                 if (!empty($field['relationship']) && !empty($relationships[$field['relationship']])) {
                   $field_name = '(' . $relationships[$field['relationship']] . ') ' . $field_name;
                 }
@@ -875,7 +882,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * Interface where you can select views displays in the DXPR Builder modal.
    *
-   * @return array
+   * @return mixed[]
    *   Array of views tags keyed by an identifier with the view & display name.
    */
   protected function getCmsViewsTags() {
@@ -915,7 +922,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    * in modules implementing hook_dxpr_builder_element_buttons_folders.
    * These classes are used in the button modal element settings.
    *
-   * @return array
+   * @return mixed[]
    *   Array of button style classes, keyed by an identifier for button style.
    */
   protected function getButtonStyles() {
@@ -962,6 +969,9 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
 
   /**
    * Get the path to this module.
+   *
+   * @return string
+   *   The path of the module
    */
   private function getModulePath() {
     return $this->moduleExtensionList->getPath('dxpr_builder');
@@ -994,7 +1004,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *   The base directory or URI to scan, without trailing slash.
    * @param string $mask
    *   The preg_match() regular expression for files to be included.
-   * @param array $options
+   * @param mixed[] $options
    *   An associative array of additional options, with the following elements:
    *   - 'nomask': The preg_match() regular expression for files to be excluded.
    *     Defaults to the 'file_scan_ignore_directories' setting.
@@ -1009,7 +1019,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *   - 'min_depth': Minimum depth of directories to return files from.
    *     Defaults to 0.
    *
-   * @return array
+   * @return mixed[]
    *   An associative array (keyed on the chosen key) of objects with 'uri',
    *   'filename', and 'name' properties corresponding to the matched files.
    *
@@ -1024,14 +1034,14 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * As well as to determine the mode (static or dynamic).
    *
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
    *   - settings: an array of drupalSettings to be included
    *   - mode: the mode of the response.
    */
-  private function parseContentForScripts(array &$response) {
+  private function parseContentForScripts(array &$response): void {
     if (
       (strpos($response['output'], 'dxpr_frontend.min.js') !== FALSE)
       || strpos($response['output'], 'dxpr_frontend.js') !== FALSE
@@ -1046,7 +1056,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
   /**
    * Parse the given value for content.
    *
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
@@ -1055,7 +1065,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    * @param bool $enable_editor
    *   Check if editor mode is enabled.
    */
-  private function parseForContent(array &$response, bool $enable_editor) {
+  private function parseForContent(array &$response, bool $enable_editor): void {
     $doc = $this->createDocument($response['output']);
     $this->stripScriptsAndStylesheetsFromContent($doc, $response);
     $this->parseDocumentForTemplateLibrary($doc, $response);
@@ -1102,14 +1112,14 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * @param \DOMDocument $doc
    *   The documentcontaining the parseable data.
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
    *   - settings: an array of drupalSettings to be included
    *   - mode: the mode of the response.
    */
-  private function stripScriptsAndStylesheetsFromContent(\DOMDocument $doc, array &$response) {
+  private function stripScriptsAndStylesheetsFromContent(\DOMDocument $doc, array &$response): void {
     // Strip script tags.
     $scripts = $doc->getElementsByTagName('script');
     // Looping backwards due to DOM changing and DomNodeList
@@ -1152,14 +1162,14 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * @param \DOMDocument $doc
    *   The documentcontaining the parseable data.
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
    *   - settings: an array of drupalSettings to be included
    *   - mode: the mode of the response.
    */
-  private function parseDocumentForTemplateLibrary(\DOMDocument $doc, array &$response) {
+  private function parseDocumentForTemplateLibrary(\DOMDocument $doc, array &$response): void {
     $xpath = new \DOMXpath($doc);
     // We aggregate all element css and remove the link tags.
     $result = $xpath->query('//*[@data-dxpr-builder-libraries]');
@@ -1188,14 +1198,14 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * @param \DOMDocument $doc
    *   The documentcontaining the parseable data.
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
    *   - settings: an array of drupalSettings to be included
    *   - mode: the mode of the response.
    */
-  private function parseDocumentForCmsElements(\DOMDocument $doc, array &$response) {
+  private function parseDocumentForCmsElements(\DOMDocument $doc, array &$response): void {
     // Drupal blocks and views are represented as empty tags, here we replace
     // empty tags with the actual block or view content.
     $xpath = new \DOMXpath($doc);
@@ -1429,7 +1439,7 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    * @param string $source
    *   HTML code to be added on to DOM object.
    */
-  private function documentAppendHtml(\DOMNode $parent, $source) {
+  private function documentAppendHtml(\DOMNode $parent, $source): void {
     $doc = new \DOMDocument("1.0", "UTF-8");
     $doc->resolveExternals = FALSE;
     $doc->substituteEntities = FALSE;
@@ -1465,14 +1475,14 @@ class DxprBuilderService implements DxprBuilderServiceInterface {
    *
    * @param \DOMDocument $doc
    *   The documentcontaining the parseable data.
-   * @param array $response
+   * @param mixed[] $response
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - library: an array of libraries to be included
    *   - settings: an array of drupalSettings to be included
    *   - mode: the mode of the response.
    */
-  private function getValueFromDoc(\DOMDocument $doc, array &$response) {
+  private function getValueFromDoc(\DOMDocument $doc, array &$response): void {
     $response['output'] = preg_replace('/^<!DOCTYPE.+?>/', '', str_replace([
       '<?xml encoding="UTF-8">',
       '<html>',

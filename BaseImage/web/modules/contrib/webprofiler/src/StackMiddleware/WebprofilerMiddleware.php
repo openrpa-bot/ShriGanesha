@@ -1,40 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\webprofiler\StackMiddleware;
 
 use Drupal\Core\Database\Database;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * Class WebprofilerMiddleware.
+ * Start the database logger.
  */
 class WebprofilerMiddleware implements HttpKernelInterface {
 
   /**
-   * The decorated kernel.
-   *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface
-   */
-  protected $httpKernel;
-
-  /**
    * Constructs a WebprofilerMiddleware object.
    *
-   * @param \Symfony\Component\HttpKernel\HttpKernelInterface $http_kernel
+   * @param \Symfony\Component\HttpKernel\HttpKernelInterface $httpKernel
    *   The decorated kernel.
    */
-  public function __construct(HttpKernelInterface $http_kernel) {
-    $this->httpKernel = $http_kernel;
+  public function __construct(protected readonly HttpKernelInterface $httpKernel) {
   }
 
   /**
    * {@inheritdoc}
    */
-  public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE) {
+  public function handle(Request $request, int $type = self::MAIN_REQUEST, bool $catch = TRUE): Response {
     foreach (Database::getAllConnectionInfo() as $key => $info) {
       Database::startLog('webprofiler', $key);
     }
+
     return $this->httpKernel->handle($request, $type, $catch);
   }
 

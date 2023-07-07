@@ -55,8 +55,18 @@ class WebformBlockDeriver extends DeriverBase implements ContainerDeriverInterfa
 
   /**
    * {@inheritdoc}
+   *
+   * @param mixed $base_plugin_definition
+   *   The definition array of the base plugin.
+   *
+   * @phpstan-param mixed $base_plugin_definition
+   *
+   * @return array
+   *   An array of full derivative definitions keyed on derivative id.
+   *
+   * @phpstan-return array<string, mixed>
    */
-  public function getDerivativeDefinitions($base_plugin_definition) {
+  public function getDerivativeDefinitions($base_plugin_definition): array {
     if ($this->moduleHandler->moduleExists('webform')) {
 
       $webforms = $this->entityTypeManager

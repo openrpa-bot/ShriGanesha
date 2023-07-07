@@ -292,6 +292,8 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-return mixed
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -320,7 +322,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * {@inheritdoc}
    */
-  public function ajaxRefresh() {
+  public function ajaxRefresh(): JsonResponse {
     $url = Url::fromRoute('dxpr_builder.ajax_callback');
 
     // Check if request related to enterprise.
@@ -345,7 +347,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * {@inheritdoc}
    */
-  public function ajaxCallback() {
+  public function ajaxCallback(): Response {
     $post_action = $this->requestStack->getCurrentRequest()->request->get('action');
     $action = $post_action ? $post_action : FALSE;
     $response = new AjaxResponse('');
@@ -477,8 +479,9 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
             $html = $this->renderer->render($data);
           }
           if ($name[0] === 'block') {
-            // Name is for example "block-system_menu_block:main".
-            $settings = $this->getBlockSettings($name[1]);
+            // Name is for example "block-system_menu_block:secondary-menu".
+            $plugin_id = substr($post_name, 6);
+            $settings = $this->getBlockSettings($plugin_id);
             // Render the fields in a form tag as expected by the frontend.
             // @see CMSSettingsParamType()
             $settings['#printed'] = FALSE;
@@ -640,6 +643,9 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   Returns json response.
    */
   public function validateHelpLink() {
     $help_link = $this->requestStack->getCurrentRequest()->request->get('help_link');
@@ -647,6 +653,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
     if ($help_link && strpos($help_link, 'dxpr.com/documentation/')) {
 
       try {
+        /* @phpstan-ignore-next-line */
         $response = $this->httpClient->head($help_link);
 
         // Send TRUE if help link is valid and exists on dxpr.com.
@@ -665,7 +672,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * {@inheritdoc}
    */
-  public function fileUpload() {
+  public function fileUpload(): Response {
     $type = $this->requestStack->getCurrentRequest()->get('type');
     switch ($type) {
       case 'video':
@@ -684,6 +691,9 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
 
   /**
    * Get the base URL of the current request.
+   *
+   * @return string
+   *   The path.
    */
   private function getBase() {
     $current_request = $this->requestStack->getCurrentRequest();
@@ -807,9 +817,9 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    *   The type of entity.
    * @param string $bundle
    *   The type of bundle.
-   * @param int $entityId
+   * @param string|int $entityId
    *   The entity ID.
-   * @param int $revisionId
+   * @param string|int $revisionId
    *   The entity revision ID.
    * @param string $fieldName
    *   The field name.
@@ -875,9 +885,9 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * Loads DXPR Builder field content.
    *
-   * @param string $entityType
+   * @param string|int $entityType
    *   The type of entity.
-   * @param int $entityId
+   * @param string|int $entityId
    *   The ID of the entity to be saved.
    * @param string $fieldName
    *   The name of the field to return.
@@ -917,7 +927,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    * @param string $displayId
    *   The ID of the display for the given view.
    *
-   * @return string
+   * @return mixed[]
    *   The settings for the given view
    */
   private function getViewSettings($viewId, $displayId) {
@@ -936,10 +946,12 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    * @param string $plugin_id
    *   The ID of the block.
    *
-   * @return string
+   * @return array
    *   The settings for the given block
+   *
+   * @phpstan-return array<string, mixed>
    */
-  private function getBlockSettings($plugin_id) {
+  private function getBlockSettings($plugin_id): array {
     $entity = $this->entityTypeManager()->getStorage('block')->create([
       'plugin' => $plugin_id,
       'theme' => NULL,
@@ -975,14 +987,14 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    * #tree is set to TRUE. This method updates the name attributes
    * so that we can extract the correct output client-side.
    *
-   * @param array $form
+   * @param mixed[] $form
    *   The form structure.
    * @param bool $in_tree
    *   Indicates if #tree was set.
    * @param string[] $prefix
    *   Prefix to use for name.
    */
-  private function updateFormNames(array &$form, $in_tree = FALSE, array $prefix = []) {
+  private function updateFormNames(array &$form, $in_tree = FALSE, array $prefix = []): void {
     foreach (Element::children($form) as $name) {
       if (!empty($form[$name]['#name'])) {
         $html_name = '';
@@ -1007,10 +1019,10 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    * Fieldsets do not expand/collapse in all admin themes (e.g. Bootstrap).
    * Expanding all fieldsets ensures that they remain usable in all themes.
    *
-   * @param array $form
+   * @param mixed[] $form
    *   The form structure.
    */
-  private function expandFieldsets(array &$form) {
+  private function expandFieldsets(array &$form): void {
     foreach (Element::children($form) as $name) {
       if (isset($form[$name]['#type']) && $form[$name]['#type'] == 'details') {
         $form[$name]['#open'] = TRUE;
@@ -1022,16 +1034,16 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * Loads settings for a CMS element - often views.
    *
-   * @param array $element_info
+   * @param mixed[] $element_info
    *   An array of info regarding the element to be returned.
    * @param string $settings
    *   Settings for the elmeent to be loaded.
-   * @param array $data
+   * @param mixed[] $data
    *   Data on the element to be returned.
    * @param \Drupal\Core\Asset\AttachedAssets $assets
    *   Any assets for the found element will be attached to this element.
    */
-  private function loadCmsElement(array $element_info, $settings, array $data, AttachedAssets $assets) {
+  private function loadCmsElement(array $element_info, $settings, array $data, AttachedAssets $assets): string {
     // Loads Drupal block or views display.
     return $this->dxprBuilderService->loadCmsElement($element_info, $settings, $data, $assets);
   }
@@ -1249,7 +1261,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * Creates image url from file ID.
    *
-   * @param array $fileIds
+   * @param mixed[] $fileIds
    *   Array of files ids.
    * @param string $imageStyle
    *   The image style.
@@ -1299,17 +1311,17 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
   /**
    * Description.
    */
-  private function getRequestTime() {
+  private function getRequestTime(): int {
     return $this->requestStack->getCurrentRequest()->server->get('REQUEST_TIME');
   }
 
   /**
    * Fixes the element for rendering.
    *
-   * @param array $arr
+   * @param mixed[] $arr
    *   Array for scanning.
    */
-  protected function addTagHelper(array &$arr) {
+  protected function addTagHelper(array &$arr): void {
     foreach ($arr as &$v_arr) {
       if (is_array($v_arr) && !empty($v_arr)) {
         if (!empty($v_arr['#tag']) && $v_arr['#tag'] === 'script') {
@@ -1344,7 +1356,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
    * @param \Drupal\Core\Asset\AttachedAssets $assets
    *   Assets retrieved by fetchPreRenderAssets().
    *
-   * @return array
+   * @return mixed[]
    *   Array with keys css, js, and settings.
    */
   private function fetchPostRenderAssets(AttachedAssets $assets) {
@@ -1359,9 +1371,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
       if (!empty($js_asset['drupalSettings']['data']['dxpr_html_head'])) {
         $this->addTagHelper($js_asset['drupalSettings']['data']['dxpr_html_head']);
         $js_header = $this->renderer->render($js_asset['drupalSettings']['data']['dxpr_html_head']);
-        if ($js_header) {
-          $js .= $js_header->__toString();
-        }
+        $js .= $js_header->__toString();
         // Removes html_head from settings because it isn't real settings.
         unset($js_asset['drupalSettings']['data']['dxpr_html_head']);
       }
@@ -1374,9 +1384,7 @@ class AjaxController extends ControllerBase implements AjaxControllerInterface {
             continue;
           }
           $rendered = $this->renderer->render($script);
-          if ($rendered) {
-            $js .= $rendered->__toString();
-          }
+          $js .= $rendered->__toString();
         }
       }
     }

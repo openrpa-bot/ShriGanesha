@@ -2,68 +2,82 @@
  * @file
  * Database panel app.
  */
-(function ($, Drupal, drupalSettings) {
+(function (Drupal) {
 
-    "use strict";
+  "use strict";
 
-    Drupal.behaviors.webprofiler_database = {
-        attach: function (context) {
-            $(context).find('.js--explain-trigger').once('js--explain-trigger').each(function () {
+  const queryTpl = _.template(`
+    <table class="webprofiler__table responsive-enabled" data-striping="1">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Caller</th>
+                <th>Database</th>
+                <th>Target</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="odd">
+                <td class="webprofiler__key"><% print(time); %> ms</td>
+                <td class="webprofiler__key"><% print(caller); %></td>
+                <td class="webprofiler__key"><% print(db); %></td>
+                <td class="webprofiler__key"><% print(target); %></td>
+            </tr>
+        </tbody>
+    </table>
 
-                $(this).on('click', function () {
-                    var position = $(this).attr('data-wp-queryPosition'),
-                        wrapper = $(this).parent().parent().find('.js--explain-target'),
-                        loader = $(this).parent().parent().find('.js--loader');
+    <div class="wp-executable-actions">
+      <% if (hasArgs == 1) {%><a class="wp-executable-toggle">Swap placeholders</a><%}%>
+      <a class="wp-query-copy">Copy query</a>
+      <% if (type == "SELECT") {%><a href="<% print(explainPath); %>" class="use-ajax wp-query-explain">Explain</a><%}%>
+    </div>
+    <div class="js--explain-target-<% print(qid); %>"></div>
+  `);
 
-                    if (wrapper.html().length === 0) {
+  Drupal.behaviors.webprofiler_database = {
+    attach: function (context) {
+      hljs.configure({
+        ignoreUnescapedHTML: true
+      });
 
-                        var url = Drupal.url('admin/reports/profiler/database_explain/' + drupalSettings.webprofiler.token + '/' + position);
+      once('db', '.wp-db-query').forEach(function (element) {
+        let result =
+          queryTpl({
+            'time': element.dataset.wpTime,
+            'caller': element.dataset.wpClass,
+            'db': element.dataset.wpDb,
+            'target': element.dataset.wpTarget,
+            'hasArgs': element.dataset.wpHasArgs,
+            'type': element.dataset.wpType,
+            'qid': element.dataset.wpQid,
+            'explainPath': element.dataset.wpExplainPath
+          });
 
-                        loader.show();
+        element.innerHTML += result;
 
-                        $.getJSON(url, function (data) {
-                            _.templateSettings.variable = 'rc';
-                            var template = _.template(
-                                $("#wp-query-explain-template").html()
-                            );
-                            wrapper.html(template(data));
-                            loader.hide();
-                            delete _.templateSettings.variable;
-                        });
-                    }
-                    wrapper.toggle();
+        element.querySelectorAll('code').forEach(function (code) {
+          hljs.highlightElement(code);
+        });
 
-                });
-            });
-
-            $(context).find('.js--code-toggle').once('js--code-toggle').each(function () {
-                $(this).on('click', function () {
-                    $(this).parent().find('.js--code-target').find('code').toggleClass('is--hidden');
-                });
-            });
-
-            $(context).find('.js--code-toggle--global').once('js--code-toggle--global').each(function () {
-                $(this).on('click', function () {
-
-                    if($(this).hasClass('js--placeholder-visible')){
-                        $('.js--placeholder-query').addClass('is--hidden');
-                        $('.js--original-query').removeClass('is--hidden');
-
-                    }else{
-                        $('.js--placeholder-query').removeClass('is--hidden');
-                        $('.js--original-query').addClass('is--hidden');
-                    }
-                    $(this).toggleClass('js--placeholder-visible');
-                });
-            });
-
-            if (typeof hljs != "undefined") {
-                var highlightBlock = (typeof hljs.highlightElement === "function") ? hljs.highlightElement : hljs.highlightBlock;
-                $('code.sql').each(function (i, block) {
-                    highlightBlock(block);
-                });
-            }
+        // Swap placeholders.
+        if (element.dataset.wpHasArgs === '1') {
+          element.querySelector('.wp-executable-toggle').addEventListener('click', function (e) {
+            element.querySelector('.wp-query-placeholder').classList.toggle('is-hidden');
+            element.querySelector('.wp-query-executable').classList.toggle('is-hidden');
+          });
         }
+
+        // Copy to clipboard.
+        if (navigator.clipboard && window.isSecureContext) {
+          element.querySelector('.wp-query-copy').addEventListener('click', function (e) {
+            let query = element.querySelector('.wp-query-executable').innerText;
+            navigator.clipboard.writeText(query);
+          });
+        }
+        else {
+          element.querySelector('.wp-query-copy').classList.toggle('is-hidden');
+        }
+      });
     }
-})
-(jQuery, Drupal, drupalSettings);
+  }
+})(Drupal);

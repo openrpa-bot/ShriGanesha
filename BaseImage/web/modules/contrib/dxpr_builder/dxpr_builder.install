@@ -24,7 +24,7 @@ use Drupal\dxpr_builder\Entity\DxprBuilderUserTemplate;
 /**
  * Implements hook_install().
  */
-function dxpr_builder_install() {
+function dxpr_builder_install(): void {
   module_set_weight('dxpr_builder', 100);
   Drupal::configFactory()->getEditable('image.settings')->set('allow_insecure_derivatives', TRUE)->save();
   if (\Drupal::moduleHandler()->moduleExists('dxpr_builder_media')) {
@@ -147,7 +147,7 @@ function dxpr_builder_install() {
 /**
  * Implements hook_uninstall().
  */
-function dxpr_builder_uninstall() {
+function dxpr_builder_uninstall(): void {
   // Delete all DXPR Builder profiles and templates.
   \Drupal::database()->delete('config')
     ->condition('name', 'dxpr_builder.dxpr_builder_profile' . "%", 'LIKE')
@@ -165,8 +165,10 @@ function dxpr_builder_uninstall() {
 
 /**
  * Implements hook_requirements().
+ *
+ * @phpstan-return array<string, array<string, mixed>>
  */
-function dxpr_builder_requirements($phase) {
+function dxpr_builder_requirements(string $phase): array {
   if ($phase === 'install') {
     return [];
   }
@@ -206,8 +208,10 @@ function dxpr_builder_requirements($phase) {
 
 /**
  * Implements hook_schema().
+ *
+ * @phpstan-return array<string, array<string, mixed>>
  */
-function dxpr_builder_schema() {
+function dxpr_builder_schema(): array {
   $schema['dxpr_page_templates'] = [
     'description' => 'Dxpr page templates',
     'fields' => [
@@ -314,7 +318,7 @@ function dxpr_builder_schema() {
 /**
  * Update dxpr builder page templates.
  */
-function dxpr_builder_update_8005() {
+function dxpr_builder_update_8005(): void {
   // Update page templates.
   \Drupal::moduleHandler()->loadInclude('inc', 'dxpr_builder', 'dxpr_builder.templates');
 }
@@ -322,21 +326,21 @@ function dxpr_builder_update_8005() {
 /**
  * Clear all caches to add new menu items and classes.
  */
-function dxpr_builder_update_8006() {
+function dxpr_builder_update_8006(): void {
   drupal_flush_all_caches();
 }
 
 /**
  * Update config for dxpr builder profiles.
  */
-function dxpr_builder_update_8007() {
+function dxpr_builder_update_8007(): void {
   // Remove default profile sidebar override.
 }
 
 /**
  * Update config for dxpr builder profiles.
  */
-function dxpr_builder_update_8008() {
+function dxpr_builder_update_8008(): void {
   $profiles = \Drupal::entityTypeManager()
     ->getStorage('dxpr_builder_profile')
     ->loadMultiple();
@@ -352,7 +356,7 @@ function dxpr_builder_update_8008() {
  *
  * @see https://www.drupal.org/node/3034742
  */
-function dxpr_builder_update_8009() {
+function dxpr_builder_update_8009(): void {
   $entity_type = \Drupal::entityTypeManager()->getDefinition('dxpr_builder_profile');
   $entity_update_manager = \Drupal::entityDefinitionUpdateManager();
   $entity_update_manager->installEntityType($entity_type);
@@ -361,7 +365,7 @@ function dxpr_builder_update_8009() {
 /**
  * Сhange dxpr_user_templates template field type to longtext.
  */
-function dxpr_builder_update_8010() {
+function dxpr_builder_update_8010(): void {
   $new_field = [
     'type' => 'text',
     'size' => 'big',
@@ -373,14 +377,14 @@ function dxpr_builder_update_8010() {
 /**
  * Clear cache for relative-absolute path conversion admin page.
  */
-function dxpr_builder_update_8011() {
+function dxpr_builder_update_8011(): void {
   drupal_flush_all_caches();
 }
 
 /**
  * Update user template table.
  */
-function dxpr_builder_update_8012() {
+function dxpr_builder_update_8012(): void {
   $field_global_spec = [
     'type' => 'int',
     'description' => "Whether the template is global",
@@ -396,7 +400,7 @@ function dxpr_builder_update_8012() {
 /**
  * Transfer all user templates to configuration.
  */
-function dxpr_builder_update_8013() {
+function dxpr_builder_update_8013(): void {
   $result = \Drupal::database()->select('dxpr_user_templates', 't')
     ->fields('t', ['uid', 'name', 'template', 'global'])
     ->execute();
@@ -422,7 +426,7 @@ function dxpr_builder_update_8013() {
 /**
  * Update dxpr builder page templates.
  */
-function dxpr_builder_update_8014() {
+function dxpr_builder_update_8014(): void {
   // Drop dxpr_page_templates table rows.
   \Drupal::database()->truncate('dxpr_page_templates')->execute();
 
@@ -433,7 +437,7 @@ function dxpr_builder_update_8014() {
 /**
  * Updates offset_selector setting in config storage.
  */
-function dxpr_builder_update_8015() {
+function dxpr_builder_update_8015(): void {
   $config_name = 'dxpr_builder.settings';
 
   // Load data from file.
@@ -455,7 +459,7 @@ function dxpr_builder_update_8015() {
 /**
  * Update dxpr builder page templates.
  */
-function dxpr_builder_update_8016() {
+function dxpr_builder_update_8016(): void {
   // Drop dxpr_page_templates table rows.
   \Drupal::database()->truncate('dxpr_page_templates')->execute();
 
@@ -466,14 +470,14 @@ function dxpr_builder_update_8016() {
 /**
  * Marking a cache container for rebuild.
  */
-function dxpr_builder_update_8017() {
+function dxpr_builder_update_8017(): void {
   \Drupal::service('kernel')->invalidateContainer();
 }
 
 /**
  * Convert Page Templates functionality to use Configuration Objects.
  */
-function dxpr_builder_update_8018() {
+function dxpr_builder_update_8018(): void {
   $entity_type = \Drupal::entityTypeManager()->getDefinition('dxpr_builder_page_template');
   /** @var \Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface $update_manager */
   $update_manager = \Drupal::service('entity.definition_update_manager');
@@ -509,7 +513,7 @@ function dxpr_builder_update_8018() {
 /**
  * Remove unused state items.
  */
-function dxpr_builder_update_8019() {
+function dxpr_builder_update_8019(): void {
   \Drupal::state()->delete('dxpr_builder.license_check');
   \Drupal::state()->delete('dxpr_builder.license_status');
 }
@@ -519,7 +523,7 @@ function dxpr_builder_update_8019() {
  *
  * @see https://www.drupal.org/node/3034742
  */
-function dxpr_builder_update_8020() {
+function dxpr_builder_update_8020(): void {
   $entity_type = \Drupal::entityTypeManager()->getDefinition('dxpr_builder_profile');
   $entity_update_manager = \Drupal::entityDefinitionUpdateManager();
   $entity_update_manager->installEntityType($entity_type);
@@ -528,7 +532,7 @@ function dxpr_builder_update_8020() {
 /**
  * Copy dxpr_builder_e_profile entities to dxpr_builder_profile.
  */
-function dxpr_builder_update_8021() {
+function dxpr_builder_update_8021(): void {
   if (!\Drupal::moduleHandler()->moduleExists('dxpr_builder_e')) {
     return;
   }
@@ -557,7 +561,7 @@ function dxpr_builder_update_8021() {
 /**
  * Add record_analytics setting value.
  */
-function dxpr_builder_update_8022() {
+function dxpr_builder_update_8022(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dxpr_builder.settings');
   $config->set('record_analytics', TRUE);
@@ -567,7 +571,7 @@ function dxpr_builder_update_8022() {
 /**
  * Add notifications setting value.
  */
-function dxpr_builder_update_8023() {
+function dxpr_builder_update_8023(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dxpr_builder.settings');
   $config->set('notifications', TRUE);
@@ -577,7 +581,7 @@ function dxpr_builder_update_8023() {
 /**
  * Add editor_assets_source setting value.
  */
-function dxpr_builder_update_8024() {
+function dxpr_builder_update_8024(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dxpr_builder.settings');
   $development = $config->get('development');
@@ -588,7 +592,7 @@ function dxpr_builder_update_8024() {
 /**
  * Set editor_assets_source setting to cloud.
  */
-function dxpr_builder_update_8025() {
+function dxpr_builder_update_8025(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dxpr_builder.settings');
   $config->set('editor_assets_source', 0);
@@ -598,7 +602,7 @@ function dxpr_builder_update_8025() {
 /**
  * Update central DXPR Builder user storage.
  */
-function dxpr_builder_update_8026() {
+function dxpr_builder_update_8026(): void {
   $dxpr_builder_role_ids = [];
 
   foreach (Role::loadMultiple() as $user_role) {
@@ -627,7 +631,7 @@ function dxpr_builder_update_8026() {
 /**
  * Add license info block and 'DXPR Builder User' column to admin people view.
  */
-function dxpr_builder_update_8027() {
+function dxpr_builder_update_8027(): void {
   // Create block.
   Block::create([
     'status' => TRUE,
@@ -655,7 +659,7 @@ function dxpr_builder_update_8027() {
 /**
  * Create dxpr_lock table.
  */
-function dxpr_builder_update_8028() {
+function dxpr_builder_update_8028(): void {
   $table = 'dxpr_lock';
   $db = \Drupal::database();
   if (!$db->schema()->tableExists($table)) {
@@ -674,7 +678,7 @@ function dxpr_builder_update_8028() {
 /**
  * Add licenses block to user licenses dashboard page.
  */
-function dxpr_builder_update_8029() {
+function dxpr_builder_update_8029(): void {
   $block = Block::load('licenseinfo');
   $block->set('visibility', [
     'request_path' => [
@@ -689,7 +693,7 @@ function dxpr_builder_update_8029() {
 /**
  * Switch bootstrap version after "Bootstrap 3 Light" removal.
  */
-function dxpr_builder_update_8030() {
+function dxpr_builder_update_8030(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('dxpr_builder.settings');
 
@@ -703,7 +707,7 @@ function dxpr_builder_update_8030() {
 /**
  * Enable license info block when incorrectly installed as disabled.
  */
-function dxpr_builder_update_8031() {
+function dxpr_builder_update_8031(): void {
   if ($block = Block::load('licenseinfo')) {
     if (!$block->status() && $block->getRegion() === 'header') {
       $block->setStatus(TRUE);
@@ -712,5 +716,38 @@ function dxpr_builder_update_8031() {
       $block->set('theme', $admin_theme);
       $block->save();
     }
+  }
+}
+
+/**
+ * Remove blocked users from license storage.
+ */
+function dxpr_builder_update_8032(): void {
+  // Get a list of roles with the "edit with dxpr builder" permission.
+  $editor_roles = [];
+  foreach (\Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple() as $role) {
+    if ($role->hasPermission('edit with dxpr builder')) {
+      $editor_roles[] = $role->id();
+    }
+  }
+  if (count($editor_roles)) {
+    // Get user IDs for users that are blocked and have one of the roles with
+    // the "edit with dxpr builder" permission.
+    $accounts = \Drupal::entityQuery('user')
+      ->accessCheck(FALSE)
+      ->condition('status', 0)
+      ->condition('roles', $editor_roles, 'IN')
+      ->execute();
+    // Add user 1 if blocked.
+    $user1 = \Drupal::entityTypeManager()->getStorage('user')->load(1);
+    if ($user1->isBlocked()) {
+      $accounts[] = 1;
+    }
+    // Remove users from central storage.
+    $licenses = \Drupal::service('dxpr_builder.license_service');
+    $licenses->syncUsersWithCentralStorage(
+      array_values($accounts),
+      DxprBuilderLicenseServiceInterface::DXPR_USER_REMOVE_OPERATION
+    );
   }
 }

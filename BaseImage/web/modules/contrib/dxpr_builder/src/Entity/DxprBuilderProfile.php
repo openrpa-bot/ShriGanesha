@@ -143,9 +143,15 @@ class DxprBuilderProfile extends ConfigEntityBase implements DxprBuilderProfileI
   protected $modal_buttons = [];
 
   /**
-   * {@inheritdoc}
+   * Loads the first profile available for specified roles.
+   *
+   * @phpstan-param array<string, mixed> $roles
+   *   The roles.
+   *
+   * @phpstan-return \Drupal\dxpr_builder\DxprBuilderProfileInterface|null
+   *   User profile or empty array.
    */
-  public static function loadByRoles(array $roles) {
+  public static function loadByRoles(array $roles): ?DxprBuilderProfileInterface {
     $profiles = DxprBuilderProfile::loadMultiple();
     uasort($profiles, [DxprBuilderProfile::class, 'sort']);
 
@@ -155,7 +161,7 @@ class DxprBuilderProfile extends ConfigEntityBase implements DxprBuilderProfileI
       }
     }
 
-    return [];
+    return NULL;
   }
 
 }

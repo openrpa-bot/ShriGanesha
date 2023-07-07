@@ -11,9 +11,9 @@ dependencies:
   - drupal:image
   - drupal:block
 # project: 'dxpr_builder'
-# version: '2.2.3'
+# version: '2.2.6'
 
-# Information added by Drupal.org packaging script on 2023-04-17
-version: '2.2.3'
+# Information added by Drupal.org packaging script on 2023-06-13
+version: '2.2.6'
 project: 'dxpr_builder'
-datestamp: 1681736182
+datestamp: 1686668259

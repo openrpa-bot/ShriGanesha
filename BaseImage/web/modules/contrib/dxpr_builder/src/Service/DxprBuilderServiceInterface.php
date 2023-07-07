@@ -32,7 +32,7 @@ interface DxprBuilderServiceInterface {
    * @param string $content
    *   The content for which tokens should be replaced.
    */
-  public function replaceBaseTokens(&$content);
+  public function replaceBaseTokens(&$content): void;
 
   /**
    * Replaces deprecated brand strings with new strings in content.
@@ -40,7 +40,7 @@ interface DxprBuilderServiceInterface {
    * @param string $content
    *   The content for which tokens should be replaced.
    */
-  public function replaceDeprecatedStrings(&$content);
+  public function replaceDeprecatedStrings(&$content): void;
 
   /**
    * Analyzes the raw fields value and readies it for being output to the page.
@@ -52,10 +52,10 @@ interface DxprBuilderServiceInterface {
    * @param string $dataString
    *   Identification string for container consisting of
    *   entitytype|bundle|entity ID|field machine name.
-   * @param string $enable_editor
+   * @param bool $enable_editor
    *   Description.
    *
-   * @return array
+   * @return mixed[]
    *   An array containing the following keys:
    *   - output: the value to be altered by this function
    *   - css: an array of CSS files to be included
@@ -72,18 +72,18 @@ interface DxprBuilderServiceInterface {
    * If the default theme implements the color modulew e also provide a
    * subset of it's colors to be used as default colors in color pickers.
    *
-   * @param array $element
+   * @param mixed[] $element
    *   A renderable array for the $items, as an array of child elements
    *   keyed by numeric indexes starting from 0.
-   * @param array $settings
+   * @param mixed[] $settings
    *   An array of settings that will be attached to the element.
    */
-  public function editorAttach(array &$element, array &$settings);
+  public function editorAttach(array &$element, array &$settings): void;
 
   /**
    * Retrieves and caches CMS elements (blocks and views) for Builder interface.
    *
-   * @return array
+   * @return mixed[]
    *   Array of Drupal blocks and views displays. Blocks are keyed by an
    *   identifier consisting of "block"-module-delta and view displays
    *   are keyed by "view"-module-display.
@@ -96,22 +96,22 @@ interface DxprBuilderServiceInterface {
    * @param string|null $default_scheme
    *   Selected scheme.
    */
-  public function getFilesDirectoryPath($default_scheme = NULL);
+  public function getFilesDirectoryPath($default_scheme = NULL): string;
 
   /**
    * Renders Blocks and Views Displays so they can be inserted into fields.
    *
-   * @param array $element_info
+   * @param mixed[] $element_info
    *   Identifies the element to be rendered. The array will contain the
    *   following three keys:
    *   - type: Either 'block' or 'view'
    *   - module: The module that handles the element
    *   - delta: The delta of the block.
-   * @param array $settings
+   * @param string $settings
    *   Array containing settings for this CMS element, including title display,
    *   views pager settings, views fields toggling, and contextual
    *   filter settings.
-   * @param array $data
+   * @param mixed[] $data
    *   Additional settings Drupal views.
    * @param \Drupal\Core\Asset\AttachedAssets $assets
    *   An AttachedAssets object to which any assets should be attached.
@@ -121,7 +121,7 @@ interface DxprBuilderServiceInterface {
    */
   public function loadCmsElement(
     array $element_info,
-    array $settings,
+    string $settings,
     array $data,
     AttachedAssets $assets
   );
@@ -129,7 +129,7 @@ interface DxprBuilderServiceInterface {
   /**
    * Retrieve all folders containing dxpr elment templates.
    *
-   * @return array
+   * @return mixed[]
    *   A list of folders in which dxpr elements may exist. Each element
    *   of the array will have the following keys:
    *   - folder: the path to the folder
@@ -159,7 +159,7 @@ interface DxprBuilderServiceInterface {
    * @param string $string
    *   The string to parse.
    *
-   * @return array
+   * @return mixed[]
    *   An array containing the relevant element info parsed
    *   from the string
    */
@@ -173,6 +173,6 @@ interface DxprBuilderServiceInterface {
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   The entity to be manipulated.
    */
-  public function setEmptyStringToDxprFieldsOnEntity(ContentEntityInterface $entity);
+  public function setEmptyStringToDxprFieldsOnEntity(ContentEntityInterface $entity): void;
 
 }
